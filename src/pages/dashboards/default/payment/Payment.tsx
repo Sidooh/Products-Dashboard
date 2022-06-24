@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Card, Col, Form, Row } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import PaymentChart from './PaymentChart';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
 
 type LinePaymentType = {
     data: {
@@ -31,9 +33,12 @@ const LinePayment = ({data}: LinePaymentType) => {
                             Yesterday <span className="opacity-50">$684.87</span>
                         </p>
                     </Col>
-                    <Col xs="auto" className="d-none d-sm-block">
-                        <Form.Select size="sm" className="mb-3" value={paymentStatus}
-                                     onChange={e => setPaymentStatus(e.target.value)}>
+                    <Col xs="auto" className="d-none d-sm-flex align-items-center">
+                        <button className="btn btn-sm btn-outline-light me-2 refresh-chart" type="button"
+                                title="Update Chart">
+                            <FontAwesomeIcon icon={faSync}/>
+                        </button>
+                        <Form.Select size="sm" value={paymentStatus} onChange={e => setPaymentStatus(e.target.value)}>
                             <option value="all">All Payments</option>
                             <option value="successful">Successful Payments</option>
                             <option value="failed">Failed Payments</option>

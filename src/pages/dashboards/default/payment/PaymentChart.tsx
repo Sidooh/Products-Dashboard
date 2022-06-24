@@ -39,6 +39,7 @@ const getOptions = (data: ChartData, paymentStatus: PaymentStatus, isDark: boole
         formatter         : (params: any) => `${params[0].axisValue} - ${params[0].value} USD`
     },
     xAxis  : {
+        show: true,
         type       : 'category',
         data       : [
             '9:00 AM',

@@ -1,20 +1,16 @@
 import { Card } from 'react-bootstrap';
-import DataTable from '../../../components/common/datatable';
-import { useNavigate } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
-import PhoneChip from '../../../components/chips/PhoneChip';
-import StatusChip from '../../../components/chips/StatusChip';
-import TableDate from '../../../components/common/TableDate';
-import TableActions from '../../../components/common/TableActions';
+import PhoneChip from 'components/chips/PhoneChip';
+import StatusChip from 'components/chips/StatusChip';
+import TableDate from 'components/common/TableDate';
+import TableActions from 'components/common/TableActions';
+import DataTable from 'components/common/datatable';
 
-const PendingTransactions = () => {
-    const navigate = useNavigate();
-
+const Transactions = () => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable bulkActions onCreateRow={() => navigate('/notifications/create')}
-                           title={'Recent Transactions'} columns={[
+                <DataTable bulkActions title={'Transactions'} columns={[
                     {
                         accessor: 'customer',
                         Header  : 'Customer',
@@ -72,4 +68,4 @@ const PendingTransactions = () => {
     );
 };
 
-export default PendingTransactions;
+export default Transactions;

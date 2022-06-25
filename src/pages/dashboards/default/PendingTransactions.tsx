@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import DataTable from 'components/common/datatable';
 import { Card } from 'react-bootstrap';
 import { Tooltip } from '@mui/material';
-import PhoneChip from '../../../components/chips/PhoneChip';
-import StatusChip from '../../../components/chips/StatusChip';
-import TableDate from '../../../components/common/TableDate';
-import TableActions from '../../../components/common/TableActions';
+import PhoneChip from 'components/chips/PhoneChip';
+import StatusChip from 'components/chips/StatusChip';
+import TableDate from 'components/common/TableDate';
+import TableActions from 'components/common/TableActions';
 
 const PendingTransactions = () => {
     const navigate = useNavigate();

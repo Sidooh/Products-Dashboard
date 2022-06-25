@@ -9,6 +9,7 @@ import SettingsPanel from 'components/settings-panel/SettingsPanel';
 import Login from 'pages/auth/Login';
 import Dashboard from 'pages/dashboards/default';
 import Analytics from 'pages/dashboards/analytics';
+import Transactions from 'pages/transactions';
 
 
 const Layout = () => {
@@ -31,6 +32,7 @@ const Layout = () => {
                     <Route index element={<Dashboard/>}/>
                     <Route path={'/dashboard'} element={<Dashboard/>}/>
                     <Route path={'/dashboard/analytics'} element={<Analytics/>}/>
+                    <Route path={'/transactions'} element={<Transactions/>}/>
                     <Route path={'*'} element={<Dashboard/>}/>
                 </Route>
             </Routes>

@@ -63,7 +63,7 @@ const Transactions = () => {
                         accessor     : 'actions',
                         disableSortBy: true,
                         className    : 'text-end',
-                        Cell         : ({row}: any) => <TableActions entityId={row.original.id} entity={'user'}/>
+                        Cell         : ({row}: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
                     }
                 ]} data={transactions}/>
             </Card.Body>

@@ -10,6 +10,8 @@ export const store = configureStore({
 
         [transactionsApi.reducerPath]: transactionsApi.reducer
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+        .concat(transactionsApi.middleware)
 });
 
 export type AppDispatch = typeof store.dispatch;

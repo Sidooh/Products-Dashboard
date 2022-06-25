@@ -4,6 +4,7 @@ import { Dropdown } from 'react-bootstrap';
 import Avatar from 'components/common/Avatar';
 import { useAppDispatch } from '../../../app/hooks';
 import { logout, reset } from '../../../features/auth/authSlice';
+import { faCrown } from '@fortawesome/free-solid-svg-icons';
 
 const ProfileDropdown = () => {
     const navigate = useNavigate()
@@ -17,19 +18,14 @@ const ProfileDropdown = () => {
 
     return (
         <Dropdown navbar={true} as="li">
-            <Dropdown.Toggle
-                bsPrefix="toggle"
-                as={Link}
-                to="#!"
-                className="pe-0 ps-2 nav-link"
-            >
-                <Avatar isExact name={'N'} size="2xl" mediaClass="fs-2 bg-soft-primary text-primary"/>
+            <Dropdown.Toggle bsPrefix="toggle" as={Link} to="#!" className="pe-0 ps-2 nav-link">
+                <Avatar isExact name={'P'} size="2xl" mediaClass="fs-2 bg-soft-primary text-primary"/>
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="dropdown-menu-card  dropdown-menu-end">
                 <div className="bg-white rounded-2 py-2 dark__bg-1000">
                     <Dropdown.Item className="fw-bold text-warning" href="#!">
-                        <FontAwesomeIcon icon="crown" className="me-1"/>
+                        <FontAwesomeIcon icon={faCrown} className="me-1"/>
                         <span>Sidooh</span>
                     </Dropdown.Item>
                     <Dropdown.Divider/>

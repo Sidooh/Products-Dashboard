@@ -1,5 +1,5 @@
 import { RouteType } from "utils/types";
-import { faWrench, faPieChart } from '@fortawesome/free-solid-svg-icons';
+import { faWrench, faPieChart, faGlobe } from '@fortawesome/free-solid-svg-icons';
 
 export const dashboardRoutes: RouteType = {
     label       : 'Dashboard',
@@ -21,6 +21,18 @@ export const dashboardRoutes: RouteType = {
     ]
 };
 
+export const transactionRoutes: RouteType = {
+    label: 'Transactions',
+    children: [
+        {
+            name: 'All Transactions',
+            icon: faGlobe,
+            to: '/transactions',
+            active: true,
+        },
+    ]
+};
+
 export const appRoutes: RouteType = {
     label: 'App',
     children: [
@@ -35,6 +47,7 @@ export const appRoutes: RouteType = {
 
 const routes = [
     dashboardRoutes,
+    transactionRoutes,
     appRoutes
 ];
 

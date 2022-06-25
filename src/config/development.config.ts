@@ -6,6 +6,11 @@ export const DevelopmentConfig = {
                     "url": "http://localhost:8000/api/v1"
                 }
             },
+            "products": {
+                "api": {
+                    "url": "http://localhost:8001/api/v1"
+                }
+            },
             "notify": {
                 "api": {
                     "url": "http://localhost:8003/api/v1"
@@ -18,7 +23,7 @@ export const DevelopmentConfig = {
                 "dashboard": {
                     "url": "http://127.0.0.1:8080/admin"
                 }
-            }
+            },
         }
     }
 };

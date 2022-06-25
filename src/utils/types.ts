@@ -32,3 +32,7 @@ export type RouteType = {
     labelDisable?: boolean
     children: RouteChildType[]
 }
+
+export type TransactionType = {
+    id?: string
+}

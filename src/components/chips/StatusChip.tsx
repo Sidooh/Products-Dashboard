@@ -52,8 +52,8 @@ const StatusChip = ({status, bg = true, entity, entityId}: StatusChipType) => {
         <>
             <Chip sx={{px: .5}} onClick={e => setAnchorEl(e.currentTarget)}
                   variant={bg ? 'filled' : 'outlined'}
-                  color={color} className={`fw-bold font-size-11`}
-                  label={<span><b>Status:</b> {status}</span>}
+                  color={color} className={`fw-bold fs-9`}
+                  label={<span>{status}</span>}
                   icon={icon}
             />
             <Menu

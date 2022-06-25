@@ -1,12 +1,20 @@
 import { Card } from 'react-bootstrap';
-import { Tooltip } from '@mui/material';
-import PhoneChip from 'components/chips/PhoneChip';
 import StatusChip from 'components/chips/StatusChip';
 import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
 import DataTable from 'components/common/datatable';
+import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
+import { SectionLoader } from 'components/common/Loader';
+import { SectionError } from 'components/common/Error';
 
 const Transactions = () => {
+    let {data: transactions, isLoading, isSuccess, isError, error} = useTransactionsQuery();
+
+    console.log(transactions);
+
+    if (isError) return <SectionError error={error}/>;
+    if (isLoading || !isSuccess || !transactions) return <SectionLoader/>;
+
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -15,18 +23,11 @@ const Transactions = () => {
                         accessor: 'customer',
                         Header  : 'Customer',
                         Cell    : ({row}: any) => (
-                            <Tooltip title={row.original.user.email}>
-                                <span>
-                                            {row.original.user.last_name} <br/>
-                                            <small>{row.original.user.user_roles_str}</small>
-                                        </span>
-                            </Tooltip>
+                            <span>
+                                {row.original.account.phone} <br/>
+                                <small><b>Destination: {row.original.destination}</b></small>
+                            </span>
                         )
-                    },
-                    {
-                        accessor: 'phone',
-                        Header  : 'Phone',
-                        Cell    : ({row}: any) => <PhoneChip phone={row.original.phone}/>
                     },
                     {
                         accessor: 'product',
@@ -43,6 +44,8 @@ const Transactions = () => {
                     {
                         accessor: 'payment',
                         Header  : 'Payment',
+                        Cell    : ({row}: any) => <StatusChip status={row.original.payment.status} entity={'payment'}
+                                                              entityId={row.original.id}/>
                     },
                     {
                         accessor: 'status',
@@ -51,18 +54,18 @@ const Transactions = () => {
                                                               entityId={row.original.id}/>
                     },
                     {
-                        accessor: 'created_at',
-                        Header: 'Date',
+                        accessor : 'created_at',
+                        Header   : 'Date',
                         className: 'text-end',
-                        Cell: ({ row }:any) => <TableDate date={row.original.created_at}/>
+                        Cell     : ({row}: any) => <TableDate date={row.original.created_at}/>
                     },
                     {
-                        accessor: 'actions',
+                        accessor     : 'actions',
                         disableSortBy: true,
-                        className: 'text-end',
-                        Cell: ({ row }:any) => <TableActions entityId={row.original.id} entity={'user'}/>
+                        className    : 'text-end',
+                        Cell         : ({row}: any) => <TableActions entityId={row.original.id} entity={'user'}/>
                     }
-                ]} data={[]}/>
+                ]} data={transactions}/>
             </Card.Body>
         </Card>
     );

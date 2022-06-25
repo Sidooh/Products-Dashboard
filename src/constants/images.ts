@@ -9,14 +9,20 @@ export const IMAGES = {
         falconModeDark   : require('../assets/images/generic/falcon-mode-dark.jpg'),
     },
     icons  : {
-        arrowsH  : require('../assets/images/icons/arrows-h.svg').default,
-        paragraph: require('../assets/images/icons/paragraph.svg').default,
+        arrowsH   : require('../assets/images/icons/arrows-h.svg').default,
+        cash   : require('../assets/images/icons/cash.png'),
+        paragraph : require('../assets/images/icons/paragraph.svg').default,
         weather_sm: require('../assets/images/icons/weather-sm.jpg'),
 
         spotIllustrations: {
             auth_corner: require('../assets/images/icons/spot-illustrations/authentication-corner.png'),
-            bg_shape: require('../assets/images/icons/spot-illustrations/bg-shape.png'),
-            shape_1 : require('../assets/images/icons/spot-illustrations/shape-1.png'),
+            bg_shape   : require('../assets/images/icons/spot-illustrations/bg-shape.png'),
+            corner_1   : require('../assets/images/icons/spot-illustrations/corner-1.png'),
+            corner_2   : require('../assets/images/icons/spot-illustrations/corner-2.png'),
+            corner_3   : require('../assets/images/icons/spot-illustrations/corner-3.png'),
+            corner_4   : require('../assets/images/icons/spot-illustrations/corner-4.png'),
+            corner_5   : require('../assets/images/icons/spot-illustrations/corner-5.png'),
+            shape_1    : require('../assets/images/icons/spot-illustrations/shape-1.png'),
         }
     },
     logos  : {

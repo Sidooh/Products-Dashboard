@@ -10,6 +10,7 @@ import Login from 'pages/auth/Login';
 import Dashboard from 'pages/dashboards/default';
 import Analytics from 'pages/dashboards/analytics';
 import Transactions from 'pages/transactions';
+import ShowTransaction from '../pages/transactions/ShowTransaction';
 
 
 const Layout = () => {
@@ -33,6 +34,7 @@ const Layout = () => {
                     <Route path={'/dashboard'} element={<Dashboard/>}/>
                     <Route path={'/dashboard/analytics'} element={<Analytics/>}/>
                     <Route path={'/transactions'} element={<Transactions/>}/>
+                    <Route path={'/transactions/:id'} element={<ShowTransaction/>}/>
                     <Route path={'*'} element={<Dashboard/>}/>
                 </Route>
             </Routes>

@@ -2,6 +2,12 @@
   "name": "products-dashboard",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -16,7 +22,6 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.2.1",
-    "@types/echarts": "^4.9.15",
     "@types/jest": "^27.5.2",
     "@types/node": "^17.0.45",
     "@types/react": "^18.0.14",
@@ -25,7 +30,9 @@
     "classnames": "^2.3.1",
     "echarts": "^5.3.3",
     "formik": "^2.2.9",
+    "libphonenumber-js": "^1.10.7",
     "moment": "^2.29.3",
+    "pluralize": "^8.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.4.0",
     "react-countup": "^6.3.0",
@@ -43,11 +50,13 @@
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@types/echarts": "^4.9.15",
+    "@types/pluralize": "^0.0.29",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/react-table": "^7.7.12",
+    "@types/toastify-js": "^1.11.1",
+    "@types/yup": "^0.29.14"
   },
   "eslintConfig": {
     "extends": [
@@ -66,11 +75,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/react-router-dom": "^5.3.3",
-    "@types/react-table": "^7.7.12",
-    "@types/toastify-js": "^1.11.1",
-    "@types/yup": "^0.29.14"
   }
 }

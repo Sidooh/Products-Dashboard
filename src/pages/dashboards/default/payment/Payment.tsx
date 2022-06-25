@@ -20,12 +20,7 @@ const LinePayment = ({data}: LinePaymentType) => {
 
     return (
         <Card className="rounded-3 overflow-hidden h-100 shadow-none">
-            <Card.Body
-                className="bg-line-chart-gradient"
-                as={Flex}
-                justifyContent="between"
-                direction="column"
-            >
+            <Card.Body className="bg-line-chart-gradient" as={Flex} justifyContent="between" direction="column">
                 <Row className="align-items-center g-0">
                     <Col className="light">
                         <h4 className="text-white mb-0">Today $764.39</h4>
@@ -45,11 +40,7 @@ const LinePayment = ({data}: LinePaymentType) => {
                         </Form.Select>
                     </Col>
                 </Row>
-                <PaymentChart
-                    data={data}
-                    paymentStatus={paymentStatus as PaymentStatus}
-                    style={{height: '200px'}}
-                />
+                <PaymentChart data={data} paymentStatus={paymentStatus as PaymentStatus} style={{height: '200px'}}/>
             </Card.Body>
         </Card>
     );

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CountUp from 'react-countup';
 import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
-const Transactions = () => {
+const TransactionsCount = () => {
     return (
         <Card className="h-100">
             <Card.Body>
@@ -34,4 +34,4 @@ const Transactions = () => {
     );
 };
 
-export default Transactions;
+export default TransactionsCount;

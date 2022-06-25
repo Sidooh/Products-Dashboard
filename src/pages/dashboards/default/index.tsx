@@ -1,8 +1,9 @@
 import { Col, Row } from "react-bootstrap";
 import Revenue from './Revenue';
-import Transactions from "./Transactions";
-import TransactionSummary from './TransactionSummary';
+import TransactionsCount from "./TransactionsCount";
+import PendingTransactions from './PendingTransactions';
 import Payment from './payment/Payment';
+import RecentTransactions from './RecentTransactions';
 
 export const payment = {
     all: [4, 1, 6, 2, 7, 12, 4, 6, 5, 4, 5, 10],
@@ -13,16 +14,17 @@ export const payment = {
 const Dashboard = () => {
     return (
         <>
-            <Row className="g-3">
+            <Row className="g-3 mb-3">
                 <Col xxl={9}><Payment data={payment}/></Col>
                 <Col>
                     <Row className="g-3">
-                        <Col md={6} xxl={12}><Transactions/></Col>
+                        <Col md={6} xxl={12}><TransactionsCount/></Col>
                         <Col md={6} xxl={12}><Revenue/></Col>
                     </Row>
                 </Col>
             </Row>
-            <TransactionSummary/>
+            <PendingTransactions/>
+            <RecentTransactions/>
         </>
     );
 };

@@ -1,5 +1,4 @@
 import { Status } from 'utils/enums';
-import PropTypes from 'prop-types';
 import { Chip, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import { Check, Error, Info, Pending } from '@mui/icons-material';
 import { useState } from 'react';
@@ -72,13 +71,6 @@ const StatusChip = ({status, bg = true, entity, entityId}: StatusChipType) => {
             </Menu>
         </>
     );
-};
-
-StatusChip.propTypes = {
-    status  : PropTypes.string.isRequired,
-    bg      : PropTypes.bool,
-    entity  : PropTypes.string,
-    entityId: PropTypes.number,
 };
 
 export default StatusChip;

@@ -1,6 +1,9 @@
 import { Card, Table } from 'react-bootstrap';
+import { TandaRequest } from 'utils/types';
+import moment from 'moment';
+import { currencyFormat } from '../../utils/helpers';
 
-const TandaTransaction = () => {
+const TandaTransaction = ({request}: { request: TandaRequest }) => {
     return (
         <Card className="mb-3">
             <Card.Header className="pb-0"><h5 className="fs-0">Transaction - Tanda</h5></Card.Header>
@@ -21,16 +24,18 @@ const TandaTransaction = () => {
                     <tbody>
                     <tr className="border-200">
                         <td className="align-middle">
-                            967aaf87-c4ea-4f21-9cf9-c461117e5987
-                            <br/>
-                            <span className="text-sm-center">(012220624879875)</span>
+                            {request.request_id}<br/>
+                            <span className="text-sm-center">({request.receipt_number})</span>
                         </td>
-                        <td className="align-middle">100</td>
-                        <td className="align-middle">AIRTEL</td>
-                        <td className="align-middle">254736388405</td>
-                        <td className="align-middle">Request processed successfully</td>
-                        <td className="align-middle text-center">000000</td>
-                        <td className="align-middle">Jun 24, 2022, 04:29 PM</td>
+                        <td className="align-middle">{currencyFormat(request.amount)}</td>
+                        <td className="align-middle">{request.provider}</td>
+                        <td className="align-middle">{request.destination}</td>
+                        <td className="align-middle">{request.message}</td>
+                        <td className="align-middle text-center">{request.status}</td>
+                        <td className="align-middle text-end">
+                            {moment(request.last_modified).format('MMM D, Y')}<br/>
+                            <small>{moment(request.last_modified).format('hh:mm A')}</small>
+                        </td>
                     </tr>
                     </tbody>
                 </Table>

@@ -16,7 +16,7 @@ export const transactionsApi = createApi({
             providesTags: ['Transaction']
         }),
         transaction: builder.query<Transaction, string>({
-            query: id => `/transactions/${id}?with=payment`,
+            query: id => `/transactions/${id}?with=payment,tanda_request`,
             providesTags: ['Transaction']
         }),
     })

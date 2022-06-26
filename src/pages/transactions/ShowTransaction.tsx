@@ -79,7 +79,7 @@ const ShowTransaction = () => {
 
             {transaction.payment?.type === PaymentType.MPESA && <MpesaPayment payment={transaction.payment}/>}
 
-            <TandaTransaction/>
+            {transaction.request && <TandaTransaction request={transaction.request}/>}
         </>
     );
 };

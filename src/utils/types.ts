@@ -61,6 +61,17 @@ export type Payment = {
     provider?: StkRequest
 }
 
+export type TandaRequest = {
+    request_id: number
+    receipt_number: number
+    amount: number
+    provider: string
+    message: string
+    destination: string
+    last_modified: string
+    status: number
+}
+
 export type Transaction = {
     id?: number
     status: Status
@@ -70,4 +81,5 @@ export type Transaction = {
     amount: number
     created_at: string
     payment?: Payment
+    request?: TandaRequest
 }

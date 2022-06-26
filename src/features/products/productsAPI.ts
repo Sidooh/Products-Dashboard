@@ -19,4 +19,5 @@ export const productsAPI = createApi({
 
 export const {
     useGetDashboardQuery,
+    useGetRevenueDataQuery
 } = productsAPI;

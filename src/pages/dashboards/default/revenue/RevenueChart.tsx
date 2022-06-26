@@ -7,24 +7,20 @@ import { RootState } from 'app/store';
 import ECharts from 'components/common/echarts';
 import { Status } from 'utils/enums';
 
-type ChartData = {
-    all: number[],
-    successful: number[],
-    failed: number[]
-}
 type PaymentChartType = {
-    data: ChartData
+    data: any
+    labels: string[]
     paymentStatus: string | Status
     style: object
 }
 
 echarts.use([LineChart, TooltipComponent, GridComponent, LegendComponent]);
 
-const getOptions = (data: ChartData, isDark: boolean) => ({
+const getOptions = (labels: string[], data: any, isDark: boolean) => ({
     tooltip: {
         trigger           : 'axis',
         axisPointer       : {
-            type: 'none'
+            type: 'cross'
         },
         padding           : [7, 10],
         backgroundColor   : getColor('100'),
@@ -36,54 +32,62 @@ const getOptions = (data: ChartData, isDark: boolean) => ({
             fontSize  : 12,
             color     : getColor('dark')
         },
-        formatter         : (params: any) => `${params[0].axisValue} - ${params[0].value} USD`
-    },
-    xAxis  : {
-        show       : true,
-        type       : 'category',
-        data       : [
-            '9:00 AM',
-            '10:00 AM',
-            '11:00 AM',
-            '12:00 PM',
-            '1:00 PM',
-            '2:00 PM',
-            '3:00 PM',
-            '4:00 PM',
-            '5:00 PM',
-            '6:00 PM',
-            '7:00 PM',
-            '8:00 PM'
-        ],
-        boundaryGap: false,
-        splitLine  : {
-            show     : true,
-            lineStyle: {
-                color: rgbaColor('#fff', 0.1)
-            },
-            interval : 0
-        },
-        axisLine   : {
-            lineStyle: {
-                color: rgbaColor('#fff', 0.1)
-            }
-        },
-        axisTick   : {
-            show     : true,
-            length   : 10,
-            lineStyle: {
-                color: rgbaColor('#fff', 0.1)
-            }
-        },
-        axisLabel  : {
-            color     : getColor('400'),
-            fontWeight: 600,
-            fontSize  : 12,
-            margin    : 15,
-            interval  : window.innerWidth < 768 ? 'auto' : 0,
-            formatter : (value: string) => value.substring(0, value.length - 3)
+        formatter         : (params: any) => {
+            return (
+                `<b>${params[1].axisValue}</b> <br>`+
+                `Today - ${params[1].value} KES<br>`+
+                `Yesterday - ${params[0].value} KES`
+            )
         }
     },
+    xAxis  : [
+        {
+            show       : true,
+            type       : 'category',
+            data       : labels,
+            splitLine  : {
+                show     : true,
+                lineStyle: {
+                    color: rgbaColor('#fff', 0.1)
+                },
+            },
+            axisLine   : {
+                lineStyle: {
+                    color: rgbaColor('#fff', 0.1)
+                }
+            },
+            axisTick   : {
+                show     : true,
+                length   : 10,
+                lineStyle: {
+                    color: rgbaColor('#fff', 0.1)
+                }
+            },
+            axisLabel  : {
+                color     : getColor('400'),
+                fontWeight: 600,
+                fontSize  : 10,
+                margin    : 15,
+                interval  : window.innerWidth < 768 ? 'auto' : 0,
+                rotate    : '30',
+            },
+        },
+        {
+            type       : 'category',
+            data       : labels,
+            axisLine   : {
+                lineStyle: {
+                    color: rgbaColor('#900', 0.1)
+                }
+            },
+            axisTick   : {
+                length   : 10,
+                lineStyle: {
+                    color: rgbaColor('#fff', 0.1)
+                }
+            },
+        }
+    ],
     yAxis  : {
         type       : 'value',
         axisPointer: {
@@ -101,8 +105,21 @@ const getOptions = (data: ChartData, isDark: boolean) => ({
     series : [
         {
             type     : 'line',
+            data     : data.yesterday.datasets,
+            symbol   : 'emptyCircle',
+            itemStyle: {
+                color: isDark ? getColor('primary') : getColor('red')
+            },
+            lineStyle: {
+                color: isDark
+                    ? rgbaColor(getColor('primary'), 0.8)
+                    : rgbaColor(getColor('red'), 0.8)
+            },
+        },
+        {
+            type     : 'line',
             smooth   : true,
-            data     : data['all'].map(item => (item * 3.14).toFixed(2)),
+            data     : data.today.datasets,
             symbol   : 'emptyCircle',
             itemStyle: {
                 color: isDark ? getColor('primary') : getColor('white')
@@ -142,21 +159,13 @@ const getOptions = (data: ChartData, isDark: boolean) => ({
             }
         }
     ],
-    grid   : {right: 15, left: 15, bottom: '15%', top: 0}
+    grid   : {left: 20, right: 5, bottom: '25%', top: 10}
 });
 
-const RevenueChart = ({data, paymentStatus, style}: PaymentChartType) => {
+const RevenueChart = ({data, labels, style}: PaymentChartType) => {
     const {isDark} = useAppSelector((state: RootState) => state.theme);
 
-    console.log(paymentStatus);
-
-    return (
-        <ECharts
-            echarts={echarts}
-            options={getOptions(data/*, paymentStatus*/, isDark)}
-            style={style}
-        />
-    );
+    return <ECharts echarts={echarts} options={getOptions(labels, data, isDark)} style={style}/>;
 };
 
 export default RevenueChart;

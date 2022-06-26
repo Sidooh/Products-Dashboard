@@ -4,18 +4,25 @@ import Flex from 'components/common/Flex';
 import RevenueChart from './RevenueChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
-import { Status } from '../../../../utils/enums';
+import { Status } from 'utils/enums';
+import { useGetRevenueDataQuery } from 'features/products/productsAPI';
+import { SectionError } from 'components/common/Error';
+import { SectionLoader } from 'components/common/Loader';
 
-type LinePaymentType = {
-    data: {
-        all: number[],
-        successful: number[],
-        failed: number[]
-    }
-};
+/*const payment = {
+    all       : [4, 1, 6, 2, 7, 12, 4, 6, 5, 4, 5, 10],
+    successful: [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8],
+    failed    : [1, 0, 2, 1, 2, 1, 1, 0, 0, 1, 0, 2]
+};*/
 
-const LinePayment = ({data}: LinePaymentType) => {
+const LinePayment = () => {
+    const {data, isError, error, isLoading, isSuccess} = useGetRevenueDataQuery();
+    console.log(data);
+
     const [paymentStatus, setPaymentStatus] = useState<string | Status>(Status.COMPLETED);
+
+    if (isError) return <SectionError error={error}/>;
+    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
 
     return (
         <Card className="rounded-3 overflow-hidden h-100 shadow-none">
@@ -39,7 +46,7 @@ const LinePayment = ({data}: LinePaymentType) => {
                         </Form.Select>
                     </Col>
                 </Row>
-                <RevenueChart data={data} paymentStatus={paymentStatus} style={{height: '200px'}}/>
+                <RevenueChart data={data} labels={data.yesterday.labels} paymentStatus={paymentStatus} style={{height: '200px'}}/>
             </Card.Body>
         </Card>
     );

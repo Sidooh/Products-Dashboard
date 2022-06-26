@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Status } from './enums';
 
 export type Children = {
     children: ReactNode
@@ -33,6 +34,40 @@ export type RouteType = {
     children: RouteChildType[]
 }
 
-export type TransactionType = {
-    id?: string
+export type StkCallback = {
+    id: string
+    amount: number
+    result_desc: string
+    checkout_request_id: string
+    created_at: string
+}
+
+export type StkRequest = {
+    id: string
+    checkout_request_id: string
+    amount: number
+    phone: number
+    reference: string
+    status: Status
+    created_at: string
+    response?: StkCallback
+}
+
+export type Payment = {
+    amount: number
+    type: string
+    subtype: string
+    status: Status
+    provider?: StkRequest
+}
+
+export type Transaction = {
+    id?: number
+    status: Status
+    description: string
+    destination: string
+    type: string
+    amount: number
+    created_at: string
+    payment?: Payment
 }

@@ -1,9 +1,14 @@
 import { Card, Table } from 'react-bootstrap';
+import { Payment } from 'utils/types';
+import { currencyFormat, parsePhone } from '../../utils/helpers';
+import moment from 'moment';
 
-const MpesaPayment = () => {
+const MpesaPayment = ({payment}: { payment: Payment }) => {
+    console.log(payment);
+
     return (
         <Card className="mb-3">
-            <Card.Header className="pb-0"><h5 className="fs-0">Payment - MPESA</h5></Card.Header>
+            <Card.Header className="pb-0"><h5 className="fs-0">Payment - {payment.type}</h5></Card.Header>
             <div className="card-body">
                 <Table striped responsive className="border-bottom fs--1">
                     <thead className="bg-200 text-900">
@@ -19,13 +24,16 @@ const MpesaPayment = () => {
 
                     <tr className="border-200">
                         <td className="align-middle">
-                            <h6 className="mb-0 text-nowrap">1-AIRTIME</h6>
-                            <p className="mb-0">254714611696</p>
+                            <h6 className="mb-0 text-nowrap">{payment.provider?.reference}</h6>
+                            <p className="mb-0">{parsePhone(payment.provider?.phone)}</p>
                         </td>
-                        <td className="align-middle text-center">Paid</td>
+                        <td className="align-middle text-center">{payment.provider?.status}</td>
                         <td className="align-middle">The service request is processed successfully.</td>
-                        <td className="align-middle">KES&nbsp;100</td>
-                        <td className="align-middle">Jun 24, 2022, 04:29 PM</td>
+                        <td className="align-middle">{currencyFormat(payment.provider?.amount)}</td>
+                        <td className="text-end">
+                            {moment(payment.provider?.response?.created_at || payment.provider?.created_at).format('MMM D, Y')}<br/>
+                            <small>{moment(payment.provider?.response?.created_at || payment.provider?.created_at).format('hh:mm A')}</small>
+                        </td>
                     </tr>
                     </tbody>
                 </Table>

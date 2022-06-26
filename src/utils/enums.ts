@@ -12,3 +12,8 @@ export enum Status {
     FAILED = 'FAILED',
     REFUNDED = 'REFUNDED',
 }
+
+export enum PaymentType {
+    MPESA = 'MPESA',
+    SIDOOH = 'SIDOOH',
+}

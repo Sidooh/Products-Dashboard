@@ -168,7 +168,7 @@ export const getColor = function getColor(name: string) {
 };
 
 
-export const parsePhone = (phone?: string) => phone && parsePhoneNumber(String(phone), 'KE').number;
+export const parsePhone = (phone?: string|number) => phone && parsePhoneNumber(String(phone), 'KE').number;
 
 export const getTelcoFromPhone = (phone: string) => {
     phone = String(phone);
@@ -198,3 +198,8 @@ export const Arr = {
     removeItems: (arr: any[], itemsToRemove: any[]) => arr.filter(v => !itemsToRemove.includes(v)),
     only       : (arr: any[], keys: any[]) => arr.filter(a => keys.includes(a))
 };
+
+export const currencyFormat = (number?:number, currency = 'KES') => number && (new Intl.NumberFormat('en-GB', {
+    style: 'currency',
+    currency
+})).format(number);

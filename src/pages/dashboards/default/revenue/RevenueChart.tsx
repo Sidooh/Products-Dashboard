@@ -33,46 +33,44 @@ const getOptions = (labels: string[], data: any, isDark: boolean) => ({
             color     : getColor('dark')
         },
         formatter         : (params: any) => {
-            return (
-                `<b>${params[1].axisValue}</b> <br>`+
-                `Today - ${params[1].value} KES<br>`+
-                `Yesterday - ${params[0].value} KES`
-            )
+            let label = `<b>${params[0]?.axisValue}</b> <br>`;
+            if (params[1]) label += `Today - ${params[1]?.value} KES<br>`;
+            label += `Yesterday - ${params[0].value} KES`;
+
+            return label;
         }
     },
-    xAxis  : [
-        {
-            show       : true,
-            type       : 'category',
-            data       : labels,
-            splitLine  : {
-                show     : true,
-                lineStyle: {
-                    color: rgbaColor('#fff', 0.1)
-                },
-            },
-            axisLine   : {
-                lineStyle: {
-                    color: rgbaColor('#fff', 0.1)
-                }
-            },
-            axisTick   : {
-                show     : true,
-                length   : 10,
-                lineStyle: {
-                    color: rgbaColor('#fff', 0.1)
-                }
-            },
-            axisLabel  : {
-                color     : getColor('400'),
-                fontWeight: 600,
-                fontSize  : 10,
-                margin    : 15,
-                interval  : window.innerWidth < 768 ? 'auto' : 0,
-                rotate    : '30',
+    xAxis  : {
+        show     : true,
+        type     : 'category',
+        data     : labels,
+        splitLine: {
+            show     : true,
+            lineStyle: {
+                color: rgbaColor('#fff', 0.1)
             },
         },
-    ],
+        axisLine : {
+            lineStyle: {
+                color: rgbaColor('#fff', 0.1)
+            }
+        },
+        axisTick : {
+            show     : true,
+            length   : 10,
+            lineStyle: {
+                color: rgbaColor('#fff', 0.1)
+            }
+        },
+        axisLabel: {
+            color     : getColor('400'),
+            fontWeight: 600,
+            fontSize  : 10,
+            margin    : 15,
+            interval  : window.innerWidth < 768 ? 'auto' : 0,
+            rotate    : '30',
+        },
+    },
     yAxis  : {
         type       : 'value',
         axisPointer: {

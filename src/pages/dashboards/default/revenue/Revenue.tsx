@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Card, Col, Form, Row } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
-import PaymentChart from './PaymentChart';
+import RevenueChart from './RevenueChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { Status } from '../../../../utils/enums';
 
 type LinePaymentType = {
     data: {
@@ -13,10 +14,8 @@ type LinePaymentType = {
     }
 };
 
-export type PaymentStatus = 'all' | 'successful' | 'failed'
-
 const LinePayment = ({data}: LinePaymentType) => {
-    const [paymentStatus, setPaymentStatus] = useState<string | PaymentStatus>('successful');
+    const [paymentStatus, setPaymentStatus] = useState<string | Status>(Status.COMPLETED);
 
     return (
         <Card className="rounded-3 overflow-hidden h-100 shadow-none">
@@ -40,7 +39,7 @@ const LinePayment = ({data}: LinePaymentType) => {
                         </Form.Select>
                     </Col>
                 </Row>
-                <PaymentChart data={data} paymentStatus={paymentStatus as PaymentStatus} style={{height: '200px'}}/>
+                <RevenueChart data={data} paymentStatus={paymentStatus} style={{height: '200px'}}/>
             </Card.Body>
         </Card>
     );

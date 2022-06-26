@@ -51,7 +51,7 @@ const StatusChip = ({status, bg = true, entity, entityId}: StatusChipType) => {
         <>
             <Chip sx={{px: .5}} onClick={e => setAnchorEl(e.currentTarget)}
                   variant={bg ? 'filled' : 'outlined'}
-                  color={color} className={`fw-bold fs-9`}
+                  color={color} className={`fw-bold fs-7`}
                   label={<span>{status}</span>}
                   icon={icon}
             />

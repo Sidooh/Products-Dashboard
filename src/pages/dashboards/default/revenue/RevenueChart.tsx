@@ -2,10 +2,10 @@ import * as echarts from 'echarts/core';
 import { LineChart } from 'echarts/charts';
 import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components';
 import { getColor, rgbaColor } from 'utils/helpers';
-import { PaymentStatus } from './Payment';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import ECharts from 'components/common/echarts';
+import { Status } from 'utils/enums';
 
 type ChartData = {
     all: number[],
@@ -14,13 +14,13 @@ type ChartData = {
 }
 type PaymentChartType = {
     data: ChartData
-    paymentStatus: PaymentStatus
+    paymentStatus: string | Status
     style: object
 }
 
 echarts.use([LineChart, TooltipComponent, GridComponent, LegendComponent]);
 
-const getOptions = (data: ChartData, paymentStatus: PaymentStatus, isDark: boolean) => ({
+const getOptions = (data: ChartData, isDark: boolean) => ({
     tooltip: {
         trigger           : 'axis',
         axisPointer       : {
@@ -39,7 +39,7 @@ const getOptions = (data: ChartData, paymentStatus: PaymentStatus, isDark: boole
         formatter         : (params: any) => `${params[0].axisValue} - ${params[0].value} USD`
     },
     xAxis  : {
-        show: true,
+        show       : true,
         type       : 'category',
         data       : [
             '9:00 AM',
@@ -102,7 +102,7 @@ const getOptions = (data: ChartData, paymentStatus: PaymentStatus, isDark: boole
         {
             type     : 'line',
             smooth   : true,
-            data     : data[paymentStatus].map(item => (item * 3.14).toFixed(2)),
+            data     : data['all'].map(item => (item * 3.14).toFixed(2)),
             symbol   : 'emptyCircle',
             itemStyle: {
                 color: isDark ? getColor('primary') : getColor('white')
@@ -145,16 +145,18 @@ const getOptions = (data: ChartData, paymentStatus: PaymentStatus, isDark: boole
     grid   : {right: 15, left: 15, bottom: '15%', top: 0}
 });
 
-const PaymentChart = ({data, paymentStatus, style}: PaymentChartType ) => {
+const RevenueChart = ({data, paymentStatus, style}: PaymentChartType) => {
     const {isDark} = useAppSelector((state: RootState) => state.theme);
+
+    console.log(paymentStatus);
 
     return (
         <ECharts
             echarts={echarts}
-            options={getOptions(data, paymentStatus, isDark)}
+            options={getOptions(data/*, paymentStatus*/, isDark)}
             style={style}
         />
     );
 };
 
-export default PaymentChart;
+export default RevenueChart;

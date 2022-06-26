@@ -8,6 +8,14 @@ export const theme = createTheme({
         MuiChip: {
             defaultProps: {
                 size: 'small'
+            },
+            styleOverrides:{
+                sizeSmall: {
+                    height:'20px'
+                },
+                iconSmall:{
+                    fontSize:'10px'
+                }
             }
         },
         MuiTextField    : {

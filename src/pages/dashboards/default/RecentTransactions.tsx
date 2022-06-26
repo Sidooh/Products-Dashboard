@@ -1,40 +1,29 @@
 import { Card } from 'react-bootstrap';
 import DataTable from '../../../components/common/datatable';
-import { useNavigate } from 'react-router-dom';
-import { Tooltip } from '@mui/material';
-import PhoneChip from '../../../components/chips/PhoneChip';
 import StatusChip from '../../../components/chips/StatusChip';
 import TableDate from '../../../components/common/TableDate';
 import TableActions from '../../../components/common/TableActions';
+import { Transaction } from '../../../utils/types';
 
-const PendingTransactions = () => {
-    const navigate = useNavigate();
-
+const PendingTransactions = ({transactions}: { transactions: Transaction[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable bulkActions onCreateRow={() => navigate('/notifications/create')}
-                           title={'Recent Transactions'} columns={[
+                <DataTable bulkActions title={'Recent Transactions'} columns={[
                     {
                         accessor: 'customer',
                         Header  : 'Customer',
                         Cell    : ({row}: any) => (
-                            <Tooltip title={row.original.user.email}>
-                                <span>
-                                            {row.original.user.last_name} <br/>
-                                            <small>{row.original.user.user_roles_str}</small>
-                                        </span>
-                            </Tooltip>
+                            <span>
+                                {row.original.account.phone} <br/>
+                                <small><b>Destination: {row.original.destination}</b></small>
+                            </span>
                         )
-                    },
-                    {
-                        accessor: 'phone',
-                        Header  : 'Phone',
-                        Cell    : ({row}: any) => <PhoneChip phone={row.original.phone}/>
                     },
                     {
                         accessor: 'product',
                         Header  : 'Product',
+                        Cell: ({row}:any) => row.original.product.name
                     },
                     {
                         accessor: 'amount',
@@ -47,6 +36,8 @@ const PendingTransactions = () => {
                     {
                         accessor: 'payment',
                         Header  : 'Payment',
+                        Cell    : ({row}: any) => <StatusChip status={row.original.payment.status} entity={'payment'}
+                                                              entityId={row.original.id}/>
                     },
                     {
                         accessor: 'status',
@@ -55,18 +46,18 @@ const PendingTransactions = () => {
                                                               entityId={row.original.id}/>
                     },
                     {
-                        accessor: 'created_at',
-                        Header: 'Date',
+                        accessor : 'created_at',
+                        Header   : 'Date',
                         className: 'text-end',
-                        Cell: ({ row }:any) => <TableDate date={row.original.created_at}/>
+                        Cell     : ({row}: any) => <TableDate date={row.original.created_at}/>
                     },
                     {
-                        accessor: 'actions',
+                        accessor     : 'actions',
                         disableSortBy: true,
-                        className: 'text-end',
-                        Cell: ({ row }:any) => <TableActions entityId={row.original.id} entity={'user'}/>
+                        className    : 'text-end',
+                        Cell         : ({row}: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
                     }
-                ]} data={[]}/>
+                ]} data={transactions}/>
             </Card.Body>
         </Card>
     );

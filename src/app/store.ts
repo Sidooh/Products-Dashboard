@@ -2,16 +2,18 @@ import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import authReducer from 'features/auth/authSlice';
 import themeReducer from '../features/theme/themeSlice';
 import { transactionsApi } from '../features/transactions/transactionsAPI';
+import { productsAPI } from '../features/products/productsAPI';
 
 export const store = configureStore({
     reducer: {
         auth : authReducer,
         theme: themeReducer,
 
-        [transactionsApi.reducerPath]: transactionsApi.reducer
+        [transactionsApi.reducerPath]: transactionsApi.reducer,
+        [productsAPI.reducerPath]: productsAPI.reducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-        .concat(transactionsApi.middleware)
+        .concat(transactionsApi.middleware, productsAPI.middleware)
 });
 
 export type AppDispatch = typeof store.dispatch;

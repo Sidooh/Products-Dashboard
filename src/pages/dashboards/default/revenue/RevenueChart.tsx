@@ -72,21 +72,6 @@ const getOptions = (labels: string[], data: any, isDark: boolean) => ({
                 rotate    : '30',
             },
         },
-        {
-            type       : 'category',
-            data       : labels,
-            axisLine   : {
-                lineStyle: {
-                    color: rgbaColor('#900', 0.1)
-                }
-            },
-            axisTick   : {
-                length   : 10,
-                lineStyle: {
-                    color: rgbaColor('#fff', 0.1)
-                }
-            },
-        }
     ],
     yAxis  : {
         type       : 'value',

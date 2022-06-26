@@ -18,7 +18,7 @@ const Dashboard = () => {
     return (
         <>
             <Row className="g-3 mb-3">
-                <Col xxl={9}><Revenue/></Col>
+                <Col xxl={9}><Revenue total_today={data.total_today} total_yesterday={data.total_yesterday}/></Col>
                 <Col>
                     <Row className="g-3">
                         <Col md={6} xxl={12}>

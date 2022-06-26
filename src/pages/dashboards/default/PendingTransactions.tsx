@@ -3,9 +3,11 @@ import { Card } from 'react-bootstrap';
 import StatusChip from 'components/chips/StatusChip';
 import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
-import { Transaction } from '../../../utils/types';
+import { Transaction } from 'utils/types';
 
 const PendingTransactions = ({transactions}: { transactions: Transaction[] }) => {
+    console.log('Pending Transactions', transactions);
+
     return (
         <Card className={'mb-3'}>
             <Card.Body>

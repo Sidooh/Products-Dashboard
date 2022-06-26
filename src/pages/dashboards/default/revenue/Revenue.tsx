@@ -8,14 +8,9 @@ import { Status } from 'utils/enums';
 import { useGetRevenueDataQuery } from 'features/products/productsAPI';
 import { SectionError } from 'components/common/Error';
 import { SectionLoader } from 'components/common/Loader';
+import CountUp from 'react-countup';
 
-/*const payment = {
-    all       : [4, 1, 6, 2, 7, 12, 4, 6, 5, 4, 5, 10],
-    successful: [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8],
-    failed    : [1, 0, 2, 1, 2, 1, 1, 0, 0, 1, 0, 2]
-};*/
-
-const LinePayment = () => {
+const Revenue = ({total_today, total_yesterday}: { total_today: number, total_yesterday: number }) => {
     const {data, isError, error, isLoading, isSuccess} = useGetRevenueDataQuery();
     console.log(data);
 
@@ -29,9 +24,14 @@ const LinePayment = () => {
             <Card.Body className="bg-line-chart-gradient" as={Flex} justifyContent="between" direction="column">
                 <Row className="align-items-center g-0">
                     <Col className="light">
-                        <h4 className="text-white mb-0">Today $764.39</h4>
+                        <h4 className="text-white mb-0">
+                            Today <CountUp end={total_today} prefix={'KES '} decimals={2}/>
+                        </h4>
                         <p className="fs--1 fw-semi-bold text-white">
-                            Yesterday <span className="opacity-50">$684.87</span>
+                            Yesterday {' '}
+                            <span className="opacity-50">
+                                <CountUp end={total_yesterday} prefix={'KES '} decimals={2}/>
+                            </span>
                         </p>
                     </Col>
                     <Col xs="auto" className="d-none d-sm-flex align-items-center">
@@ -46,10 +46,11 @@ const LinePayment = () => {
                         </Form.Select>
                     </Col>
                 </Row>
-                <RevenueChart data={data} labels={data.yesterday.labels} paymentStatus={paymentStatus} style={{height: '200px'}}/>
+                <RevenueChart data={data} labels={data.yesterday.labels} paymentStatus={paymentStatus}
+                              style={{height: '200px'}}/>
             </Card.Body>
         </Card>
     );
 };
 
-export default LinePayment;
+export default Revenue;

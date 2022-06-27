@@ -10,13 +10,13 @@ import { Status } from 'utils/enums';
 type PaymentChartType = {
     data: any
     labels: string[]
-    paymentStatus: string | Status
+    status: string | Status
     style: object
 }
 
 echarts.use([LineChart, TooltipComponent, GridComponent, LegendComponent]);
 
-const getOptions = (labels: string[], data: any, isDark: boolean) => ({
+const getOptions = (labels: string[], data: any, status: string | Status, isDark: boolean) => ({
     tooltip: {
         trigger           : 'axis',
         axisPointer       : {
@@ -89,7 +89,7 @@ const getOptions = (labels: string[], data: any, isDark: boolean) => ({
         {
             type     : 'line',
             smooth   : true,
-            data     : data.yesterday.datasets,
+            data     : data.yesterday[status]?.datasets ?? Array(data.yesterday["ALL"].datasets.length).fill(0),
             symbol   : 'emptyCircle',
             itemStyle: {
                 color: isDark ? getColor('primary') : getColor('red')
@@ -103,7 +103,7 @@ const getOptions = (labels: string[], data: any, isDark: boolean) => ({
         {
             type     : 'line',
             smooth   : true,
-            data     : data.today.datasets,
+            data     : data.today[status]?.datasets ?? Array(data.yesterday["ALL"].datasets.length).fill(0),
             symbol   : 'emptyCircle',
             itemStyle: {
                 color: isDark ? getColor('primary') : getColor('white')
@@ -146,10 +146,10 @@ const getOptions = (labels: string[], data: any, isDark: boolean) => ({
     grid   : {left: 35, right: 2, bottom: '25%', top: 0}
 });
 
-const RevenueChart = ({data, labels, style}: PaymentChartType) => {
+const RevenueChart = ({data, labels, style, status}: PaymentChartType) => {
     const {isDark} = useAppSelector((state: RootState) => state.theme);
 
-    return <ECharts echarts={echarts} options={getOptions(labels, data, isDark)} style={style}/>;
+    return <ECharts echarts={echarts} options={getOptions(labels, data, status, isDark)} style={style}/>;
 };
 
 export default RevenueChart;

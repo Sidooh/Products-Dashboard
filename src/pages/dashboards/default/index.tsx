@@ -9,7 +9,7 @@ import { SectionError } from 'components/common/Error';
 import { SectionLoader } from 'components/common/Loader';
 
 const Dashboard = () => {
-    console.log(process.env);
+    // console.log(process.env);
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardQuery();
     console.log(data);
 

@@ -7,10 +7,10 @@ export enum Telco {
 }
 
 export enum Status {
-    PENDING = 'PENDING',
     COMPLETED = 'COMPLETED',
-    FAILED = 'FAILED',
+    PENDING = 'PENDING',
     REFUNDED = 'REFUNDED',
+    FAILED = 'FAILED',
 }
 
 export enum PaymentType {

@@ -40,13 +40,16 @@ const Revenue = ({total_today, total_yesterday}: { total_today: number, total_ye
                             <FontAwesomeIcon icon={faSync}/>
                         </button>
                         <Form.Select size="sm" value={paymentStatus} onChange={e => setPaymentStatus(e.target.value)}>
-                            <option value="all">All Payments</option>
-                            <option value="successful">Successful Payments</option>
-                            <option value="failed">Failed Payments</option>
+                            <option value="ALL">All Payments</option>
+                            {
+                                Object.values(Status).map((status, i) => (
+                                    <option key={`status-${i}`} value={status}>{status} Payments</option>
+                                ))
+                            }
                         </Form.Select>
                     </Col>
                 </Row>
-                <RevenueChart data={data} labels={data.yesterday.labels} paymentStatus={paymentStatus}
+                <RevenueChart data={data} labels={data.yesterday["ALL"].labels} status={paymentStatus}
                               style={{height: '200px'}}/>
             </Card.Body>
         </Card>

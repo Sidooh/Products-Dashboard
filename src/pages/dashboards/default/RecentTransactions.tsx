@@ -36,7 +36,7 @@ const PendingTransactions = ({transactions}: { transactions: Transaction[] }) =>
                     {
                         accessor: 'payment',
                         Header  : 'Payment',
-                        Cell    : ({row}: any) => <StatusChip status={row.original.payment.status} entity={'payment'}
+                        Cell    : ({row}: any) => <StatusChip status={row.original.payment?.status} entity={'payment'}
                                                               entityId={row.original.id}/>
                     },
                     {

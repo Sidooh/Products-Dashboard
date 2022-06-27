@@ -10,7 +10,7 @@ import { SectionError } from '../../components/common/Error';
 import { SectionLoader } from '../../components/common/Loader';
 import moment from 'moment';
 import { currencyFormat } from '../../utils/helpers';
-import { PaymentType, Status } from '../../utils/enums';
+import { PaymentType } from '../../utils/enums';
 
 const ShowTransaction = () => {
     const {id} = useParams();
@@ -67,7 +67,7 @@ const ShowTransaction = () => {
                                         <strong>Amount: </strong>{currencyFormat(transaction.payment?.amount)}</p>
                                     <div className="fs--1">
                                         <strong className="me-2">Status: </strong>
-                                        <StatusChip status={transaction.payment?.status as Status}
+                                        <StatusChip status={transaction.payment?.status}
                                                     entity={'transaction'} entityId={Number(id)}/>
                                     </div>
                                 </div>

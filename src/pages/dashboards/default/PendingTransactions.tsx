@@ -6,8 +6,6 @@ import TableActions from 'components/common/TableActions';
 import { Transaction } from 'utils/types';
 
 const PendingTransactions = ({transactions}: { transactions: Transaction[] }) => {
-    console.log('Pending Transactions', transactions);
-
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -25,7 +23,7 @@ const PendingTransactions = ({transactions}: { transactions: Transaction[] }) =>
                     {
                         accessor: 'product',
                         Header  : 'Product',
-                        Cell: ({row}:any) => row.original.product.name
+                        Cell    : ({row}: any) => row.original.product.name
                     },
                     {
                         accessor: 'amount',
@@ -38,8 +36,8 @@ const PendingTransactions = ({transactions}: { transactions: Transaction[] }) =>
                     {
                         accessor: 'payment',
                         Header  : 'Payment',
-                        Cell    : ({row}: any) => <StatusChip status={row.original.payment.status} entity={'payment'}
-                                                              entityId={row.original.id}/>
+                        Cell    : ({row}: any) => <StatusChip status={row.original.payment?.status}
+                                                              entity={'payment'} entityId={row.original.id}/>
                     },
                     {
                         accessor: 'status',

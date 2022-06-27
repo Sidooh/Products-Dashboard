@@ -88,6 +88,7 @@ const getOptions = (labels: string[], data: any, isDark: boolean) => ({
     series : [
         {
             type     : 'line',
+            smooth   : true,
             data     : data.yesterday.datasets,
             symbol   : 'emptyCircle',
             itemStyle: {

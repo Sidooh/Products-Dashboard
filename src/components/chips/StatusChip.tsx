@@ -23,13 +23,15 @@ const statusProps = (status: Status, colorIcon = true) => {
 };
 
 type StatusChipType = {
-    status: Status
+    status?: Status
     bg?: boolean
     entity: string,
     entityId: number
 }
 
 const StatusChip = ({status, bg = true, entity, entityId}: StatusChipType) => {
+    if(!status) status = Status.FAILED
+
     const {color, icon} = statusProps(status, false);
 
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | undefined>(undefined);

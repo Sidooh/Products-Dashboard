@@ -21,7 +21,7 @@ export const ProductionConfig = {
             },
             "products": {
                 "api": {
-                    "url": "https://sidooh-admin-dashboard-okctxaztla-uc.a.run.app/admin"
+                    "url": "https://products-7yvno4vidq-uc.a.run.app/api/v1"
                 }
             }
         }

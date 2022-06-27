@@ -18,6 +18,8 @@ function BulkAction({ title, onCreateRow, selectedFlatRows, selectedRowIds = [],
     const tableTitle = pluralize(title, selectedRowsCount);
 
     const executeBulkAction = () => {
+        console.log(action);
+
         const ids = selectedFlatRows.map(row => row.original.id);
         console.log(ids);
     };

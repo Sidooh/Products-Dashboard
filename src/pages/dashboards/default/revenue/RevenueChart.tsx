@@ -143,7 +143,7 @@ const getOptions = (labels: string[], data: any, isDark: boolean) => ({
             }
         }
     ],
-    grid   : {left: 20, right: 5, bottom: '25%', top: 10}
+    grid   : {left: 35, right: 2, bottom: '25%', top: 0}
 });
 
 const RevenueChart = ({data, labels, style}: PaymentChartType) => {

@@ -5,10 +5,11 @@ import PendingTransactions from './PendingTransactions';
 import Revenue from './revenue/Revenue';
 import RecentTransactions from './RecentTransactions';
 import { useGetDashboardQuery } from 'features/products/productsAPI';
-import { SectionError } from '../../../components/common/Error';
-import { SectionLoader } from '../../../components/common/Loader';
+import { SectionError } from 'components/common/Error';
+import { SectionLoader } from 'components/common/Loader';
 
 const Dashboard = () => {
+    console.log(process.env.REACT_APP_ACCOUNTS_URL);
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardQuery();
     console.log(data);
 

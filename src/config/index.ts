@@ -7,11 +7,19 @@ export const CONFIG = {
             accounts: {
                 api: {
                     url: import.meta.env.VITE_ACCOUNTS_API_URL
+                },
+                dashboard: {
+                    url: import.meta.env.VITE_ACCOUNTS_DASH_URL
                 }
             },
             products: {
                 api: {
                     url: import.meta.env.VITE_PRODUCTS_API_URL
+                }
+            },
+            payments: {
+                dashboard: {
+                    url: import.meta.env.VITE_PAYMENTS_DASH_URL
                 }
             },
             notify  : {
@@ -23,9 +31,7 @@ export const CONFIG = {
                 }
             },
             legacy  : {
-                dashboard: {
-                    url: import.meta.env.VITE_LEGACY_URL
-                }
+                url: import.meta.env.VITE_LEGACY_URL
             },
         },
 

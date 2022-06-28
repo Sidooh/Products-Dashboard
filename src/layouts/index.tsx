@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { lazy, memo, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Middleware } from '../middleware';
 import MainLayout from './MainLayout';
@@ -6,12 +6,12 @@ import GuestLayout from './GuestLayout';
 import { is } from 'utils/helpers';
 import SettingsToggle from 'components/settings-panel/SettingsToggle';
 import SettingsPanel from 'components/settings-panel/SettingsPanel';
-import Login from 'pages/auth/Login';
-import Dashboard from 'pages/dashboards/default';
-import Analytics from 'pages/dashboards/analytics';
-import Transactions from 'pages/transactions';
-import ShowTransaction from '../pages/transactions/ShowTransaction';
 
+const Login = lazy(() => import('pages/auth/Login'));
+const Dashboard = lazy(() => import('pages/dashboards/default'));
+const Analytics = lazy(() => import('pages/dashboards/analytics'));
+const Transactions = lazy(() => import('pages/transactions'));
+const ShowTransaction = lazy(() => import('pages/transactions/ShowTransaction'));
 
 const Layout = () => {
     const HTMLClassList = document.getElementsByTagName('html')[0].classList;

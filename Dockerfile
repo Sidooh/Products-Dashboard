@@ -4,7 +4,6 @@ FROM node:lts-alpine as build-stage
 WORKDIR /app
 
 COPY ["package.json", "yarn.lock", "./"]
-COPY [".yarnrc.yml", "."]
 
 RUN ["yarn", "install"]
 

@@ -1,7 +1,8 @@
-import { CSSProperties, memo } from 'react';
+import { CSSProperties, lazy, memo } from 'react';
 import _ from 'lodash';
 import { getColor } from 'utils/helpers';
-import BaseECharts from './BaseECharts';
+
+const BaseECharts = lazy(() => import('./BaseECharts'))
 
 const getOption = () => ({
     color: getColor('primary'),

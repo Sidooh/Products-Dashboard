@@ -3,14 +3,16 @@ import { Card, Col, Row } from 'react-bootstrap';
 import StatusChip from 'components/chips/StatusChip';
 import CardBgCorner from 'components/CardBgCorner';
 import { IMAGES } from '../../constants/images';
-import MpesaPayment from './MpesaPayment';
-import TandaTransaction from './TandaTransaction';
 import { useTransactionQuery } from '../../features/transactions/transactionsAPI';
 import { SectionError } from '../../components/common/Error';
 import { SectionLoader } from '../../components/common/Loader';
 import moment from 'moment';
 import { currencyFormat } from '../../utils/helpers';
 import { PaymentType } from '../../utils/enums';
+import { lazy } from 'react';
+
+const MpesaPayment = lazy(() => import('./MpesaPayment'))
+const TandaTransaction = lazy(() => import('./TandaTransaction'))
 
 const ShowTransaction = () => {
     const {id} = useParams();

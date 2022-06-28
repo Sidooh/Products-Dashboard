@@ -46,10 +46,10 @@ const PendingTransactions = ({transactions}: { transactions: Transaction[] }) =>
                                                               entityId={row.original.id}/>
                     },
                     {
-                        accessor : 'created_at',
+                        accessor : 'updated_at',
                         Header   : 'Date',
                         className: 'text-end',
-                        Cell     : ({row}: any) => <TableDate date={row.original.created_at}/>
+                        Cell     : ({row}: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
                         accessor     : 'actions',

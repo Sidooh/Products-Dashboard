@@ -4,11 +4,11 @@ import { SectionError } from 'components/common/Error';
 import { SectionLoader } from 'components/common/Loader';
 import { lazy } from 'react';
 
-const TotalRevenue = lazy(() => import('./TotalRevenue'))
-const TransactionsCount = lazy(() => import('./TransactionsCount'))
-const PendingTransactions = lazy(() => import('./PendingTransactions'))
-const Revenue = lazy(() => import('./revenue/Revenue'))
-const RecentTransactions = lazy(() => import('./RecentTransactions'))
+const TotalRevenue = lazy(() => import('./TotalRevenue'));
+const TransactionsCount = lazy(() => import('./TransactionsCount'));
+const PendingTransactions = lazy(() => import('./PendingTransactions'));
+const Revenue = lazy(() => import('./revenue/Revenue'));
+const RecentTransactions = lazy(() => import('./RecentTransactions'));
 
 const Dashboard = () => {
     // console.log(process.env);

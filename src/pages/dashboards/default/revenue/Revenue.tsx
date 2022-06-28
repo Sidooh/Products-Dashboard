@@ -1,6 +1,7 @@
-import { lazy, useState } from 'react';
+import { useState } from 'react';
 import { Card, Col, Form, Row } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
+import RevenueChart from './RevenueChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { Status } from 'utils/enums';
@@ -8,8 +9,6 @@ import { useGetRevenueDataQuery } from 'features/products/productsAPI';
 import { SectionError } from 'components/common/Error';
 import { ComponentLoader } from 'components/common/Loader';
 import CountUp from 'react-countup';
-
-const RevenueChart = lazy(() => import('./RevenueChart'))
 
 const Revenue = ({total_today, total_yesterday}: { total_today: number, total_yesterday: number }) => {
     const {data, isError, error, isLoading, isSuccess} = useGetRevenueDataQuery();

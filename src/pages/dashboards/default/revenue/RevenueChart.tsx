@@ -4,10 +4,8 @@ import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/compon
 import { getColor, rgbaColor } from 'utils/helpers';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
+import ECharts from 'components/common/echarts';
 import { Status } from 'utils/enums';
-import { lazy } from 'react';
-
-const ECharts = lazy(() => import('components/common/echarts'))
 
 type PaymentChartType = {
     data: any

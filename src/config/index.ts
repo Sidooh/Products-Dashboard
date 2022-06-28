@@ -6,25 +6,25 @@ export const CONFIG = {
         services: {
             accounts: {
                 api: {
-                    url: process.env.REACT_APP_ACCOUNTS_API_URL
+                    url: import.meta.env.VITE_ACCOUNTS_API_URL
                 }
             },
             products: {
                 api: {
-                    url: process.env.REACT_APP_PRODUCTS_API_URL
+                    url: import.meta.env.VITE_PRODUCTS_API_URL
                 }
             },
             notify  : {
                 api      : {
-                    url: process.env.REACT_APP_NOTIFY_API_URL
+                    url: import.meta.env.VITE_NOTIFY_API_URL
                 },
                 dashboard: {
-                    url: process.env.REACT_APP_NOTIFY_DASH_URL
+                    url: import.meta.env.VITE_NOTIFY_DASH_URL
                 }
             },
             legacy  : {
                 dashboard: {
-                    url: process.env.REACT_APP_LEGACY_URL
+                    url: import.meta.env.VITE_LEGACY_URL
                 }
             },
         },

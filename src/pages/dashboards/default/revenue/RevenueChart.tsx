@@ -103,7 +103,7 @@ const getOptions = (labels: string[], data: any, status: string | Status, isDark
         {
             type     : 'line',
             smooth   : true,
-            data     : data.today[status]?.datasets ?? Array(data.yesterday["ALL"].datasets.length).fill(0),
+            data     : data.today[status]?.datasets ?? Array(data.today["ALL"].datasets.length).fill(0),
             symbol   : 'emptyCircle',
             itemStyle: {
                 color: isDark ? getColor('primary') : getColor('white')

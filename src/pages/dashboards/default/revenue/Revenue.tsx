@@ -16,6 +16,7 @@ const Revenue = ({total_today, total_yesterday}: { total_today: number, total_ye
 
     const [paymentStatus, setPaymentStatus] = useState<string | Status>(Status.COMPLETED);
 
+    return <SectionLoader/>;
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <SectionLoader/>;
 

@@ -6,6 +6,7 @@ import DataTable from 'components/common/datatable';
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
 import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
+import { currencyFormat } from '../../utils/helpers';
 
 const Transactions = () => {
     let {data: transactions, isLoading, isSuccess, isError, error} = useTransactionsQuery();
@@ -36,10 +37,7 @@ const Transactions = () => {
                     {
                         accessorKey: 'amount',
                         header: 'Amount',
-                        cell: ({row}: any) => (new Intl.NumberFormat('en-GB', {
-                            style: 'currency',
-                            currency: 'KES'
-                        })).format(row.original.amount)
+                        cell: ({row}: any) => currencyFormat(row.original.amount)
                     },
                     {
                         accessorKey: 'payment',

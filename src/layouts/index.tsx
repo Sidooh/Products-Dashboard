@@ -12,6 +12,8 @@ const Dashboard = lazy(() => import('pages/dashboards/default'));
 const Analytics = lazy(() => import('pages/dashboards/analytics'));
 const Transactions = lazy(() => import('pages/transactions'));
 const ShowTransaction = lazy(() => import('pages/transactions/ShowTransaction'));
+const EarningAccounts = lazy(() => import('pages/earnings/EarningAccounts'));
+const Cashbacks = lazy(() => import('pages/earnings/Cashbacks'));
 
 const Layout = () => {
     const HTMLClassList = document.getElementsByTagName('html')[0].classList;
@@ -33,8 +35,13 @@ const Layout = () => {
                     <Route index element={<Dashboard/>}/>
                     <Route path={'/dashboard'} element={<Dashboard/>}/>
                     <Route path={'/dashboard/analytics'} element={<Analytics/>}/>
+
                     <Route path={'/transactions'} element={<Transactions/>}/>
                     <Route path={'/transactions/:id'} element={<ShowTransaction/>}/>
+
+                    <Route path={'/earnings/accounts'} element={<EarningAccounts/>}/>
+                    <Route path={'/earnings/cashbacks'} element={<Cashbacks/>}/>
+
                     <Route path={'*'} element={<Dashboard/>}/>
                 </Route>
             </Routes>

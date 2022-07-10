@@ -47,13 +47,13 @@ const routes:RouteType[] = [
             {
                 name: 'Accounts',
                 icon: faChalkboardUser,
-                to: '/settings',
+                to: '/earnings/accounts',
                 active: true
             },
             {
                 name: 'Cashbacks',
                 icon: faCoins,
-                to: '/settings',
+                to: '/earnings/cashbacks',
                 active: true
             },
         ]
@@ -64,13 +64,13 @@ const routes:RouteType[] = [
             {
                 name: 'Sub Types',
                 icon: faSuperscript,
-                to: '/settings',
+                to: '/subscriptions/types',
                 active: true
             },
             {
                 name: 'Subscriptions',
                 icon: faSubscript,
-                to: '/settings',
+                to: '/subscriptions',
                 active: true
             },
         ]
@@ -79,15 +79,15 @@ const routes:RouteType[] = [
         label: 'Accounts',
         children: [
             {
-                name: 'Utility Accounts',
-                icon: faBolt,
-                to: '/settings',
+                name: 'Airtime Accounts',
+                icon: faSimCard,
+                to: '/accounts/airtime',
                 active: true
             },
             {
-                name: 'Airtime Accounts',
-                icon: faSimCard,
-                to: '/settings',
+                name: 'Utility Accounts',
+                icon: faBolt,
+                to: '/accounts/utility',
                 active: true
             },
         ]

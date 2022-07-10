@@ -83,3 +83,17 @@ export type Transaction = {
     payment?: Payment
     request?: TandaRequest
 }
+
+export type EarningAccount = {
+    id?: number
+    type: string
+    self_amount: number
+    invite_amount: number
+}
+
+export type Cashback = {
+    id?: number
+    amount: number
+    type: string
+    transaction?: Transaction
+}

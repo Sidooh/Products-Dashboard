@@ -18,11 +18,11 @@ const Transactions = () => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable bulkActions title={'Transactions'} columns={[
+                <DataTable title={'Transactions'} columns={[
                     {
-                        accessor: 'customer',
-                        Header  : 'Customer',
-                        Cell    : ({row}: any) => (
+                        accessorKey: 'customer',
+                        header: 'Customer',
+                        cell: ({row}: any) => (
                             <span>
                                 {row.original.account.phone} <br/>
                                 <small><b>Destination: {row.original.destination}</b></small>
@@ -30,40 +30,37 @@ const Transactions = () => {
                         )
                     },
                     {
-                        accessor: 'product',
-                        Header  : 'Product',
+                        accessorKey: 'product',
+                        header: 'Product',
                     },
                     {
-                        accessor: 'amount',
-                        Header  : 'Amount',
-                        Cell    : ({row}: any) => (new Intl.NumberFormat('en-GB', {
-                            style   : 'currency',
+                        accessorKey: 'amount',
+                        header: 'Amount',
+                        cell: ({row}: any) => (new Intl.NumberFormat('en-GB', {
+                            style: 'currency',
                             currency: 'KES'
                         })).format(row.original.amount)
                     },
                     {
-                        accessor: 'payment',
-                        Header  : 'Payment',
-                        Cell    : ({row}: any) => <StatusChip status={row.original.payment?.status} entity={'payment'}
-                                                              entityId={row.original.id}/>
+                        accessorKey: 'payment',
+                        header: 'Payment',
+                        cell: ({row}: any) => <StatusChip status={row.original.payment?.status} entity={'payment'}
+                                                          entityId={row.original.id}/>
                     },
                     {
-                        accessor: 'status',
-                        Header  : 'Status',
-                        Cell    : ({row}: any) => <StatusChip status={row.original.status} entity={'transaction'}
-                                                              entityId={row.original.id}/>
+                        accessorKey: 'status',
+                        header: 'Status',
+                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'transaction'}
+                                                          entityId={row.original.id}/>
                     },
                     {
-                        accessor : 'created_at',
-                        Header   : 'Date',
-                        className: 'text-end',
-                        Cell     : ({row}: any) => <TableDate date={row.original.created_at}/>
+                        accessorKey: 'created_at',
+                        header: 'Date',
+                        cell: ({row}: any) => <TableDate date={row.original.created_at}/>
                     },
                     {
-                        accessor     : 'actions',
-                        disableSortBy: true,
-                        className    : 'text-end',
-                        Cell         : ({row}: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
+                        id: 'actions',
+                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
                     }
                 ]} data={transactions}/>
             </Card.Body>

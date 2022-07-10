@@ -7,15 +7,13 @@ import NavbarVerticalMenu from './NavbarVerticalMenu';
 import ToggleButton from './ToggleButton';
 import routes from 'routes';
 import { capitalize } from 'utils/helpers';
-import NavbarTopDropDownMenus from 'components/navbar/top/NavbarTopDropDownMenus';
 import { IMAGES } from 'constants/images';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
-import { navbarBreakPoint, topNavbarBreakpoint } from 'constants/breakpoints';
+import { navbarBreakPoint } from 'constants/breakpoints';
 
 const NavbarVertical = () => {
     const {
-        navbarPosition,
         navbarStyle,
         isNavbarVerticalCollapsed,
         showBurgerMenu
@@ -64,21 +62,20 @@ const NavbarVertical = () => {
 
     return (
         <Navbar expand={navbarBreakPoint}
-            className={classNames('navbar-vertical', {
-                [`navbar-${navbarStyle}`]: navbarStyle !== 'transparent'
-            })} variant="light">
+                className={classNames('navbar-vertical', {
+                    [`navbar-${navbarStyle}`]: navbarStyle !== 'transparent'
+                })} variant="light">
             <Flex alignItems="center">
                 <ToggleButton/>
                 <Logo at="navbar-vertical" width={70}/>
             </Flex>
             <Navbar.Collapse in={showBurgerMenu} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
-                style={{
-                    backgroundImage:
-                        navbarStyle === 'vibrant'
-                            ? `linear-gradient(-45deg, rgba(0, 160, 255, 0.86), #0048a2),url(${IMAGES.generic.bg_navbar})`
-                            : 'none'
-                }}
-            >
+                             style={{
+                                 backgroundImage:
+                                     navbarStyle === 'vibrant'
+                                         ? `linear-gradient(-45deg, rgba(0, 160, 255, 0.86), #0048a2),url(${IMAGES.generic.bg_navbar})`
+                                         : 'none'
+                             }}>
                 <div className="navbar-vertical-content scrollbar">
                     <Nav className="flex-column" as="ul">
                         {routes.map(route => (
@@ -90,19 +87,6 @@ const NavbarVertical = () => {
                             </Fragment>
                         ))}
                     </Nav>
-
-                    <>
-                        {navbarPosition === 'combo' && (
-                            <div className={`d-${topNavbarBreakpoint}-none`}>
-                                <div className="navbar-vertical-divider">
-                                    <hr className="navbar-vertical-hr my-2"/>
-                                </div>
-                                <Nav navbar>
-                                    <NavbarTopDropDownMenus/>
-                                </Nav>
-                            </div>
-                        )}
-                    </>
                 </div>
             </Navbar.Collapse>
         </Navbar>

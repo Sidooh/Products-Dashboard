@@ -45,7 +45,7 @@ const Layout = () => {
                     <Route path={'/earnings/cashbacks'} element={<Cashbacks/>}/>
 
                     <Route path={'/subscriptions'} element={<Subscriptions/>}/>
-                    <Route path={'/subscriptions/types'} element={<SubscriptionTypes/>}/>
+                    <Route path={'/subscriptions-types'} element={<SubscriptionTypes/>}/>
 
                     <Route path={'*'} element={<Dashboard/>}/>
                 </Route>

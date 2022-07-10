@@ -1,53 +1,47 @@
 import { Card } from 'react-bootstrap';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
 import DataTable from 'components/common/datatable';
-import { useEarningAccountsQuery } from 'features/earnings/earningsAPI';
+import { useSubscriptionTypesQuery } from 'features/subscriptions/subscriptionsAPI';
 import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
 import { currencyFormat } from '../../utils/helpers';
+import pluralize from 'pluralize';
 
 const SubscriptionTypes = () => {
-    let {data: accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
+    let {data: subTypes, isLoading, isSuccess, isError, error} = useSubscriptionTypesQuery();
 
-    console.log(accounts);
+    console.log(subTypes);
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !accounts) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !subTypes) return <SectionLoader/>;
 
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable title={'Earning Accounts'} columns={[
+                <DataTable title={'Subscription Types'} columns={[
                     {
-                        accessorKey: 'customer',
-                        accessorFn: row => row.account.phone,
-                        header: 'Customer',
+                        accessorKey: 'title',
+                        header: 'Title',
                     },
                     {
-                        accessorKey: 'type',
-                        header: 'Type',
+                        accessorKey: 'price',
+                        header: 'Price',
+                        accessorFn: row => currencyFormat(row.price)
                     },
                     {
-                        accessorKey: 'self_amount',
-                        header: 'Self Amount',
-                        cell: ({row}: any) => currencyFormat(row.original.self_amount)
+                        accessorKey: 'duration',
+                        header: 'Duration',
+                        accessorFn: row => pluralize(row.period, row.duration),
                     },
                     {
-                        accessorKey: 'invite_amount',
-                        header: 'Invite Amount',
-                        cell: ({row}: any) => currencyFormat(row.original.invite_amount)
-                    },
-                    {
-                        accessorKey: 'updated_at',
-                        header: 'Last Update',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
+                        accessorKey: 'level_limit',
+                        header: 'Level Limit',
                     },
                     {
                         id: 'actions',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'earnings-account'}/>
+                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'subscription-type'}/>
                     }
-                ]} data={accounts}/>
+                ]} data={subTypes}/>
             </Card.Body>
         </Card>
     );

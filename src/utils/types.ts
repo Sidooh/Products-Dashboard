@@ -97,3 +97,10 @@ export type Cashback = {
     type: string
     transaction?: Transaction
 }
+
+export type ProductAccount = {
+    id?: number
+    provider: string
+    account_number: number
+    priority: number
+}

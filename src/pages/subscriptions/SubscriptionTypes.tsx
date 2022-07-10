@@ -2,41 +2,41 @@ import { Card } from 'react-bootstrap';
 import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
 import DataTable from 'components/common/datatable';
-import { useCashbacksQuery } from 'features/earnings/earningsAPI';
+import { useEarningAccountsQuery } from 'features/earnings/earningsAPI';
 import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
 import { currencyFormat } from '../../utils/helpers';
 
-const EarningAccounts = () => {
-    let {data: cashbacks, isLoading, isSuccess, isError, error} = useCashbacksQuery();
+const SubscriptionTypes = () => {
+    let {data: accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
 
-    console.log(cashbacks);
+    console.log(accounts);
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !cashbacks) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !accounts) return <SectionLoader/>;
 
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable title={'Cashbacks'} columns={[
+                <DataTable title={'Earning Accounts'} columns={[
                     {
-                        accessorKey: 'description',
-                        accessorFn: row => row.transaction.description,
-                        header: 'Description',
+                        accessorKey: 'customer',
+                        accessorFn: row => row.account.phone,
+                        header: 'Customer',
                     },
                     {
                         accessorKey: 'type',
                         header: 'Type',
                     },
                     {
-                        accessorKey: 'amount',
-                        header: 'Amount',
-                        cell: ({row}: any) => (
-                            <span>
-                                {currencyFormat(row.original.transaction.amount)} <br/>
-                                <small>Cashback:<b> {currencyFormat(row.original.amount)}</b></small>
-                            </span>
-                        )
+                        accessorKey: 'self_amount',
+                        header: 'Self Amount',
+                        cell: ({row}: any) => currencyFormat(row.original.self_amount)
+                    },
+                    {
+                        accessorKey: 'invite_amount',
+                        header: 'Invite Amount',
+                        cell: ({row}: any) => currencyFormat(row.original.invite_amount)
                     },
                     {
                         accessorKey: 'updated_at',
@@ -47,10 +47,10 @@ const EarningAccounts = () => {
                         id: 'actions',
                         cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'earnings-account'}/>
                     }
-                ]} data={cashbacks}/>
+                ]} data={accounts}/>
             </Card.Body>
         </Card>
     );
 };
 
-export default EarningAccounts;
+export default SubscriptionTypes;

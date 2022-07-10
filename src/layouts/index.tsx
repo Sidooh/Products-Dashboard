@@ -14,6 +14,8 @@ const Transactions = lazy(() => import('pages/transactions'));
 const ShowTransaction = lazy(() => import('pages/transactions/ShowTransaction'));
 const EarningAccounts = lazy(() => import('pages/earnings/EarningAccounts'));
 const Cashbacks = lazy(() => import('pages/earnings/Cashbacks'));
+const Subscriptions = lazy(() => import('pages/subscriptions'));
+const SubscriptionTypes = lazy(() => import('pages/subscriptions/SubscriptionTypes'));
 
 const Layout = () => {
     const HTMLClassList = document.getElementsByTagName('html')[0].classList;
@@ -41,6 +43,9 @@ const Layout = () => {
 
                     <Route path={'/earnings/accounts'} element={<EarningAccounts/>}/>
                     <Route path={'/earnings/cashbacks'} element={<Cashbacks/>}/>
+
+                    <Route path={'/subscriptions'} element={<Subscriptions/>}/>
+                    <Route path={'/subscriptions/types'} element={<SubscriptionTypes/>}/>
 
                     <Route path={'*'} element={<Dashboard/>}/>
                 </Route>

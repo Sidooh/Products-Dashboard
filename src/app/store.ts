@@ -4,6 +4,7 @@ import themeReducer from '../features/theme/themeSlice';
 import { transactionsApi } from '../features/transactions/transactionsAPI';
 import { productsAPI } from '../features/products/productsAPI';
 import { earningsAPI } from '../features/earnings/earningsAPI';
+import { subscriptionsAPI } from '../features/subscriptions/subscriptionsAPI';
 
 export const store = configureStore({
     reducer: {
@@ -13,9 +14,10 @@ export const store = configureStore({
         [transactionsApi.reducerPath]: transactionsApi.reducer,
         [productsAPI.reducerPath]: productsAPI.reducer,
         [earningsAPI.reducerPath]: earningsAPI.reducer,
+        [subscriptionsAPI.reducerPath]: subscriptionsAPI.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-        .concat(transactionsApi.middleware, productsAPI.middleware, earningsAPI.middleware)
+        .concat(transactionsApi.middleware, productsAPI.middleware, earningsAPI.middleware, subscriptionsAPI.middleware)
 });
 
 export type AppDispatch = typeof store.dispatch;

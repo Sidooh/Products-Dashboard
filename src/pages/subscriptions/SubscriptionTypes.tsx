@@ -31,7 +31,7 @@ const SubscriptionTypes = () => {
                     {
                         accessorKey: 'duration',
                         header: 'Duration',
-                        accessorFn: row => pluralize(row.period, row.duration),
+                        accessorFn: row => `${row.duration} ${pluralize(row.period, row.duration).toUpperCase()}`,
                     },
                     {
                         accessorKey: 'level_limit',

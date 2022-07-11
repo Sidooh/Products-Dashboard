@@ -6,6 +6,7 @@ import { useEarningAccountsQuery } from 'features/earnings/earningsAPI';
 import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
 import { currencyFormat } from '../../utils/helpers';
+import PhoneChip from '../../components/chips/PhoneChip';
 
 const EarningAccounts = () => {
     let {data: accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
@@ -23,6 +24,7 @@ const EarningAccounts = () => {
                         accessorKey: 'customer',
                         accessorFn: row => row.account.phone,
                         header: 'Customer',
+                        cell: ({row}: any) => <PhoneChip phone={row.original.account.phone}/>
                     },
                     {
                         accessorKey: 'type',

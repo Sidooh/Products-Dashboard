@@ -7,6 +7,7 @@ import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
 import { currencyFormat } from 'utils/helpers';
 import moment from 'moment';
+import PhoneChip from '../../components/chips/PhoneChip';
 
 const Subscriptions = () => {
     let {data: subscriptions, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
@@ -24,6 +25,7 @@ const Subscriptions = () => {
                         accessorKey: 'customer',
                         accessorFn: row => row.account.phone,
                         header: 'Customer',
+                        cell: ({row}: any) => <PhoneChip phone={row.original.account.phone}/>
                     },
                     {
                         accessorKey: 'amount',

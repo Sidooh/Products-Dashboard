@@ -45,7 +45,7 @@ const EarningAccounts = () => {
                     },
                     {
                         id: 'actions',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'earnings-account'}/>
+                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'cashback'}/>
                     }
                 ]} data={cashbacks}/>
             </Card.Body>

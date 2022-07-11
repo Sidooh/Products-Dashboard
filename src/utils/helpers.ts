@@ -8,9 +8,9 @@ const userAgent = ((navigator && navigator.userAgent) || '').toLowerCase();
 
 // build a 'comparator' object for various comparison checks
 let comparator = {
-    '<' : (a: any, b: string) => a < b,
+    '<': (a: any, b: string) => a < b,
     '<=': (a: any, b: string) => a <= b,
-    '>' : (a: any, b: string) => a > b,
+    '>': (a: any, b: string) => a > b,
     '>=': (a: any, b: string) => a >= b
 };
 
@@ -29,11 +29,11 @@ export const is = {
     windows: () => {
         return navigator.userAgent.indexOf("Win") !== -1;
     },
-    chrome : (range?: string): boolean => {
+    chrome: (range?: string): boolean => {
         let match = /google inc/.test(vendor) ? userAgent.match(/(?:chrome|crios)\/(\d+)/) : null;
         return match !== null && !is.opera() && compareVersion(match[1], range);
     },
-    opera  : (range?: string): boolean => {
+    opera: (range?: string): boolean => {
         let match = userAgent.match(/(?:^opera.+?version|opr)\/(\d+)/);
         return match !== null && compareVersion(match[1], range);
     },
@@ -61,11 +61,11 @@ export const toast = (data: ToastDataType) => {
         close = data.close ?? true;
 
     Toastify({
-        text     : data.msg,
-        duration : duration,
-        close    : close,
-        gravity  : data.gravity ?? 'bottom',
-        position : data.position ?? 'right',
+        text: data.msg,
+        duration: duration,
+        close: close,
+        gravity: data.gravity ?? 'bottom',
+        position: data.position ?? 'right',
         className: type,
     }).showToast();
 };
@@ -168,9 +168,9 @@ export const getColor = function getColor(name: string) {
 };
 
 
-export const parsePhone = (phone?: string|number) => phone && parsePhoneNumber(String(phone), 'KE').number;
+export const parsePhone = (phone?: string | number) => phone && parsePhoneNumber(String(phone), 'KE').number;
 
-export const getTelcoFromPhone = (phone: string) => {
+export const getTelcoFromPhone = (phone: string | number) => {
     phone = String(phone);
 
     const safRegEx = /^(?:254|\+254|0)?((?:7(?:[0129]\d|4[0123568]|5[789]|6[89])|(1(1[0-5])))\d{6})$/,
@@ -196,7 +196,7 @@ export const getTelcoFromPhone = (phone: string) => {
 
 export const Arr = {
     removeItems: (arr: any[], itemsToRemove: any[]) => arr.filter(v => !itemsToRemove.includes(v)),
-    only       : (arr: any[], keys: any[]) => arr.filter(a => keys.includes(a))
+    only: (arr: any[], keys: any[]) => arr.filter(a => keys.includes(a))
 };
 
 export const Str = {
@@ -214,7 +214,7 @@ export const Str = {
     }
 };
 
-export const currencyFormat = (number?:number, currency = 'KES') => number && (new Intl.NumberFormat('en-GB', {
+export const currencyFormat = (number?: number, currency = 'KES') => number && (new Intl.NumberFormat('en-GB', {
     style: 'currency',
     currency
 })).format(number);

@@ -72,6 +72,18 @@ export type TandaRequest = {
     status: number
 }
 
+export type User = {
+    id?: number
+    name: string
+    email: string
+}
+
+export type Account = {
+    id?: number
+    phone: number
+    user?: User
+}
+
 export type Transaction = {
     id?: number
     status: Status
@@ -82,6 +94,7 @@ export type Transaction = {
     created_at: string
     payment?: Payment
     request?: TandaRequest
+    account?: Account
 }
 
 export type EarningAccount = {

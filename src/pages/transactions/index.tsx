@@ -7,6 +7,7 @@ import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
 import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
 import { currencyFormat } from '../../utils/helpers';
+import PhoneChip from '../../components/chips/PhoneChip';
 
 const Transactions = () => {
     let {data: transactions, isLoading, isSuccess, isError, error} = useTransactionsQuery();
@@ -25,7 +26,7 @@ const Transactions = () => {
                         header: 'Customer',
                         cell: ({row}: any) => (
                             <span>
-                                {row.original.account.phone} <br/>
+                                <PhoneChip phone={row.original.account.phone}/> <br/>
                                 <small><b>Destination: {row.original.destination}</b></small>
                             </span>
                         )

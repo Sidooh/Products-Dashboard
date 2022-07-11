@@ -10,9 +10,10 @@ import moment from 'moment';
 import { currencyFormat } from '../../utils/helpers';
 import { PaymentType } from '../../utils/enums';
 import { lazy } from 'react';
+import PhoneChip from 'components/chips/PhoneChip';
 
-const MpesaPayment = lazy(() => import('./MpesaPayment'))
-const TandaTransaction = lazy(() => import('./TandaTransaction'))
+const MpesaPayment = lazy(() => import('./MpesaPayment'));
+const TandaTransaction = lazy(() => import('./TandaTransaction'));
 
 const ShowTransaction = () => {
     const {id} = useParams();
@@ -41,16 +42,16 @@ const ShowTransaction = () => {
                             <h5 className="mb-3 fs-0">Account</h5>
                             <h6 className="mb-2">
                                 <a href="https://sidooh-admin-dashboard-iw4itjwa5a-uc.a.run.app/admin/users/50">
-                                    Michael Nabangi
+                                    {transaction.account?.user?.name ?? transaction.account?.phone}
                                 </a>
                             </h6>
                             <p className="mb-0 fs--1">
                                 <strong>Email: </strong>
-                                <a href="mailto:miguelnabz@gmail.com">miguelnabz@gmail.com</a>
+                                <a href={`mailto:${transaction.account?.user?.email}`}>{transaction.account?.user?.email}</a>
                             </p>
                             <p className="mb-0 fs--1">
                                 <strong>Phone: </strong>
-                                <a href="tel:254110039317">254110039317</a>
+                                <PhoneChip textOnly phone={transaction.account?.phone}/>
                             </p>
                         </Col>
                         <Col lg={4} className="mb-4 mb-lg-0">

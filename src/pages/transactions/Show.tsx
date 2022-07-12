@@ -11,6 +11,7 @@ import { currencyFormat } from '../../utils/helpers';
 import { PaymentType } from '../../utils/enums';
 import { lazy } from 'react';
 import PhoneChip from 'components/chips/PhoneChip';
+import { CONFIG } from '../../config';
 
 const MpesaPayment = lazy(() => import('./MpesaPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
@@ -61,7 +62,11 @@ const Show = () => {
                             <div className="fs--1"><strong>Amount: </strong>({currencyFormat(transaction.amount)})</div>
                         </Col>
                         <Col lg={4}>
-                            <h5 className="mb-3 fs-0">Payment</h5>
+                            <h5 className="mb-3 fs-0">
+                                <a href={`${CONFIG.sidooh.services.payments.dashboard.url}/payment/${transaction.payment?.payment_id}`}>
+                                    Payment
+                                </a>
+                            </h5>
                             <div className="d-flex">
                                 <img className="me-3" src={IMAGES.icons.cash} width="40" height="40" alt=""/>
                                 <div className="flex-1">

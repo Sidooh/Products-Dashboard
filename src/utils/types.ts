@@ -54,6 +54,7 @@ export type StkRequest = {
 }
 
 export type Payment = {
+    payment_id: number
     amount: number
     type: string
     subtype: string

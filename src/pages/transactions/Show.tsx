@@ -63,7 +63,7 @@ const Show = () => {
                         </Col>
                         <Col lg={4}>
                             <h5 className="mb-3 fs-0">
-                                <a href={`${CONFIG.sidooh.services.payments.dashboard.url}/payment/${transaction.payment?.payment_id}`}>
+                                <a href={`${CONFIG.sidooh.services.payments.dashboard.url}/payments/${transaction.payment?.payment_id}`}>
                                     Payment
                                 </a>
                             </h5>

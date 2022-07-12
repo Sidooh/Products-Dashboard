@@ -11,7 +11,7 @@ const Login = lazy(() => import('pages/auth/Login'));
 const Dashboard = lazy(() => import('pages/dashboards/default'));
 const Analytics = lazy(() => import('pages/dashboards/analytics'));
 const Transactions = lazy(() => import('pages/transactions'));
-const ShowTransaction = lazy(() => import('pages/transactions/ShowTransaction'));
+const ShowTransaction = lazy(() => import('pages/transactions/Show'));
 const EarningAccounts = lazy(() => import('pages/earnings/EarningAccounts'));
 const Cashbacks = lazy(() => import('pages/earnings/Cashbacks'));
 const Subscriptions = lazy(() => import('pages/subscriptions'));

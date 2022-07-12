@@ -41,12 +41,6 @@ const Transactions = () => {
                         cell: ({row}: any) => currencyFormat(row.original.amount)
                     },
                     {
-                        accessorKey: 'payment',
-                        header: 'Payment',
-                        cell: ({row}: any) => <StatusChip status={row.original.payment?.status} entity={'payment'}
-                                                          entityId={row.original.id}/>
-                    },
-                    {
                         accessorKey: 'status',
                         header: 'Status',
                         cell: ({row}: any) => <StatusChip status={row.original.status} entity={'transaction'}

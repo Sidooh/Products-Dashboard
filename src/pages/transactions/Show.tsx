@@ -15,7 +15,7 @@ import PhoneChip from 'components/chips/PhoneChip';
 const MpesaPayment = lazy(() => import('./MpesaPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
 
-const ShowTransaction = () => {
+const Show = () => {
     const {id} = useParams();
     const {data: transaction, isError, error, isLoading, isSuccess} = useTransactionQuery(String(id));
     console.log('Transaction:', transaction);
@@ -67,7 +67,8 @@ const ShowTransaction = () => {
                                 <div className="flex-1">
                                     <h6 className="mb-0">{transaction.payment?.type} {transaction.payment?.subtype}</h6>
                                     <p className="mb-0 fs--1">
-                                        <strong>Amount: </strong>{currencyFormat(transaction.payment?.amount)}</p>
+                                        <strong>Amount: </strong>{currencyFormat(transaction.amount)}
+                                    </p>
                                     <div className="fs--1">
                                         <strong className="me-2">Status: </strong>
                                         <StatusChip status={transaction.payment?.status}
@@ -87,4 +88,4 @@ const ShowTransaction = () => {
     );
 };
 
-export default ShowTransaction;
+export default Show;

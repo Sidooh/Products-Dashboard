@@ -6,16 +6,17 @@ import DataTable from 'components/common/datatable';
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
 import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
-import { currencyFormat } from '../../utils/helpers';
-import PhoneChip from '../../components/chips/PhoneChip';
+import { currencyFormat } from 'utils/helpers';
+import PhoneChip from 'components/chips/PhoneChip';
 
 const Transactions = () => {
-    let {data: transactions, isLoading, isSuccess, isError, error} = useTransactionsQuery();
-
-    console.log(transactions);
+    let {data, isLoading, isSuccess, isError, error} = useTransactionsQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !transactions) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+
+    let {data: transactions} = data;
+    console.log(transactions);
 
     return (
         <Card className={'mb-3'}>
@@ -34,6 +35,7 @@ const Transactions = () => {
                     {
                         accessorKey: 'product',
                         header: 'Product',
+                        cell: ({row}: any) => row.original.product.name
                     },
                     {
                         accessorKey: 'amount',

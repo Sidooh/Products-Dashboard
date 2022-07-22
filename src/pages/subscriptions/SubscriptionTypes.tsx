@@ -8,12 +8,13 @@ import { currencyFormat } from '../../utils/helpers';
 import pluralize from 'pluralize';
 
 const SubscriptionTypes = () => {
-    let {data: subTypes, isLoading, isSuccess, isError, error} = useSubscriptionTypesQuery();
-
-    console.log(subTypes);
+    let {data, isLoading, isSuccess, isError, error} = useSubscriptionTypesQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !subTypes) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+
+    let {data: subTypes} = data;
+    console.log(subTypes);
 
     return (
         <Card className={'mb-3'}>

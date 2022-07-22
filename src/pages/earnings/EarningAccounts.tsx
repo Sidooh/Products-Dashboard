@@ -9,12 +9,13 @@ import { currencyFormat } from '../../utils/helpers';
 import PhoneChip from '../../components/chips/PhoneChip';
 
 const EarningAccounts = () => {
-    let {data: accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
-
-    console.log(accounts);
+    let {data, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !accounts) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+
+    let {data: accounts} = data;
+    console.log(accounts);
 
     return (
         <Card className={'mb-3'}>

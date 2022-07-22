@@ -6,6 +6,8 @@ const TODAY = REFERENCE.clone().startOf("day");
 const YESTERDAY = REFERENCE.clone().subtract(1, "days").startOf("day");
 
 const TableDate = ({date}: { date: string }) => {
+    if (!date) return <>N/A</>;
+
     let relativeDate;
     if (moment(date).isSame(TODAY, "d")) {
         relativeDate = "Today";

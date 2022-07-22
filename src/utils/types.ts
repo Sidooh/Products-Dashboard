@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Status } from './enums';
 
-export type Children = {
-    children: ReactNode
+export interface ApiResponse<T> {
+    status: string;
+    data:T
 }
 
 export type ToastDataType = {

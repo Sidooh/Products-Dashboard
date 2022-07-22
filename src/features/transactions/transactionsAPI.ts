@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { Transaction } from 'utils/types';
-import { RootState } from '../../app/store';
+import { ApiResponse, Transaction } from 'utils/types';
+import { RootState } from 'app/store';
 
 export const transactionsApi = createApi({
     reducerPath: 'transactionsApi',
@@ -19,11 +19,11 @@ export const transactionsApi = createApi({
     }),
     endpoints: (builder) => ({
         //  Transaction Endpoints
-        transactions: builder.query<Transaction[], void>({
+        transactions: builder.query<ApiResponse<Transaction[]>, void>({
             query: () => '/transactions?with=account,payment',
             providesTags: ['Transaction']
         }),
-        transaction: builder.query<Transaction, string>({
+        transaction: builder.query<ApiResponse<Transaction>, string>({
             query: id => `/transactions/${id}?with=account,payment,tanda_request`,
             providesTags: ['Transaction']
         }),

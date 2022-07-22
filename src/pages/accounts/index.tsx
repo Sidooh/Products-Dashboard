@@ -15,12 +15,13 @@ const Accounts = () => {
 
     if (!['utility', 'airtime'].includes(String(product))) return <Navigate to={'/'}/>;
 
-    let {data: accounts, isLoading, isSuccess, isError, error} = useAccountsQuery(product!);
-
-    console.log(accounts);
+    let {data, isLoading, isSuccess, isError, error} = useAccountsQuery(product!);
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !accounts) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+
+    let {data: accounts} = data;
+    console.log(accounts);
 
     return (
         <Card className={'mb-3'}>

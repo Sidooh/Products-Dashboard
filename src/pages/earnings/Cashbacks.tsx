@@ -8,12 +8,13 @@ import { SectionError } from 'components/common/Error';
 import { currencyFormat } from '../../utils/helpers';
 
 const EarningAccounts = () => {
-    let {data: cashbacks, isLoading, isSuccess, isError, error} = useCashbacksQuery();
-
-    console.log(cashbacks);
+    let {data, isLoading, isSuccess, isError, error} = useCashbacksQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !cashbacks) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+
+    let {data: cashbacks} = data;
+    console.log(cashbacks);
 
     return (
         <Card className={'mb-3'}>

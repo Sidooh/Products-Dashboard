@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { ProductAccount } from 'utils/types';
+import { ApiResponse, ProductAccount } from 'utils/types';
 import { RootState } from 'app/store';
 
 export const accountsAPI = createApi({
@@ -19,7 +19,7 @@ export const accountsAPI = createApi({
     }),
     endpoints: (builder) => ({
         //  Earning Endpoints
-        accounts: builder.query<ProductAccount[], string>({
+        accounts: builder.query<ApiResponse<ProductAccount[]>, string>({
             query: product => `/${product}-accounts?with=account`,
             providesTags: ['Account']
         }),

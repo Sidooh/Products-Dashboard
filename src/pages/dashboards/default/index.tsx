@@ -11,12 +11,13 @@ const Revenue = lazy(() => import('./revenue/Revenue'));
 const RecentTransactions = lazy(() => import('./RecentTransactions'));
 
 const Dashboard = () => {
-    // console.log(process.env);
-    const {data, isError, error, isLoading, isSuccess} = useGetDashboardQuery();
-    console.log(data);
+    let {data: dashData, isError, error, isLoading, isSuccess} = useGetDashboardQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !dashData) return <SectionLoader/>;
+
+    const data = dashData.data;
+    console.log(dashData);
 
     return (
         <>

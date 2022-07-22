@@ -7,15 +7,16 @@ import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
 import { currencyFormat } from 'utils/helpers';
 import moment from 'moment';
-import PhoneChip from '../../components/chips/PhoneChip';
+import PhoneChip from 'components/chips/PhoneChip';
 
 const Subscriptions = () => {
-    let {data: subscriptions, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
-
-    console.log(subscriptions);
+    let {data, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !subscriptions) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+
+    let {data: subscriptions} = data;
+    console.log(subscriptions);
 
     return (
         <Card className={'mb-3'}>

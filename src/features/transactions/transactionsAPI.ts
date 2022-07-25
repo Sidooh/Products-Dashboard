@@ -23,9 +23,19 @@ export const transactionsApi = createApi({
             query: () => '/transactions?with=account,payment',
             providesTags: ['Transaction']
         }),
-        transaction: builder.query<ApiResponse<Transaction>, string>({
+        transaction: builder.query<ApiResponse<Transaction>, number>({
             query: id => `/transactions/${id}?with=account,payment,tanda_request`,
+            transformResponse: (response: { data: ApiResponse<Transaction> }) => response.data,
             providesTags: ['Transaction']
+        }),
+        transactionProcess: builder.mutation<ApiResponse<Transaction>, { id: number, request_id: string }>({
+            query: ({id, ...patch}) => ({
+                url: `/transactions/${id}/process`,
+                method: 'POST',
+                body: patch
+            }),
+            transformResponse: (response: { data: ApiResponse<Transaction> }) => response.data,
+            invalidatesTags: ['Transaction']
         }),
     })
 });
@@ -33,4 +43,5 @@ export const transactionsApi = createApi({
 export const {
     useTransactionsQuery,
     useTransactionQuery,
+    useTransactionProcessMutation
 } = transactionsApi;

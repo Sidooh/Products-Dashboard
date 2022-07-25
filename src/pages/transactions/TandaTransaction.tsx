@@ -33,8 +33,8 @@ const TandaTransaction = ({request}: { request: TandaRequest }) => {
                         <td className="align-middle">{request.message}</td>
                         <td className="align-middle text-center">{request.status}</td>
                         <td className="align-middle text-end">
-                            {moment(request.last_modified).format('MMM D, Y')}<br/>
-                            <small>{moment(request.last_modified).format('hh:mm A')}</small>
+                            {moment(request.updated_at).format('MMM D, Y')}<br/>
+                            <small>{moment(request.updated_at).format('hh:mm A')}</small>
                         </td>
                     </tr>
                     </tbody>

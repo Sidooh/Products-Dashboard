@@ -1,7 +1,9 @@
 import { Card, Table } from 'react-bootstrap';
 import { Payment } from 'utils/types';
-import { currencyFormat, parsePhone } from '../../utils/helpers';
+import { currencyFormat } from '../../utils/helpers';
 import moment from 'moment';
+import StatusChip from "../../components/chips/StatusChip";
+import {CONFIG} from "../../config";
 
 const MpesaPayment = ({payment}: { payment: Payment }) => {
     console.log(payment);
@@ -13,26 +15,29 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                 <Table striped responsive className="border-bottom fs--1">
                     <thead className="bg-200 text-900">
                     <tr>
-                        <th className="border-0">Reference</th>
-                        <th className="border-0 text-center">Status</th>
-                        <th className="border-0">Result</th>
+                        <th className="border-0">Sub-Type</th>
                         <th className="border-0">Amount</th>
                         <th className="border-0">Date</th>
+                        <th className="border-0">Status</th>
+                        <th className="border-0"></th>
                     </tr>
                     </thead>
                     <tbody>
 
                     <tr className="border-200">
-                        <td className="align-middle">
-                            <h6 className="mb-0 text-nowrap">{payment.provider?.reference}</h6>
-                            <p className="mb-0">{parsePhone(payment.provider?.phone)}</p>
+                        <td className="align-middle">{payment.subtype}</td>
+                        <td className="align-middle">{currencyFormat(payment.amount)}</td>
+                        <td className="">
+                            {moment(payment.updated_at).format('MMM D, Y')}<br/>
+                            <small>{moment(payment.updated_at).format('hh:mm A')}</small>
                         </td>
-                        <td className="align-middle text-center">{payment.provider?.status}</td>
-                        <td className="align-middle">The service request is processed successfully.</td>
-                        <td className="align-middle">{currencyFormat(payment.provider?.amount)}</td>
-                        <td className="text-end">
-                            {moment(payment.provider?.response?.created_at || payment.provider?.created_at).format('MMM D, Y')}<br/>
-                            <small>{moment(payment.provider?.response?.created_at || payment.provider?.created_at).format('hh:mm A')}</small>
+                        <td className="align-middle text-start">
+                            <StatusChip status={payment.status} entity={'payment'} entityId={Number(payment.id)}/>
+                        </td>
+                        <td>
+                            <a href={`${CONFIG.sidooh.services.payments.dashboard.url}/payments/${payment.payment_id}`}>
+                                More
+                            </a>
                         </td>
                     </tr>
                     </tbody>

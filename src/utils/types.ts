@@ -54,12 +54,13 @@ export type StkRequest = {
 }
 
 export type Payment = {
+    id: number
     payment_id: number
     amount: number
     type: string
     subtype: string
     status: Status
-    provider?: StkRequest
+    updated_at: string
 }
 
 export type TandaRequest = {
@@ -69,32 +70,34 @@ export type TandaRequest = {
     provider: string
     message: string
     destination: string
-    last_modified: string
+    updated_at: string
     status: number
 }
 
 export type User = {
-    id?: number
+    id: number
     name: string
     email: string
 }
 
 export type Account = {
-    id?: number
+    id: number
     phone: number
     user?: User
+    user_id: number
 }
 
 export type Transaction = {
-    id?: number
+    id: number
     status: Status
     description: string
     destination: string
     type: string
     amount: number
     created_at: string
+    updated_at: string
     payment?: Payment
-    request?: TandaRequest
+    tanda_request?: TandaRequest
     account?: Account
 }
 

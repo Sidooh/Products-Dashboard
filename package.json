@@ -31,7 +31,7 @@
     "echarts": "^5.3.3",
     "formik": "^2.2.9",
     "libphonenumber-js": "^1.10.7",
-    "moment": "^2.29.3",
+    "moment": "^2.29.4",
     "pluralize": "^8.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.4.0",

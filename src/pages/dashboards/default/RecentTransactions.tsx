@@ -5,7 +5,7 @@ import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
 import { Transaction } from 'utils/types';
 
-const PendingTransactions = ({transactions}: { transactions: Transaction[] }) => {
+const RecentTransactions = ({transactions}: { transactions: Transaction[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -54,4 +54,4 @@ const PendingTransactions = ({transactions}: { transactions: Transaction[] }) =>
     );
 };
 
-export default PendingTransactions;
+export default RecentTransactions;

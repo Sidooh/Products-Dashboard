@@ -16,8 +16,8 @@ const TandaTransaction = lazy(() => import('./TandaTransaction'));
 
 const Show = () => {
     const {id} = useParams<{ id: any }>();
-    const {data: transaction, isError, error, isLoading, isSuccess} = useTransactionQuery(Number(id));
-    console.log('Transaction:', transaction);
+    const {data: transactionData, isError, error, isLoading, isSuccess} = useTransactionQuery(Number(id));
+    console.log('Transaction:', transactionData);
 
     const [requestId, setRequestId] = useState('');
 
@@ -27,7 +27,8 @@ const Show = () => {
     ] = useTransactionProcessMutation()
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || isUpdating || !isSuccess || !transaction) return <SectionLoader/>;
+    if (isLoading || isUpdating || !isSuccess || !transactionData) return <SectionLoader/>;
+    const {data: transaction} = transactionData;
 
     const onProcessTransaction = (): void => {
         processTransaction({id: transaction.id, request_id: requestId})

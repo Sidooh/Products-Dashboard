@@ -3,6 +3,8 @@ import { useGetDashboardQuery } from 'features/products/productsAPI';
 import { SectionError } from 'components/common/Error';
 import { SectionLoader } from 'components/common/Loader';
 import { lazy } from 'react';
+import {useTransactionsQuery} from "../../../features/transactions/transactionsAPI";
+import {Status} from "../../../utils/enums";
 
 const TotalRevenue = lazy(() => import('./TotalRevenue'));
 const TransactionsCount = lazy(() => import('./TransactionsCount'));
@@ -11,33 +13,43 @@ const Revenue = lazy(() => import('./revenue/Revenue'));
 const RecentTransactions = lazy(() => import('./RecentTransactions'));
 
 const Dashboard = () => {
-    let {data: dashData, isError, error, isLoading, isSuccess} = useGetDashboardQuery();
+    let {data: transactionData, isLoading, isSuccess, isError, error} = useTransactionsQuery();
+    let {data: dashboardStats} = useGetDashboardQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !dashData) return <SectionLoader/>;
+    console.log(isLoading);
 
-    const data = dashData.data;
-    console.log(dashData);
+    if (isLoading || !isSuccess || !transactionData) return <SectionLoader/>;
+
+    console.log(isLoading);
+
+    const {data: stats} = dashboardStats || {};
+    console.log(stats);
+
+    const {data: transactions} = transactionData;
+    console.log(transactions)
+
+    const pendingTransactions = transactions.filter(t => t.status === Status.PENDING)
 
     return (
         <>
-            <Row className="g-3 mb-3">
-                <Col xxl={9}><Revenue total_today={data.total_today} total_yesterday={data.total_yesterday}/></Col>
+            {stats && <Row className="g-3 mb-3">
+                <Col xxl={9}><Revenue total_today={stats.total_today} total_yesterday={stats.total_yesterday}/></Col>
                 <Col>
                     <Row className="g-3">
                         <Col md={6} xxl={12}>
-                            <TransactionsCount total={data.total_transactions}
-                                               total_today={data.total_transactions_today}/>
+                            <TransactionsCount total={stats.total_transactions}
+                                               total_today={stats.total_transactions_today}/>
                         </Col>
                         <Col md={6} xxl={12}>
-                            <TotalRevenue total={data.total_revenue} total_today={data.total_revenue_today}/>
+                            <TotalRevenue total={stats.total_revenue} total_today={stats.total_revenue_today}/>
                         </Col>
                     </Row>
                 </Col>
-            </Row>
+            </Row>}
 
-            <PendingTransactions transactions={data.pending_transactions}/>
-            <RecentTransactions transactions={data.recent_transactions}/>
+            {pendingTransactions && pendingTransactions.length > 0 && <PendingTransactions transactions={pendingTransactions}/>}
+            <RecentTransactions transactions={transactions}/>
         </>
     );
 };

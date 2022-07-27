@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
-import { ApiResponse, Transaction } from 'utils/types';
+import { ApiResponse } from 'utils/types';
 
 type DashboardData = {
     total_today: number
@@ -10,8 +10,18 @@ type DashboardData = {
     total_transactions_today: number
     total_revenue: number
     total_revenue_today: number
-    pending_transactions: Transaction[]
-    recent_transactions: Transaction[]
+}
+
+type RevenueDayData = {
+    ALL: {
+        labels: string[],
+        dataset: number[]
+    }
+}
+
+type RevenueData = {
+    today: RevenueDayData
+    yesterday: RevenueDayData
 }
 
 export const productsAPI = createApi({
@@ -30,8 +40,9 @@ export const productsAPI = createApi({
     endpoints: (builder) => ({
         getDashboard: builder.query<ApiResponse<DashboardData>, void>({
             query: () => '/dashboard',
+            // transformResponse: (response: { data: ApiResponse<DashboardData> }) => response.data.data,
         }),
-        getRevenueData: builder.query<ApiResponse<any>, void>({
+        getRevenueData: builder.query<RevenueData, void>({
             query: () => '/dashboard/revenue-chart',
         }),
     })

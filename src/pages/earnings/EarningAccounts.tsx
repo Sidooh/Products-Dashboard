@@ -25,7 +25,7 @@ const EarningAccounts = () => {
                         accessorKey: 'customer',
                         accessorFn: row => row.account.phone,
                         header: 'Customer',
-                        cell: ({row}: any) => <PhoneChip phone={row.original.account.phone}/>
+                        cell: ({row}: any) => <PhoneChip phone={row.original.account?.phone}/>
                     },
                     {
                         accessorKey: 'type',

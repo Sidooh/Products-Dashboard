@@ -1,9 +1,9 @@
 import { Card, Col, Row } from 'react-bootstrap';
 import CountUp from 'react-countup';
-import CardBgCorner from '../../../components/CardBgCorner';
 import { Chip } from '@mui/material';
+import CardBgCorner from "../../../../../components/CardBgCorner";
 
-const TransactionsCount = ({total, total_today}: { total: number, total_today: number }) => {
+const Count = ({total, total_today}: { total: number, total_today: number }) => {
     return (
         <Card style={{'height': '150px'}}>
             <CardBgCorner corner={2}/>
@@ -21,4 +21,4 @@ const TransactionsCount = ({total, total_today}: { total: number, total_today: n
     );
 };
 
-export default TransactionsCount;
+export default Count;

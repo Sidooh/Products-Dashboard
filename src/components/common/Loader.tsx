@@ -38,18 +38,19 @@ const ComponentLoader = ({size = 'md'}) => {
     return (
         <ComponentLoaderWrapper height={height}>
             <Box position={'relative'}>
-                <CircularProgress variant="determinate" size={100} thickness={3} value={100}
-                                  sx={{color: (theme) => theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]}}/>
-                <CircularProgress variant="indeterminate" disableShrink
-                                  sx={{
-                                      color                                   : (theme) => (theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8'),
-                                      animationDuration                       : '700ms',
-                                      position                                : 'absolute',
-                                      left                                    : 0,
-                                      [`& .${circularProgressClasses.circle}`]: {
-                                          strokeLinecap: 'round',
-                                      },
-                                  }} size={100} thickness={2}/>
+                <LinearProgress color="primary"/>
+                {/*<CircularProgress variant="determinate" size={100} thickness={3} value={100}*/}
+                {/*                  sx={{color: (theme) => theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]}}/>*/}
+                {/*<CircularProgress variant="indeterminate" disableShrink*/}
+                {/*                  sx={{*/}
+                {/*                      color                                   : (theme) => (theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8'),*/}
+                {/*                      animationDuration                       : '700ms',*/}
+                {/*                      position                                : 'absolute',*/}
+                {/*                      left                                    : 0,*/}
+                {/*                      [`& .${circularProgressClasses.circle}`]: {*/}
+                {/*                          strokeLinecap: 'round',*/}
+                {/*                      },*/}
+                {/*                  }} size={100} thickness={2}/>*/}
             </Box>
         </ComponentLoaderWrapper>
     );

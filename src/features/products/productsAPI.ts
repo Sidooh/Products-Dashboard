@@ -3,9 +3,7 @@ import { CONFIG } from 'config';
 import { RootState } from 'app/store';
 import { ApiResponse } from 'utils/types';
 
-type DashboardData = {
-    total_today: number
-    total_yesterday: number
+type DashboardSummariesData = {
     total_transactions: number
     total_transactions_today: number
     total_revenue: number
@@ -38,17 +36,16 @@ export const productsAPI = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getDashboard: builder.query<ApiResponse<DashboardData>, void>({
+        getDashboardSummaries: builder.query<ApiResponse<DashboardSummariesData>, void>({
             query: () => '/dashboard',
-            // transformResponse: (response: { data: ApiResponse<DashboardData> }) => response.data.data,
         }),
-        getRevenueData: builder.query<RevenueData, void>({
+        getDashboardRevenueData: builder.query<RevenueData, void>({
             query: () => '/dashboard/revenue-chart',
         }),
     })
 });
 
 export const {
-    useGetDashboardQuery,
-    useGetRevenueDataQuery
+    useGetDashboardSummariesQuery,
+    useGetDashboardRevenueDataQuery
 } = productsAPI;

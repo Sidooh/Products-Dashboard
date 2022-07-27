@@ -1,12 +1,12 @@
 import { lazy } from 'react';
 
-const DashboardStats = lazy(() => import('./DashboardStats'));
-const DashboardTransactions = lazy(() => import('./DashboardTransactions'));
+const DashboardStatistics = lazy(() => import('./statistics/DashboardStatistics'));
+const DashboardTransactions = lazy(() => import('./transactions/DashboardTransactions'));
 
 const Dashboard = () => {
     return (
         <>
-            <DashboardStats />
+            <DashboardStatistics />
 
             <DashboardTransactions />
         </>

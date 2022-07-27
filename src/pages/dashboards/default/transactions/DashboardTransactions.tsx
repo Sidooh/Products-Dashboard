@@ -2,8 +2,10 @@
 import {SectionError} from 'components/common/Error';
 import {ComponentLoader} from 'components/common/Loader';
 import {lazy} from 'react';
-import {useTransactionsQuery} from "../../../features/transactions/transactionsAPI";
-import {Status} from "../../../utils/enums";
+
+import {Transaction} from "../../../../utils/types";
+import {useTransactionsQuery} from "../../../../features/transactions/transactionsAPI";
+import {Status} from "../../../../utils/enums";
 
 const RecentTransactions = lazy(() => import('./RecentTransactions'));
 const PendingTransactions = lazy(() => import('./PendingTransactions'));
@@ -17,8 +19,7 @@ const DashboardTransactions = () => {
     const {data: transactions} = transactionData;
     console.log(transactions)
 
-    const pendingTransactions = transactions.filter(t => t.status === Status.PENDING)
-
+    const pendingTransactions = transactions.filter((t: Transaction) => t.status === Status.PENDING)
 
     return (
         <>

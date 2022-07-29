@@ -40,11 +40,8 @@ const MainLayout = () => {
             <div className={classNames('content', {'pb-0': isKanban})}>
                 <NavbarTop/>
                 {/*------ Main Routes ------*/}
-                <ErrorBoundary FallbackComponent={SectionError}
-                               onReset={() => window.location.reload()}>
-                    <Suspense fallback={<SectionLoader/>}>
-                        <Outlet/>
-                    </Suspense>
+                <ErrorBoundary FallbackComponent={SectionError} onReset={() => window.location.reload()}>
+                    <Suspense fallback={<SectionLoader/>}><Outlet/></Suspense>
                 </ErrorBoundary>
 
                 {!isKanban && <Footer/>}

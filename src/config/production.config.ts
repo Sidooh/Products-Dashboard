@@ -18,6 +18,11 @@ export const ProductionConfig = {
                 "dashboard": {
                     "url": "https://sidooh-admin-dashboard-okctxaztla-uc.a.run.app/admin"
                 }
+            },
+            "products": {
+                "api": {
+                    "url": "https://products-7yvno4vidq-uc.a.run.app/api/v1"
+                }
             }
         }
     }

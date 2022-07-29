@@ -1,8 +1,9 @@
-import { ReactNode } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Status } from './enums';
 
-export type Children = {
-    children: ReactNode
+export interface ApiResponse<T> {
+    status: string;
+    data:T
 }
 
 export type ToastDataType = {
@@ -31,4 +32,92 @@ export type RouteType = {
     label: string
     labelDisable?: boolean
     children: RouteChildType[]
+}
+
+export type StkCallback = {
+    id: string
+    amount: number
+    result_desc: string
+    checkout_request_id: string
+    created_at: string
+}
+
+export type StkRequest = {
+    id: string
+    checkout_request_id: string
+    amount: number
+    phone: number
+    reference: string
+    status: Status
+    created_at: string
+    response?: StkCallback
+}
+
+export type Payment = {
+    id: number
+    payment_id: number
+    amount: number
+    type: string
+    subtype: string
+    status: Status
+    updated_at: string
+}
+
+export type TandaRequest = {
+    request_id: number
+    receipt_number: number
+    amount: number
+    provider: string
+    message: string
+    destination: string
+    updated_at: string
+    status: number
+}
+
+export type User = {
+    id: number
+    name: string
+    email: string
+}
+
+export type Account = {
+    id: number
+    phone: number
+    user?: User
+    user_id: number
+}
+
+export type Transaction = {
+    id: number
+    status: Status
+    description: string
+    destination: string
+    type: string
+    amount: number
+    created_at: string
+    updated_at: string
+    payment?: Payment
+    tanda_request?: TandaRequest
+    account?: Account
+}
+
+export type EarningAccount = {
+    id?: number
+    type: string
+    self_amount: number
+    invite_amount: number
+}
+
+export type Cashback = {
+    id?: number
+    amount: number
+    type: string
+    transaction?: Transaction
+}
+
+export type ProductAccount = {
+    id?: number
+    provider: string
+    account_number: number
+    priority: number
 }

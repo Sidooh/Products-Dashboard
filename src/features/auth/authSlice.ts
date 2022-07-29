@@ -6,9 +6,7 @@ const auth = JSON.parse(String(localStorage.getItem('auth')));
 
 export type AuthState = {
     auth: {
-        user: { id: number, exp: number, name: string, email: string }
         token: string
-        credentials: LoginRequest
     } | null;
     isError: boolean;
     isSuccess: boolean;

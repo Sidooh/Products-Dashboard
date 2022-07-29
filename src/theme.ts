@@ -5,20 +5,38 @@ export const theme = createTheme({
         fontFamily: `${['"Varela Round"', 'cursive',].join(',')}!important`,
     },
     components: {
-        MuiTextField    : {
+        MuiSvgIcon: {
             defaultProps: {
-                size     : 'small',
+                fontSize: 'small'
+            }
+        },
+        MuiChip: {
+            defaultProps: {
+                size: 'small'
+            },
+            styleOverrides: {
+                sizeSmall: {
+                    height: '20px'
+                },
+                iconSmall: {
+                    fontSize: '10px'
+                }
+            }
+        },
+        MuiTextField: {
+            defaultProps: {
+                size: 'small',
                 fullWidth: true
             },
         },
         MuiOutlinedInput: {
             styleOverrides: {
                 input: {
-                    appearance     : 'none',
-                    borderRadius   : '.25rem',
+                    appearance: 'none',
+                    borderRadius: '.25rem',
                     backgroundColor: 'var(--falcon-input-bg)',
-                    boxShadow      : 'var(--falcon-box-shadow-inset)!important',
-                    padding        : 'padding: .3125rem 1rem;!important'
+                    boxShadow: 'var(--falcon-box-shadow-inset)!important',
+                    padding: 'padding: .3125rem 1rem;!important'
                 }
             }
         }

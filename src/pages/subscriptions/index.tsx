@@ -5,9 +5,9 @@ import DataTable from 'components/common/datatable';
 import { useSubscriptionsQuery } from 'features/subscriptions/subscriptionsAPI';
 import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
-import { currencyFormat } from 'utils/helpers';
 import moment from 'moment';
-import PhoneChip from 'components/chips/PhoneChip';
+import SidoohAccount from '../../components/common/SidoohAccount';
+import StatusChip from '../../components/chips/StatusChip';
 
 const Subscriptions = () => {
     let {data, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
@@ -26,12 +26,18 @@ const Subscriptions = () => {
                         accessorKey: 'customer',
                         accessorFn: row => row.account.phone,
                         header: 'Customer',
-                        cell: ({row}: any) => <PhoneChip phone={row.original.account.phone}/>
+                        cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
-                        accessorKey: 'amount',
-                        header: 'Amount',
-                        accessorFn: row => currencyFormat(row.amount)
+                        accessorKey: 'type',
+                        header: 'Type',
+                        accessorFn: row => row.subscription_type.title
+                    },
+                    {
+                        accessorKey: 'status',
+                        header: 'Status',
+                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'transaction'}
+                                                          entityId={row.original.id}/>
                     },
                     {
                         accessorKey: 'start_date',
@@ -45,7 +51,7 @@ const Subscriptions = () => {
                     },
                     {
                         accessorKey: 'created_at',
-                        header: 'Date Created',
+                        header: 'Created',
                         cell: ({row}: any) => <TableDate date={row.original.created_at}/>
                     },
                     {

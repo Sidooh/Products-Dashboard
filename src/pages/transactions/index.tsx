@@ -7,7 +7,7 @@ import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
 import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
 import { currencyFormat } from 'utils/helpers';
-import PhoneChip from 'components/chips/PhoneChip';
+import SidoohAccount from '../../components/common/SidoohAccount';
 
 const Transactions = () => {
     let {data, isLoading, isSuccess, isError, error} = useTransactionsQuery();
@@ -25,17 +25,17 @@ const Transactions = () => {
                     {
                         accessorKey: 'customer',
                         header: 'Customer',
-                        cell: ({row}: any) => (
-                            <span>
-                                <PhoneChip phone={row.original.account.phone}/> <br/>
-                                <small><b>Destination: {row.original.destination}</b></small>
-                            </span>
-                        )
+                        cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
-                        accessorKey: 'product',
-                        header: 'Product',
-                        cell: ({row}: any) => row.original.product.name
+                        accessorKey: 'description',
+                        header: 'Description',
+                        cell: ({row}: any) => (
+                            <span>
+                                {row.original.description}<br/>
+                                <small><b>{row.original.destination}</b></small>
+                            </span>
+                        )
                     },
                     {
                         accessorKey: 'amount',

@@ -71,6 +71,7 @@ export type TandaRequest = {
     message: string
     destination: string
     updated_at: string
+    last_modified: string
     status: number
 }
 

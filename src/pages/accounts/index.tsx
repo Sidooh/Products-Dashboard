@@ -7,7 +7,7 @@ import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
 import { Str } from 'utils/helpers';
 import { Navigate, useParams } from 'react-router-dom';
-import PhoneChip from '../../components/chips/PhoneChip';
+import SidoohAccount from '../../components/common/SidoohAccount';
 
 const Accounts = () => {
     const {product} = useParams();
@@ -31,7 +31,7 @@ const Accounts = () => {
                         accessorKey: 'customer',
                         accessorFn: row => row.account.phone,
                         header: 'Customer',
-                        cell: ({row}: any) => <PhoneChip phone={row.original.account.phone}/>
+                        cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
                         accessorKey: 'account_number',
@@ -47,11 +47,12 @@ const Accounts = () => {
                     },
                     {
                         accessorKey: 'created_at',
-                        header: 'Date Created',
+                        header: 'Created',
                         cell: ({row}: any) => <TableDate date={row.original.created_at}/>
                     },
                     {
                         id: 'actions',
+                        header: '',
                         cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'subscription'}/>
                     }
                 ]} data={accounts}/>

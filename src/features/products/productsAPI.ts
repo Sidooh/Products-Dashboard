@@ -10,11 +10,17 @@ type DashboardSummariesData = {
     total_revenue_today: number
 }
 
-type RevenueDayData = {
-    ALL: {
-        labels: string[],
-        dataset: number[]
-    }
+type ChartData = {
+    labels: string[],
+    datasets: number[]
+}
+
+interface RevenueDayData {
+    [key: string]: ChartData
+
+    // ALL: ChartData,
+    // COMPLETED: ChartData,
+    // FAILED: ChartData,
 }
 
 type RevenueData = {

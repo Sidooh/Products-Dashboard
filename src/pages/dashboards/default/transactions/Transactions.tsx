@@ -5,11 +5,11 @@ import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
 import { Transaction } from 'utils/types';
 
-const RecentTransactions = ({transactions}: { transactions: Transaction[] }) => {
+const Transactions = ({title, transactions}: { title: string, transactions: Transaction[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable title={'Recent Transactions'} columns={[
+                <DataTable title={title} columns={[
                     {
                         accessorKey: 'customer',
                         header: 'Customer',
@@ -54,4 +54,4 @@ const RecentTransactions = ({transactions}: { transactions: Transaction[] }) => 
     );
 };
 
-export default RecentTransactions;
+export default Transactions;

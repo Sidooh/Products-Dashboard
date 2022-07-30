@@ -13,7 +13,7 @@ import { CONFIG } from '../../config';
 import Flex from '../../components/common/Flex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
-import { IconButton } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 
 const MpesaPayment = lazy(() => import('./MpesaPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
@@ -55,9 +55,11 @@ const Show = () => {
                                 <Flex alignItems={'center'}>
                                     <FormControl size={'sm'} value={requestId} placeholder={'Request ID'}
                                                onChange={(e) => setRequestId(e.currentTarget.value)}/>
-                                    <IconButton size={'small'} sx={{ml: 1}} onClick={onProcessTransaction}>
-                                        <FontAwesomeIcon icon={faArrowsRotate}/>
-                                    </IconButton>
+                                    <Tooltip title={'Process Transaction'}>
+                                        <IconButton size={'small'} sx={{ml: 1}} onClick={onProcessTransaction}>
+                                            <FontAwesomeIcon icon={faArrowsRotate}/>
+                                        </IconButton>
+                                    </Tooltip>
                                 </Flex>
                             }
                         </Col>

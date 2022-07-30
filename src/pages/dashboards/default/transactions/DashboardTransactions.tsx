@@ -1,14 +1,12 @@
+import { SectionError } from 'components/common/Error';
+import { ComponentLoader } from 'components/common/Loader';
+import { lazy } from 'react';
 
-import {SectionError} from 'components/common/Error';
-import {ComponentLoader} from 'components/common/Loader';
-import {lazy} from 'react';
+import { Transaction } from "utils/types";
+import { useTransactionsQuery } from "features/transactions/transactionsAPI";
+import { Status } from "utils/enums";
 
-import {Transaction} from "../../../../utils/types";
-import {useTransactionsQuery} from "../../../../features/transactions/transactionsAPI";
-import {Status} from "../../../../utils/enums";
-
-const RecentTransactions = lazy(() => import('./RecentTransactions'));
-const PendingTransactions = lazy(() => import('./PendingTransactions'));
+const Transactions = lazy(() => import('./Transactions'));
 
 const DashboardTransactions = () => {
     let {data: transactionData, isLoading, isSuccess, isError, error} = useTransactionsQuery();
@@ -17,18 +15,17 @@ const DashboardTransactions = () => {
     if (isLoading || !isSuccess || !transactionData) return <ComponentLoader/>;
 
     const {data: transactions} = transactionData;
-    console.log(transactions)
+    console.log(transactions);
 
-    const pendingTransactions = transactions.filter((t: Transaction) => t.status === Status.PENDING)
+    const pendingTransactions = transactions.filter((t: Transaction) => t.status === Status.PENDING);
 
     return (
         <>
-            {pendingTransactions && pendingTransactions.length > 0 &&
-                <PendingTransactions transactions={pendingTransactions}/>
+            {pendingTransactions?.length &&
+                <Transactions title={'Pending Transactions'} transactions={pendingTransactions}/>
             }
 
-            <RecentTransactions transactions={transactions}/>
-
+            <Transactions title={'Recent Transactions'} transactions={transactions}/>
         </>
     );
 };

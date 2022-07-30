@@ -62,7 +62,7 @@ const routes:RouteType[] = [
         label: 'Subscriptions',
         children: [
             {
-                name: 'Sub Types',
+                name: 'Subcription Types',
                 icon: faSuperscript,
                 to: '/subscriptions-types',
                 active: true

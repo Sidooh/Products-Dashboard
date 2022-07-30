@@ -1,37 +1,40 @@
-import {useParams} from 'react-router-dom';
-import {Card, Col, Row} from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import { Card, Col, FormControl, Row } from 'react-bootstrap';
 import StatusChip from 'components/chips/StatusChip';
 import CardBgCorner from 'components/CardBgCorner';
-import {useTransactionQuery, useTransactionProcessMutation} from '../../features/transactions/transactionsAPI';
-import {SectionError} from '../../components/common/Error';
-import {SectionLoader} from '../../components/common/Loader';
+import { useTransactionProcessMutation, useTransactionQuery } from '../../features/transactions/transactionsAPI';
+import { SectionError } from '../../components/common/Error';
+import { SectionLoader } from '../../components/common/Loader';
 import moment from 'moment';
-import {currencyFormat} from '../../utils/helpers';
-import {PaymentType, Status} from '../../utils/enums';
-import {lazy, useState} from 'react';
-import {CONFIG} from '../../config';
+import { currencyFormat } from '../../utils/helpers';
+import { PaymentType, Status } from '../../utils/enums';
+import { lazy, useState } from 'react';
+import { CONFIG } from '../../config';
+import Flex from '../../components/common/Flex';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import { IconButton } from '@mui/material';
 
 const MpesaPayment = lazy(() => import('./MpesaPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
 
 const Show = () => {
     const {id} = useParams<{ id: any }>();
-    const {data: transactionData, isError, error, isLoading, isSuccess} = useTransactionQuery(Number(id));
-    console.log('Transaction:', transactionData);
+    const {data: transaction, isError, error, isLoading, isSuccess} = useTransactionQuery(Number(id));
 
     const [requestId, setRequestId] = useState('');
 
     const [
         processTransaction, // This is the mutation trigger
         {isLoading: isUpdating}, // This is the destructured mutation result
-    ] = useTransactionProcessMutation()
+    ] = useTransactionProcessMutation();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || isUpdating || !isSuccess || !transactionData) return <SectionLoader/>;
-    const {data: transaction} = transactionData;
+    if (isLoading || isUpdating || !isSuccess || !transaction) return <SectionLoader/>;
+    console.log(transaction);
 
     const onProcessTransaction = (): void => {
-        processTransaction({id: transaction.id, request_id: requestId})
+        processTransaction({id: transaction.id, request_id: requestId});
     };
 
     return (
@@ -49,13 +52,13 @@ const Show = () => {
                         </Col>
                         <Col lg={6} className="mb-4 mb-lg-0 text-end">
                             {transaction.status === Status.PENDING &&
-                                <div>
-                                    <input value={requestId} onChange={(e) => setRequestId(e.currentTarget.value)}/>
-                                    <a className="text-end"
-                                       onClick={onProcessTransaction}>
-                                        Process
-                                    </a>
-                                </div>
+                                <Flex alignItems={'center'}>
+                                    <FormControl size={'sm'} value={requestId} placeholder={'Request ID'}
+                                               onChange={(e) => setRequestId(e.currentTarget.value)}/>
+                                    <IconButton size={'small'} sx={{ml: 1}} onClick={onProcessTransaction}>
+                                        <FontAwesomeIcon icon={faArrowsRotate}/>
+                                    </IconButton>
+                                </Flex>
                             }
                         </Col>
                     </Row>

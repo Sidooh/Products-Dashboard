@@ -61,6 +61,7 @@ export type Payment = {
     subtype: string
     status: Status
     updated_at: string
+    transaction_id: number
 }
 
 export type TandaRequest = {

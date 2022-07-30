@@ -1,6 +1,6 @@
 import { Col, Form, Row } from 'react-bootstrap';
-import { Button, Checkbox, ListItemText, Menu, MenuItem, Switch, Tooltip } from '@mui/material';
-import { Add } from '@mui/icons-material';
+import { Button, Checkbox, IconButton, ListItemText, Menu, MenuItem, Switch, Tooltip } from '@mui/material';
+import { Add, ViewColumn } from '@mui/icons-material';
 import { Dispatch, SetStateAction, useState } from 'react';
 import pluralize from 'pluralize';
 import { Str } from 'utils/helpers';
@@ -74,12 +74,13 @@ const Header = ({table, rowSelection, filtering, setFiltering, title, onCreateRo
                         <Tooltip title={`${filtering ? 'Disable' : 'Enable'} Filtering`}>
                             <Switch checked={filtering} onChange={() => setFiltering(!filtering)}/>
                         </Tooltip>
-                        <Button id="demo-positioned-button"
-                                aria-controls={Boolean(anchorEl) ? 'demo-positioned-menu' : undefined}
-                                aria-haspopup="true" aria-expanded={Boolean(anchorEl) ? 'true' : undefined}
-                                onClick={e => setAnchorEl(e.currentTarget)}>
-                            Show Columns
-                        </Button>
+                        <Tooltip title={`Show Columns`}>
+                            <IconButton aria-controls={Boolean(anchorEl) ? 'demo-positioned-menu' : undefined}
+                                    aria-haspopup="true" aria-expanded={Boolean(anchorEl) ? 'true' : undefined}
+                                    onClick={e => setAnchorEl(e.currentTarget)}>
+                                <ViewColumn/>
+                            </IconButton>
+                        </Tooltip>
                         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(undefined)}
                               anchorOrigin={{vertical: 'top', horizontal: 'left',}}
                               transformOrigin={{vertical: 'top', horizontal: 'left',}}>

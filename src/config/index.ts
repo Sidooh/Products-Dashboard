@@ -1,6 +1,3 @@
-// const defaultConfig =  process.env.NODE_ENV === 'production' ? ProductionConfig : DevelopmentConfig;
-// const defaultConfig =  process.env.NODE_ENV === 'development' ? ProductionConfig : DevelopmentConfig;
-
 export const CONFIG = {
     sidooh: {
         services: {

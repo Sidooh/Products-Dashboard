@@ -4,6 +4,7 @@ import moment from 'moment';
 import { currencyFormat } from '../../utils/helpers';
 
 const TandaTransaction = ({request}: { request: TandaRequest }) => {
+    console.log(request);
     return (
         <Card className="mb-3">
             <Card.Header className="pb-0"><h5 className="fs-0">Transaction - Tanda</h5></Card.Header>
@@ -17,7 +18,8 @@ const TandaTransaction = ({request}: { request: TandaRequest }) => {
                         <th className="border-0">Destination</th>
                         <th className="border-0">Message</th>
                         <th className="border-0 text-center">Status</th>
-                        <th className="border-0">Date</th>
+                        <th className="border-0">Created</th>
+                        <th className="border-0">Updated</th>
                     </tr>
                     </thead>
 
@@ -32,6 +34,10 @@ const TandaTransaction = ({request}: { request: TandaRequest }) => {
                         <td className="align-middle">{request.destination}</td>
                         <td className="align-middle">{request.message}</td>
                         <td className="align-middle text-center">{request.status}</td>
+                        <td className="align-middle text-end">
+                            {moment(request.last_modified).format('MMM D, Y')}<br/>
+                            <small>{moment(request.last_modified).format('hh:mm A')}</small>
+                        </td>
                         <td className="align-middle text-end">
                             {moment(request.updated_at).format('MMM D, Y')}<br/>
                             <small>{moment(request.updated_at).format('hh:mm A')}</small>

@@ -11,7 +11,7 @@ type PhoneChipType = {
     textOnly?: boolean
 }
 
-const PhoneChip = ({phone, bg = false, link = true, textOnly = false}: PhoneChipType) => {
+const PhoneChip = ({phone, bg = false, link = true, textOnly = true}: PhoneChipType) => {
     if (!phone) return <></>;
 
     const telco = getTelcoFromPhone(phone);
@@ -26,8 +26,7 @@ const PhoneChip = ({phone, bg = false, link = true, textOnly = false}: PhoneChip
         color = '#30AACB';
     }
 
-    if (textOnly) return <a href={phoneNumber ? `tel:${phoneNumber}` : '#'} className={'fw-bolder'}
-                            style={{color}}>{phoneNumber}</a>;
+    if (textOnly) return <span className={'fw-bolder'} style={{color}}>{String(phoneNumber).substring(1)}</span>;
 
     return (
         <Chip component={'a'} href={(link && phone) ? `tel:${phone}` : '#'}
@@ -35,7 +34,7 @@ const PhoneChip = ({phone, bg = false, link = true, textOnly = false}: PhoneChip
               variant={bg ? 'filled' : 'outlined'}
               sx={{px: .5, bgcolor: bg ? color : '', borderColor: bg ? '' : color, color: bg ? '' : color}}
               className={`font-size-12`}
-              label={<b>{phoneNumber}</b>}
+              label={<b>{String(phoneNumber).substring(1)}</b>}
         />
     );
 };

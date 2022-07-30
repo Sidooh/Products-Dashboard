@@ -15,13 +15,12 @@ const DashboardTransactions = () => {
     if (isLoading || !isSuccess || !transactionData) return <ComponentLoader/>;
 
     const {data: transactions} = transactionData;
-    console.log(transactions);
 
     const pendingTransactions = transactions.filter((t: Transaction) => t.status === Status.PENDING);
 
     return (
         <>
-            {pendingTransactions?.length &&
+            {pendingTransactions && pendingTransactions.length &&
                 <Transactions title={'Pending Transactions'} transactions={pendingTransactions}/>
             }
 

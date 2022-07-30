@@ -12,7 +12,7 @@ export const transactionsApi = createApi({
         prepareHeaders: (headers, {getState}) => {
             const token = (getState() as RootState).auth.auth?.token;
 
-            if (token) headers.set('authorization', `Bearer ${token}`)
+            if (token) headers.set('authorization', `Bearer ${token}`);
 
             return headers;
         }
@@ -23,9 +23,9 @@ export const transactionsApi = createApi({
             query: () => '/transactions?with=account,payment',
             providesTags: ['Transaction']
         }),
-        transaction: builder.query<ApiResponse<Transaction>, number>({
+        transaction: builder.query<Transaction, number>({
             query: id => `/transactions/${id}?with=account,payment,tanda_request`,
-            transformResponse: (response: { data: ApiResponse<Transaction> }) => response.data,
+            transformResponse: (response: ApiResponse<Transaction>) => response.data,
             providesTags: ['Transaction']
         }),
         transactionProcess: builder.mutation<ApiResponse<Transaction>, { id: number, request_id: string }>({

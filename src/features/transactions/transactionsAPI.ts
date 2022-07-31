@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { ApiResponse, Transaction } from 'utils/types';
 import { RootState } from 'app/store';
+import { Status } from '../../utils/enums';
 
 export const transactionsApi = createApi({
     reducerPath: 'transactionsApi',
@@ -19,8 +20,14 @@ export const transactionsApi = createApi({
     }),
     endpoints: (builder) => ({
         //  Transaction Endpoints
-        transactions: builder.query<ApiResponse<Transaction[]>, void>({
-            query: () => '/transactions?with=account,payment',
+        transactions: builder.query<ApiResponse<Transaction[]>, Status|void>({
+            query: (status?: Status) => {
+                let url = '/transactions?with=account,payment';
+
+                if(status) url += `&status=${status}`;
+
+                return url;
+            },
             providesTags: ['Transaction']
         }),
         transaction: builder.query<Transaction, number>({

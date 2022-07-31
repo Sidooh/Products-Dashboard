@@ -29,7 +29,7 @@ const ComponentLoader = () => {
     return (
         <ComponentLoaderWrapper>
             <Box position={'relative'}>
-                <LinearProgress color="primary"/>
+                <CircularProgress color="primary"/>
                 {/*<CircularProgress variant="determinate" size={100} thickness={3} value={100}*/}
                 {/*                  sx={{color: (theme) => theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]}}/>*/}
                 {/*<CircularProgress variant="indeterminate" disableShrink*/}

@@ -3,27 +3,28 @@ import DataTable from 'components/common/datatable';
 import StatusChip from 'components/chips/StatusChip';
 import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
+import SidoohAccount from 'components/common/SidoohAccount';
 import { Transaction } from 'utils/types';
 
-const Transactions = ({title, transactions}: { title: string, transactions: Transaction[] }) => {
+const Transactions = ({tableTitle, transactions}: { tableTitle: string, transactions: Transaction[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable title={title} columns={[
+                <DataTable title={tableTitle} columns={[
                     {
                         accessorKey: 'customer',
                         header: 'Customer',
-                        cell: ({row}: any) => (
-                            <span>
-                                {row.original.account.phone} <br/>
-                                <small><b>Destination: {row.original.destination}</b></small>
-                            </span>
-                        )
+                        cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
-                        accessorKey: 'product',
-                        header: 'Product',
-                        cell: ({row}: any) => row.original.product.name
+                        accessorKey: 'description',
+                        header: 'Description',
+                        cell: ({row}: any) => (
+                            <span>
+                                {row.original.description}<br/>
+                                <small><b>{row.original.destination}</b></small>
+                            </span>
+                        )
                     },
                     {
                         accessorKey: 'amount',
@@ -46,6 +47,7 @@ const Transactions = ({title, transactions}: { title: string, transactions: Tran
                     },
                     {
                         id: 'actions',
+                        header: '',
                         cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
                     }
                 ]} data={transactions}/>

@@ -6,9 +6,9 @@ const DashboardTransactions = lazy(() => import('./transactions/DashboardTransac
 const Dashboard = () => {
     return (
         <>
-            <DashboardStatistics />
+            <DashboardStatistics/>
 
-            <DashboardTransactions />
+            <DashboardTransactions/>
         </>
     );
 };

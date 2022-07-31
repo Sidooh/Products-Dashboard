@@ -2,6 +2,8 @@ import { CONFIG } from 'config';
 import PhoneChip from 'components/chips/PhoneChip';
 
 const SidoohAccount = ({ account }) => {
+    if(!account) return null;
+
     return (
         <span>
             {account?.user?.name} <br/>

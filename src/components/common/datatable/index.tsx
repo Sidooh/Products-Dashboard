@@ -107,8 +107,7 @@ const DataTable = ({title, data, columns, onCreateRow, viewAllLink = ''}: DataTa
                     <div className="search-box me-2 mb-2 d-inline-block">
                         <div className="position-relative">
                             <DebouncedInput type={'search'} value={globalFilter ?? ''}
-                                            onChange={value => setGlobalFilter(String(value))}
-                                            className="shadow-sm" placeholder="Search..."
+                                            onChange={value => setGlobalFilter(String(value))} placeholder="Search..."
                                             label={'Search all columns...'}/>
                             <i className="bx bx-search-alt search-icon"/>
                         </div>

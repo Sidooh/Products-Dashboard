@@ -5,8 +5,9 @@ import DataTable from 'components/common/datatable';
 import { useEarningAccountsQuery } from 'features/earnings/earningsAPI';
 import { SectionLoader } from 'components/common/Loader';
 import { SectionError } from 'components/common/Error';
-import { currencyFormat } from '../../utils/helpers';
-import PhoneChip from '../../components/chips/PhoneChip';
+import { currencyFormat, groupBy } from '../../utils/helpers';
+import { EarningAccount } from '../../utils/types';
+import SidoohAccount from '../../components/common/SidoohAccount';
 
 const EarningAccounts = () => {
     let {data, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
@@ -16,6 +17,8 @@ const EarningAccounts = () => {
 
     let {data: accounts} = data;
     console.log(accounts);
+    const groupByAccount = groupBy<EarningAccount>(['account_id']);
+    console.log(groupByAccount(accounts));
 
     return (
         <Card className={'mb-3'}>
@@ -23,9 +26,9 @@ const EarningAccounts = () => {
                 <DataTable title={'Earning Accounts'} columns={[
                     {
                         accessorKey: 'customer',
-                        accessorFn: row => row.account.phone,
+                        accessorFn: row => row?.account?.phone,
                         header: 'Customer',
-                        cell: ({row}: any) => <PhoneChip phone={row.original.account?.phone}/>
+                        cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
                         accessorKey: 'type',

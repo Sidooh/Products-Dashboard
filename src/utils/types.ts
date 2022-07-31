@@ -105,9 +105,11 @@ export type Transaction = {
 
 export type EarningAccount = {
     id?: number
+    account_id: number
     type: string
     self_amount: number
     invite_amount: number
+    account?: Account
 }
 
 export type Cashback = {

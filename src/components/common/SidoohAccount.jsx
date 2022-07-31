@@ -2,12 +2,12 @@ import { CONFIG } from 'config';
 import PhoneChip from 'components/chips/PhoneChip';
 
 const SidoohAccount = ({ account }) => {
-    if(!account) return null;
+    if (!account) return null;
 
     return (
         <span>
             {account?.user?.name} <br/>
-            <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${account.id}`}>
+            <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${account.id}`} target={'_blank'}>
                 <PhoneChip phone={account.phone} textOnly/>
             </a>
         </span>

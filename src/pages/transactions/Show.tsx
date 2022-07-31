@@ -53,7 +53,7 @@ const Show = () => {
                             {transaction.status === Status.PENDING && transaction.payment?.status === Status.COMPLETED &&
                                 <Flex alignItems={'center'}>
                                     <FormControl size={'sm'} value={requestId} placeholder={'Request ID'}
-                                               onChange={(e) => setRequestId(e.currentTarget.value)}/>
+                                                 onChange={(e) => setRequestId(e.currentTarget.value)}/>
                                     <Tooltip title={'Process Transaction'}>
                                         <IconButton size={'small'} sx={{ml: 1}} onClick={onProcessTransaction}>
                                             <FontAwesomeIcon icon={faArrowsRotate}/>
@@ -72,12 +72,14 @@ const Show = () => {
                         <Col lg={6} className="mb-4 mb-lg-0">
                             <h5 className="mb-3 fs-0">Account</h5>
                             <h6 className="mb-2">
-                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${transaction.account?.user_id}`}>
+                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${transaction.account?.user_id}`}
+                                   target={'_blank'}>
                                     {transaction.account?.user?.name}
                                 </a>
                             </h6>
                             <p className="mb-0 fs--1">
-                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${transaction.account?.id}`}>
+                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${transaction.account?.id}`}
+                                   target={'_blank'}>
                                     {transaction.account?.phone}
                                 </a>
                             </p>

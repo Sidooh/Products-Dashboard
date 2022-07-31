@@ -3,14 +3,25 @@ import DataTable from 'components/common/datatable';
 import StatusChip from 'components/chips/StatusChip';
 import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
-import { Transaction } from 'utils/types';
-import SidoohAccount from '../../../../components/common/SidoohAccount';
+import SidoohAccount from 'components/common/SidoohAccount';
+import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
+import { SectionError } from 'components/common/Error';
+import { ComponentLoader } from 'components/common/Loader';
+import { Status } from 'utils/enums';
 
-const Transactions = ({title, transactions}: { title: string, transactions: Transaction[] }) => {
+const PendingTransactions = () => {
+    let {data: transactionData, isLoading, isSuccess, isError, error} = useTransactionsQuery(Status.PENDING);
+
+    if (isError) return <SectionError error={error}/>;
+    if (isLoading || !isSuccess || !transactionData) return <ComponentLoader/>;
+
+    const {data: transactions} = transactionData;
+    console.log('Pending Transactions', transactions);
+
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable title={title} columns={[
+                <DataTable title={'Pending Transactions'} columns={[
                     {
                         accessorKey: 'customer',
                         header: 'Customer',
@@ -56,4 +67,4 @@ const Transactions = ({title, transactions}: { title: string, transactions: Tran
     );
 };
 
-export default Transactions;
+export default PendingTransactions;

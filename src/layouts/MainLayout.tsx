@@ -34,9 +34,8 @@ const MainLayout = () => {
 
     return (
         <div className={isFluid ? 'container-fluid' : 'container'}>
-            {(navbarPosition === 'vertical' || navbarPosition === 'combo') && (
-                <NavbarVertical/>
-            )}
+            {(navbarPosition === 'vertical' || navbarPosition === 'combo') && <NavbarVertical/>}
+
             <div className={classNames('content', {'pb-0': isKanban})}>
                 <NavbarTop/>
                 {/*------ Main Routes ------*/}

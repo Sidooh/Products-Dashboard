@@ -1,12 +1,10 @@
-
 import { SectionError } from 'components/common/Error';
 import { ComponentLoader } from 'components/common/Loader';
-import { lazy } from 'react';
-import { Col, Row } from "react-bootstrap";
-import { useGetDashboardSummariesQuery } from "../../../../../features/products/productsAPI";
-
-const TotalRevenue = lazy(() => import('./Revenue'));
-const TransactionsCount = lazy(() => import('./Count'));
+import { Card, Col, Row } from "react-bootstrap";
+import { useGetDashboardSummariesQuery } from "features/products/productsAPI";
+import CardBgCorner from 'components/CardBgCorner';
+import { Chip } from '@mui/material';
+import CountUp from 'react-countup';
 
 const TransactionSummaries = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardSummariesQuery();
@@ -20,11 +18,39 @@ const TransactionSummaries = () => {
         <>
             <Row className="g-3">
                 <Col md={6} xxl={12}>
-                    <TransactionsCount total={stats.total_transactions}
-                                       total_today={stats.total_transactions_today}/>
+                    <Card style={{'height': '150px'}}>
+                        <CardBgCorner corner={2}/>
+                        <Card.Body>
+                            <Row className="flex-between-center">
+                                <Col className="d-md-flex d-lg-block flex-between-center">
+                                    <h5 className="mb-md-0 mb-lg-2">Transactions</h5>
+                                    <Chip sx={{px: .5}} variant={'outlined'} color={'success'} className={`mt-2 mb-3`}
+                                          label={<CountUp end={stats.total_transactions_today} separator=","/>}/>
+                                    <h4 className="fs-3 fw-normal text-700">
+                                        <CountUp end={stats.total_transactions} separator=","/>
+                                    </h4>
+                                </Col>
+                            </Row>
+                        </Card.Body>
+                    </Card>
                 </Col>
                 <Col md={6} xxl={12}>
-                    <TotalRevenue total={stats.total_revenue} total_today={stats.total_revenue_today}/>
+                    <Card style={{'height': '150px'}}>
+                        <CardBgCorner/>
+                        <Card.Body>
+                            <Row className="sflex-between-center">
+                                <Col className="d-md-flex d-lg-block flex-between-center">
+                                    <h5 className="mb-md-0 mb-lg-2">Revenue</h5>
+                                    <Chip sx={{px: .5}} variant={'outlined'} color={'success'} className={`mt-2 mb-3`}
+                                          label={<CountUp end={stats.total_revenue_today} prefix={' KES '}
+                                                          separator=","/>}/>
+                                    <h4 className="fs-3 fw-normal text-700 align-text-bottom">
+                                        <CountUp end={stats.total_revenue} prefix={'KES '} separator=","/>
+                                    </h4>
+                                </Col>
+                            </Row>
+                        </Card.Body>
+                    </Card>
                 </Col>
             </Row>
         </>

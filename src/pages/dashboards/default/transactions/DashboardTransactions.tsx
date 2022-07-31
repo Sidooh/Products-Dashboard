@@ -1,31 +1,15 @@
-import { SectionError } from 'components/common/Error';
 import { ComponentLoader } from 'components/common/Loader';
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 
-import { Transaction } from "utils/types";
-import { useTransactionsQuery } from "features/transactions/transactionsAPI";
-import { Status } from "utils/enums";
-
-const Transactions = lazy(() => import('./Transactions'));
+const PendingTransactions = lazy(() => import('./PendingTransactions'));
+const RecentTransactions = lazy(() => import('./RecentTransactions'));
 
 const DashboardTransactions = () => {
-    let {data: transactionData, isLoading, isSuccess, isError, error} = useTransactionsQuery();
-
-    if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !transactionData) return <ComponentLoader/>;
-
-    const {data: transactions} = transactionData;
-    console.log(transactions);
-
-    const pendingTransactions = transactions.filter((t: Transaction) => t.status === Status.PENDING);
-
     return (
         <>
-            {pendingTransactions?.length > 0 &&
-                <Transactions title={'Pending Transactions'} transactions={pendingTransactions}/>
-            }
+            <Suspense fallback={<ComponentLoader/>}><PendingTransactions/></Suspense>
 
-            <Transactions title={'Recent Transactions'} transactions={transactions}/>
+            <Suspense fallback={<ComponentLoader/>}><RecentTransactions/></Suspense>
         </>
     );
 };

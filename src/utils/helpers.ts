@@ -219,9 +219,17 @@ export const currencyFormat = (number?: number, currency = 'KES') => number && (
     currency
 })).format(number);
 
-export const groupBy = <T>(keys: (keyof T)[]) => (array: T[]): Record<string, T[]> =>
-    array.reduce((objectsByKeyValue, obj) => {
-        const value = keys.map((key) => obj[key]).join('-');
-        objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
-        return objectsByKeyValue;
-    }, {} as Record<string, T[]>);
+// Accepts the array and key
+export const groupBy = (array:any[], key:string, asArray = false) => {
+    // Return the end result
+    const groupedData = array.reduce((result, currentValue) => {
+        // If an array already present for key, push it to the array. Else create an array and push the object
+        (result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue);
+        // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
+        return result;
+    }, {}); // empty object is the initial value for result object
+
+    if(asArray) return Object.values(groupedData);
+
+    return groupedData;
+};

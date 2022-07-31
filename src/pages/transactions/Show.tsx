@@ -31,7 +31,6 @@ const Show = () => {
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || isUpdating || !isSuccess || !transaction) return <SectionLoader/>;
-    console.log(transaction);
 
     const onProcessTransaction = (): void => {
         processTransaction({id: transaction.id, request_id: requestId});
@@ -51,7 +50,7 @@ const Show = () => {
                             <StatusChip status={transaction.status} entity={'transaction'} entityId={Number(id)}/>
                         </Col>
                         <Col lg={6} className="mb-4 mb-lg-0 text-end">
-                            {transaction.status === Status.PENDING &&
+                            {transaction.status === Status.PENDING && transaction.payment?.status === Status.COMPLETED &&
                                 <Flex alignItems={'center'}>
                                     <FormControl size={'sm'} value={requestId} placeholder={'Request ID'}
                                                onChange={(e) => setRequestId(e.currentTarget.value)}/>

@@ -37,11 +37,23 @@ export const transactionsApi = createApi({
             transformResponse: (response: { data: ApiResponse<Transaction> }) => response.data,
             invalidatesTags: ['Transaction']
         }),
+
+        checkPayment: builder.mutation<ApiResponse<Transaction>, { id: number }>({
+            query: ({id, ...patch}) => ({
+                url: `/transactions/${id}/check-payment`,
+                method: 'POST',
+                body: patch
+            }),
+            transformResponse: (response: { data: ApiResponse<Transaction> }) => response.data,
+            invalidatesTags: ['Transaction']
+        }),
+
     })
 });
 
 export const {
     useTransactionsQuery,
     useTransactionQuery,
-    useTransactionProcessMutation
+    useTransactionProcessMutation,
+    useCheckPaymentMutation
 } = transactionsApi;

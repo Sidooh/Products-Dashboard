@@ -21,7 +21,7 @@ const DashboardTransactions = () => {
 
     return (
         <>
-            {pendingTransactions?.length &&
+            {pendingTransactions?.length > 0 &&
                 <Transactions title={'Pending Transactions'} transactions={pendingTransactions}/>
             }
 

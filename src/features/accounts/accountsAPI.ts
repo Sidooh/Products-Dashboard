@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { ApiResponse, ProductAccount } from 'utils/types';
+import { AccountDetails, ApiResponse, ProductAccount } from 'utils/types';
 import { RootState } from 'app/store';
 
 export const accountsAPI = createApi({
@@ -23,9 +23,14 @@ export const accountsAPI = createApi({
             query: product => `/${product}-accounts?with=account`,
             providesTags: ['Account']
         }),
+        account: builder.query<AccountDetails, number>({
+            query: id => `/${id}`,
+            transformResponse: (response: ApiResponse<AccountDetails>) => response.data,
+        }),
     })
 });
 
 export const {
+    useAccountQuery,
     useAccountsQuery,
 } = accountsAPI;

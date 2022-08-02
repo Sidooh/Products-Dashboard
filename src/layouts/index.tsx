@@ -6,6 +6,7 @@ import GuestLayout from './GuestLayout';
 import { is } from 'utils/helpers';
 import SettingsToggle from 'components/settings-panel/SettingsToggle';
 import SettingsPanel from 'components/settings-panel/SettingsPanel';
+import ShowAccountDetails from "../pages/dashboards/account";
 
 const Login = lazy(() => import('pages/auth/Login'));
 const Dashboard = lazy(() => import('pages/dashboards/default'));
@@ -49,6 +50,8 @@ const Layout = () => {
                     <Route path={'/subscriptions-types'} element={<SubscriptionTypes/>}/>
 
                     <Route path={'/accounts/:product'} element={<Accounts/>}/>
+
+                    <Route path={'/accounts/:id/details'} element={<ShowAccountDetails/>}/>
 
                     <Route path={'*'} element={<Dashboard/>}/>
                 </Route>

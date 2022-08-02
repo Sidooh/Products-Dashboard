@@ -84,9 +84,11 @@ export type User = {
 
 export type Account = {
     id: number
-    phone: number
+    phone: string
     user?: User
-    user_id: number
+    user_id: number,
+    created_at: string,
+    status: string
 }
 
 export type Transaction = {
@@ -124,4 +126,25 @@ export type ProductAccount = {
     provider: string
     account_number: number
     priority: number
+}
+
+export type Voucher = {
+    id: number
+    type: string
+    balance: number
+}
+
+export type AccountDetails = {
+    account: Account
+    totalTransactionsToday: number
+    totalTransactionsWeek: number
+    totalTransactionsMonth: number
+    totalTransactions: number
+    totalRevenueToday: number
+    totalRevenueWeek: number
+    totalRevenueMonth: number
+    totalRevenue: number
+    recentTransactions: Transaction[]
+    voucher: Voucher,
+    earningAccounts: EarningAccount[]
 }

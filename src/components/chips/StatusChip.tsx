@@ -1,10 +1,11 @@
 import { Status } from 'utils/enums';
 import { Chip, ListItemIcon, Menu, MenuItem } from '@mui/material';
-import { Check, Error, Info, Pending } from '@mui/icons-material';
+import { Check, Error, EventBusy, Info, Pending } from '@mui/icons-material';
 import { useState } from 'react';
 
 const statusProps = (status: Status, colorIcon = true) => {
     let color: undefined | 'success' | 'warning' | 'info' | 'error' = undefined, icon;
+
     if ([Status.COMPLETED, Status.ACTIVE].includes(status)) {
         color = 'success';
         icon = <Check color={colorIcon ? color : 'disabled'}/>;
@@ -17,6 +18,8 @@ const statusProps = (status: Status, colorIcon = true) => {
     } else if ([Status.FAILED].includes(status)) {
         color = 'error';
         icon = <Error color={colorIcon ? color : 'disabled'}/>;
+    } else if ([Status.EXPIRED].includes(status)) {
+        icon = <EventBusy color={colorIcon ? color : 'disabled'}/>;
     }
 
     return {color, icon};

@@ -12,6 +12,7 @@ export enum Status {
     PENDING = 'PENDING',
     REFUNDED = 'REFUNDED',
     FAILED = 'FAILED',
+    EXPIRED = 'EXPIRED',
 }
 
 export enum PaymentType {

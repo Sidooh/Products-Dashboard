@@ -8,7 +8,7 @@ const GuestLayout = () => {
     return (
         <section className="py-0">
             <Row className="flex-center min-vh-100 py-6">
-                <Col sm={10} md={8} lg={6} xl={5} className="col-xxl-4 position-relative">
+                <Col sm={10} md={8} lg={6} xl={4} xxl={3} className="position-relative">
                     <img className="bg-auth-circle-shape" src={IMAGES.icons.spotIllustrations.bg_shape} alt=""
                          width="250"/>
                     <img className="bg-auth-circle-shape-2" src={IMAGES.icons.spotIllustrations.shape_1} alt=""

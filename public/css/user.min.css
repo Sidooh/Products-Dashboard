@@ -282,3 +282,5 @@ table td.actions .btn {
 .fa-icon-wait {
     opacity: 1;
 }
+
+.right-0{right:0 !important}.right-50{right:50% !important}.right-100{top:100% !important}

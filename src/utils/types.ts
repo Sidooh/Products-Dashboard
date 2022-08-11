@@ -95,7 +95,7 @@ export type Transaction = Model & {
     amount: number
     payment?: Payment
     tanda_request?: TandaRequest
-    account?: Account
+    account: Account
 }
 
 export type EarningAccount = Model & {

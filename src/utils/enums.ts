@@ -7,12 +7,22 @@ export enum Telco {
 }
 
 export enum Status {
+    //success
     COMPLETED = 'COMPLETED',
     ACTIVE = 'ACTIVE',
+
+    //info
     PENDING = 'PENDING',
-    REFUNDED = 'REFUNDED',
-    FAILED = 'FAILED',
+
+    //warning
+    INACTIVE = 'INACTIVE',
     EXPIRED = 'EXPIRED',
+
+    //grey
+    REFUNDED = 'REFUNDED',
+
+    //red
+    FAILED = 'FAILED',
 }
 
 export enum PaymentType {

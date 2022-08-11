@@ -9,6 +9,7 @@ import { RootState } from 'app/store';
 import { setTheme } from 'features/theme/themeSlice';
 import { navbarBreakPoint, topNavbarBreakpoint } from 'constants/breakpoints';
 import { Logo } from '@nabcellent/sui-react';
+import { IMAGES } from 'constants/images';
 
 const NavbarTop = () => {
     const dispatch = useAppDispatch();
@@ -72,7 +73,7 @@ const NavbarTop = () => {
                 </button>
             </Navbar.Toggle>
 
-            <Logo at="navbar-top" width={40}/>
+            <Logo src={IMAGES.logos.sidooh} at="navbar-top" width={40}/>
 
             <Nav navbar className={`align-items-center d-none d-${topNavbarBreakpoint}-block`} as="ul">
                 <Nav.Item as="li">

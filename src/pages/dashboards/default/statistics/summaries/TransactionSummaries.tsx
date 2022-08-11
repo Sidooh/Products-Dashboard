@@ -2,7 +2,8 @@ import { Card, Col, Row } from "react-bootstrap";
 import { useGetDashboardSummariesQuery } from "features/products/productsAPI";
 import { Chip } from '@mui/material';
 import CountUp from 'react-countup';
-import { CardBgCorner, ComponentLoader, SectionError } from "@nabcellent/sui-react";
+import { ComponentLoader, SectionError } from "@nabcellent/sui-react";
+import CardBgCorner from 'components/CardBgCorner';
 
 const TransactionSummaries = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardSummariesQuery();

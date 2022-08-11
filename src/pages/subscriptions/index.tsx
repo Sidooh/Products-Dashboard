@@ -2,17 +2,16 @@ import { Card } from 'react-bootstrap';
 import TableActions from 'components/common/TableActions';
 import { useSubscriptionsQuery } from 'features/subscriptions/subscriptionsAPI';
 import moment from 'moment';
-import SidoohAccount from '../../components/common/SidoohAccount';
+import SidoohAccount from 'components/common/SidoohAccount';
 import { DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
-import { Subscription } from '../../utils/types';
+import { Subscription } from 'utils/types';
 
 const Subscriptions = () => {
-    let {data, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
+    let {data:subscriptions, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !subscriptions) return <SectionLoader/>;
 
-    let {data: subscriptions} = data;
     console.log(subscriptions);
 
     return (
@@ -21,7 +20,7 @@ const Subscriptions = () => {
                 <DataTable title={'Subscriptions'} columns={[
                     {
                         accessorKey: 'customer',
-                        accessorFn: (row: Subscription) => row.account.phone,
+                        accessorFn: (row: Subscription) => `${row.account?.phone}: ${row.account?.user?.name}`,
                         header: 'Customer',
                         cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },

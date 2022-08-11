@@ -1,6 +1,5 @@
 import { Nav } from 'react-bootstrap';
 import ProfileDropdown from 'components/navbar/top/ProfileDropdown';
-import NotificationDropdown from 'components/navbar/top/NotificationDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTheme } from 'features/theme/themeSlice';
@@ -28,7 +27,6 @@ const TopNavRightSideNavItem = () => {
                 </Nav.Link>
             </Nav.Item>
 
-            <NotificationDropdown/>
             <Waffle waffleLinks={[
                 {
                     avatarText: 'A',

@@ -6,7 +6,8 @@ import { RootState } from 'app/store';
 import { resetTheme, setTheme } from 'features/theme/themeSlice';
 import { CONFIG } from 'config';
 import { faPalette, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
-import { Badge, Flex, IMAGES } from '@nabcellent/sui-react';
+import { Badge, Flex } from '@nabcellent/sui-react';
+import { IMAGES } from 'constants/images';
 
 const SettingsPanel = () => {
     const {

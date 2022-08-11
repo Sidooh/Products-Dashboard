@@ -8,7 +8,8 @@ import { CONFIG } from 'config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { IconButton, Tooltip } from '@mui/material';
-import { CardBgCorner, currencyFormat, Flex, SectionError, SectionLoader, StatusChip } from '@nabcellent/sui-react';
+import { currencyFormat, Flex, SectionError, SectionLoader, StatusChip } from '@nabcellent/sui-react';
+import CardBgCorner from 'components/CardBgCorner';
 
 const MpesaPayment = lazy(() => import('./MpesaPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
@@ -34,7 +35,7 @@ const Show = () => {
     return (
         <>
             <Card className={'mb-3'}>
-                <CardBgCorner/>
+                <CardBgCorner corner={2}/>
                 <Card.Body className="position-relative">
                     <h5>Transaction Details: #{transaction.id}</h5>
                     <p className="fs--1">{moment(transaction.created_at).format('MMM D, Y, hh:mm A')}</p>

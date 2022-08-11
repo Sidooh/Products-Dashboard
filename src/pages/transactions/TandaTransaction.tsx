@@ -1,7 +1,7 @@
 import { Card, Table } from 'react-bootstrap';
 import { TandaRequest } from 'utils/types';
 import moment from 'moment';
-import { currencyFormat } from '../../utils/helpers';
+import { currencyFormat } from '@nabcellent/sui-react';
 
 const TandaTransaction = ({request}: { request: TandaRequest }) => {
     console.log(request);

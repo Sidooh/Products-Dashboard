@@ -6,7 +6,7 @@ export const CONFIG = {
                     url: import.meta.env.VITE_ACCOUNTS_API_URL
                 },
                 dashboard: {
-                    url: import.meta.env.VITE_ACCOUNTS_DASH_URL
+                    url: import.meta.env.VITE_ACCOUNTS_DASHBOARD_URL
                 }
             },
             products: {
@@ -16,17 +16,24 @@ export const CONFIG = {
             },
             payments: {
                 dashboard: {
-                    url: import.meta.env.VITE_PAYMENTS_DASH_URL
+                    url: import.meta.env.VITE_PAYMENTS_DASHBOARD_URL
                 }
             },
-            notify  : {
+            notify: {
                 dashboard: {
-                    url: import.meta.env.VITE_NOTIFY_DASH_URL
+                    url: import.meta.env.VITE_NOTIFY_DASHBOARD_URL
                 }
             },
-            legacy  : {
-                url: import.meta.env.VITE_LEGACY_URL
+            savings: {
+                dashboard: {
+                    url: import.meta.env.VITE_SAVINGS_DASHBOARD_URL
+                }
             },
+            ussd: {
+                dashboard: {
+                    url: import.meta.env.VITE_USSD_DASHBOARD_URL
+                }
+            }
         },
 
         tagline: 'Sidooh, Makes You Money with Every Purchase!',

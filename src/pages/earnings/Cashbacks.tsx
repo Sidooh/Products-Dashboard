@@ -1,11 +1,8 @@
 import { Card } from 'react-bootstrap';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
-import DataTable from 'components/common/datatable';
 import { useCashbacksQuery } from 'features/earnings/earningsAPI';
-import { SectionLoader } from 'components/common/Loader';
-import { SectionError } from 'components/common/Error';
-import { currencyFormat } from '../../utils/helpers';
+import { DataTable, SectionError, SectionLoader, TableDate, currencyFormat } from '@nabcellent/sui-react';
+import { Cashback } from 'utils/types';
 
 const EarningAccounts = () => {
     let {data, isLoading, isSuccess, isError, error} = useCashbacksQuery();
@@ -22,7 +19,7 @@ const EarningAccounts = () => {
                 <DataTable title={'Cashbacks'} columns={[
                     {
                         accessorKey: 'description',
-                        accessorFn: row => row.transaction.description,
+                        accessorFn: (row: Cashback) => row.transaction?.description,
                         header: 'Description',
                     },
                     {

@@ -1,9 +1,8 @@
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
-import { SectionError } from 'components/common/Error';
-import { ComponentLoader } from 'components/common/Loader';
 import Transactions from './Transactions';
 import { Transaction } from 'utils/types';
 import { Status } from 'utils/enums';
+import { ComponentLoader, SectionError } from '@nabcellent/sui-react';
 
 const RecentTransactions = () => {
     let {data: transactionData, isLoading, isSuccess, isError, error} = useTransactionsQuery();

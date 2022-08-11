@@ -1,11 +1,7 @@
 import { Card } from 'react-bootstrap';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
-import DataTable from 'components/common/datatable';
+import { DataTable, SectionError, TableDate, Str, SectionLoader } from '@nabcellent/sui-react';
 import { useAccountsQuery } from 'features/accounts/accountsAPI';
-import { SectionLoader } from 'components/common/Loader';
-import { SectionError } from 'components/common/Error';
-import { Str } from 'utils/helpers';
 import { Navigate, useParams } from 'react-router-dom';
 import SidoohAccount from '../../components/common/SidoohAccount';
 
@@ -29,7 +25,7 @@ const Accounts = () => {
                 <DataTable title={`${Str.ucFirst(product!)} Accounts`} columns={[
                     {
                         accessorKey: 'customer',
-                        accessorFn: row => row.account.phone,
+                        accessorFn: (row: any) => row.account.phone,
                         header: 'Customer',
                         cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },

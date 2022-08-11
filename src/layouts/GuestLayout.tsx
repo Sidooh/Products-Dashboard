@@ -1,14 +1,12 @@
 import { memo, Suspense } from 'react';
 import { Card, Col, Row } from 'react-bootstrap';
-import Logo from 'components/common/Logo';
-import Section from 'components/common/Section';
 import { Outlet } from 'react-router-dom';
-import { PageLoader } from 'components/common/Loader';
 import { IMAGES } from 'constants/images';
+import { Logo, PageLoader } from '@nabcellent/sui-react';
 
 const GuestLayout = () => {
     return (
-        <Section className="py-0">
+        <section className="py-0">
             <Row className="flex-center min-vh-100 py-6">
                 <Col sm={10} md={8} lg={6} xl={5} className="col-xxl-4 position-relative">
                     <img className="bg-auth-circle-shape" src={IMAGES.icons.spotIllustrations.bg_shape} alt=""
@@ -25,7 +23,7 @@ const GuestLayout = () => {
                     </Card>
                 </Col>
             </Row>
-        </Section>
+        </section>
     );
 };
 

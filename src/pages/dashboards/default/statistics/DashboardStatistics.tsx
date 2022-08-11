@@ -1,6 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import { lazy, Suspense } from 'react';
-import { ComponentLoader } from 'components/common/Loader';
+import { ComponentLoader } from "@nabcellent/sui-react";
 
 const RevenueChartWrapper = lazy(() => import('./revenue/RevenueChartWrapper'));
 const TransactionSummaries = lazy(() => import('./summaries/TransactionSummaries'));

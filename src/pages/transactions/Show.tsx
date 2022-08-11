@@ -1,19 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { Card, Col, FormControl, Row } from 'react-bootstrap';
-import StatusChip from 'components/chips/StatusChip';
-import CardBgCorner from 'components/CardBgCorner';
-import { useTransactionProcessMutation, useTransactionQuery } from '../../features/transactions/transactionsAPI';
-import { SectionError } from '../../components/common/Error';
-import { SectionLoader } from '../../components/common/Loader';
+import { useTransactionProcessMutation, useTransactionQuery } from 'features/transactions/transactionsAPI';
 import moment from 'moment';
-import { currencyFormat } from '../../utils/helpers';
-import { PaymentType, Status } from '../../utils/enums';
+import { PaymentType, Status } from 'utils/enums';
 import { lazy, useState } from 'react';
-import { CONFIG } from '../../config';
-import Flex from '../../components/common/Flex';
+import { CONFIG } from 'config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { IconButton, Tooltip } from '@mui/material';
+import { CardBgCorner, currencyFormat, Flex, SectionError, SectionLoader, StatusChip } from '@nabcellent/sui-react';
 
 const MpesaPayment = lazy(() => import('./MpesaPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
@@ -47,7 +42,7 @@ const Show = () => {
 
                     <Row>
                         <Col lg={6} className="mb-4 mb-lg-0">
-                            <StatusChip status={transaction.status} entity={'transaction'} entityId={Number(id)}/>
+                            <StatusChip status={transaction.status}/>
                         </Col>
                         <Col lg={6} className="mb-4 mb-lg-0 text-end">
                             {transaction.status === Status.PENDING && transaction.payment?.status === Status.COMPLETED &&

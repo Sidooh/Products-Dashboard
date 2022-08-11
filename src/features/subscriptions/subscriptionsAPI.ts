@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { EarningAccount, Cashback, ApiResponse } from 'utils/types';
+import { ApiResponse, Subscription, SubscriptionType } from 'utils/types';
 import { RootState } from 'app/store';
 
 export const subscriptionsAPI = createApi({
@@ -19,13 +19,15 @@ export const subscriptionsAPI = createApi({
     }),
     endpoints: (builder) => ({
         //  Earning Endpoints
-        subscriptions: builder.query<ApiResponse<EarningAccount[]>, void>({
+        subscriptions: builder.query<Subscription[], void>({
             query: () => '?with=account',
-            providesTags: ['Subscription']
+            providesTags: ['Subscription'],
+            transformResponse: (response:ApiResponse<Subscription[]>) => response.data
         }),
-        subscriptionTypes: builder.query<ApiResponse<Cashback[]>, void>({
+        subscriptionTypes: builder.query<SubscriptionType[], void>({
             query: () => `/subscription-types`,
-            providesTags: ['SubscriptionType']
+            providesTags: ['SubscriptionType'],
+            transformResponse: (response:ApiResponse<SubscriptionType[]>) => response.data
         }),
     })
 });

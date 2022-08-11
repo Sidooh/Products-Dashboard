@@ -1,6 +1,5 @@
+import { ComponentLoader, SectionError } from '@nabcellent/sui-react';
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
-import { SectionError } from 'components/common/Error';
-import { ComponentLoader } from 'components/common/Loader';
 import { Status } from 'utils/enums';
 import Transactions from './Transactions';
 

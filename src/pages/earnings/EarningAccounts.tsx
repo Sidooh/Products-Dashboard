@@ -1,13 +1,10 @@
 import { Card } from 'react-bootstrap';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
-import DataTable from 'components/common/datatable';
 import { useEarningAccountsQuery } from 'features/earnings/earningsAPI';
-import { SectionLoader } from 'components/common/Loader';
-import { SectionError } from 'components/common/Error';
-import { currencyFormat, groupBy } from '../../utils/helpers';
-import SidoohAccount from '../../components/common/SidoohAccount';
-import { EarningAccount } from '../../utils/types';
+import { groupBy } from 'utils/helpers';
+import SidoohAccount from 'components/common/SidoohAccount';
+import { EarningAccount } from 'utils/types';
+import { DataTable, SectionError, SectionLoader, TableDate, currencyFormat } from '@nabcellent/sui-react';
 
 const EarningAccounts = () => {
     let {data, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
@@ -25,14 +22,14 @@ const EarningAccounts = () => {
                 <DataTable title={'Earning Accounts'} columns={[
                     {
                         accessorKey: 'customer',
-                        accessorFn: row => row[0]?.account?.phone,
+                        accessorFn: (row: EarningAccount[]) => row[0]?.account?.phone,
                         header: 'Customer',
                         cell: ({row}: any) => <SidoohAccount account={row.original[0].account}/>
                     },
                     {
                         accessorKey: 'type',
                         header: 'Type',
-                        cell: ({row}: any) => row.original.map((acc:EarningAccount) => (
+                        cell: ({row}: any) => row.original.map((acc: EarningAccount) => (
                             <div>
                                 <b><small className={'m-0'}>{acc.type}</small></b><br/>
                                 <small>

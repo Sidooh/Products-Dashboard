@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { setTheme } from '../../../features/theme/themeSlice';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { setTheme } from 'features/theme/themeSlice';
 import { Tooltip } from '@mui/material';
 
 const ToggleButton = () => {

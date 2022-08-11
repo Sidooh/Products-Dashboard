@@ -5,7 +5,7 @@ import { useAuth } from 'hooks/useAuth';
 import { useAppDispatch } from 'app/hooks';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { toast } from 'utils/helpers';
+import { toast } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
 import { TextField } from '@mui/material';
 
@@ -30,7 +30,7 @@ const Login = () => {
     });
 
     useEffect(() => {
-        if (isError) toast({msg: message, type: 'danger'});
+        if (isError) toast({titleText: message, icon: 'error'});
         if (isSuccess || auth) navigate('/');
 
         dispatch(reset());

@@ -1,16 +1,14 @@
 import { Fragment, useEffect } from 'react';
 import classNames from 'classnames';
 import { Col, Nav, Navbar, Row } from 'react-bootstrap';
-import Flex from 'components/common/Flex';
-import Logo from 'components/common/Logo';
 import NavbarVerticalMenu from './NavbarVerticalMenu';
 import ToggleButton from './ToggleButton';
 import routes from 'routes';
-import { capitalize } from 'utils/helpers';
 import { IMAGES } from 'constants/images';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import { navbarBreakPoint } from 'constants/breakpoints';
+import { capitalize, Flex, Logo } from '@nabcellent/sui-react';
 
 const NavbarVertical = () => {
     const {

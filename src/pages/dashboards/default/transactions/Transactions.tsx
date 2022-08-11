@@ -1,10 +1,8 @@
 import { Card } from 'react-bootstrap';
-import DataTable from 'components/common/datatable';
-import StatusChip from 'components/chips/StatusChip';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { Transaction } from 'utils/types';
+import { DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
 
 const Transactions = ({tableTitle, transactions}: { tableTitle: string, transactions: Transaction[] }) => {
     return (
@@ -37,8 +35,7 @@ const Transactions = ({tableTitle, transactions}: { tableTitle: string, transact
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'transaction'}
-                                                          entityId={row.original.id}/>
+                        cell: ({row}: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'updated_at',

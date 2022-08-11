@@ -1,16 +1,18 @@
-import {Link, useParams} from 'react-router-dom';
-import {Card, Col, Row} from 'react-bootstrap';
-import StatusChip from 'components/chips/StatusChip';
-import CardBgCorner from 'components/CardBgCorner';
-import {SectionError} from '../../components/common/Error';
-import {SectionLoader} from '../../components/common/Loader';
-import {currencyFormat} from '../../utils/helpers';
-import {CONFIG} from '../../config';
-import DataTable from "../../components/common/datatable";
-import TableDate from "../../components/common/TableDate";
-import TableActions from "../../components/common/TableActions";
-import {useAccountQuery} from "../../features/accounts/accountsAPI";
-import {Chip} from "@mui/material";
+import { Link, useParams } from 'react-router-dom';
+import { Card, Col, Row } from 'react-bootstrap';
+import {
+    currencyFormat,
+    DataTable,
+    StatusChip,
+    TableDate,
+    SectionError,
+    CardBgCorner,
+    SectionLoader
+} from '@nabcellent/sui-react';
+import { CONFIG } from 'config';
+import TableActions from "components/common/TableActions";
+import { useAccountQuery } from "features/accounts/accountsAPI";
+import { Chip } from "@mui/material";
 import CountUp from "react-countup";
 
 const ShowAccountDetails = () => {
@@ -20,7 +22,7 @@ const ShowAccountDetails = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <SectionLoader/>;
 
-    const account = data.account
+    const account = data.account;
 
     return (
         <>
@@ -133,8 +135,7 @@ const ShowAccountDetails = () => {
                         {
                             accessorKey: 'status',
                             header: 'Status',
-                            cell: ({row}: any) => <StatusChip status={row.original.status} entity={'transaction'}
-                                                              entityId={row.original.id}/>
+                            cell: ({row}: any) => <StatusChip status={row.original.status}/>
                         },
                         {
                             accessorKey: 'created_at',
@@ -162,23 +163,20 @@ const ShowAccountDetails = () => {
                     </Card>
                 </Col>
                 <Col md={4} xxl={12}>
-                    {
-                        data.earningAccounts.map(e => {
-                            return <Card className={'bg-line-chart-gradient h-100'} key={e.id} >
-                                <Card.Header className={'bg-transparent light'}>
-                                    <h5 className="text-white">{e.type}</h5>
-                                    <h4 className="real-time-user display-4 fw-normal text-white">
-                                        <CountUp end={e.self_amount} prefix={'KES '} separator=","/>
-                                    </h4>
-                                    <Chip sx={{px: .5}} variant={'outlined'} className={`mt-2 mb-3 text-white`}
-                                          label={<CountUp end={e.invite_amount} prefix={' KES '}
-                                                          separator=","/>}/>
+                    {data.earningAccounts.map(e => {
+                        return <Card className={'bg-line-chart-gradient h-100'} key={e.id}>
+                            <Card.Header className={'bg-transparent light'}>
+                                <h5 className="text-white">{e.type}</h5>
+                                <h4 className="real-time-user display-4 fw-normal text-white">
+                                    <CountUp end={e.self_amount} prefix={'KES '} separator=","/>
+                                </h4>
+                                <Chip sx={{px: .5}} variant={'outlined'} className={`mt-2 mb-3 text-white`}
+                                      label={<CountUp end={e.invite_amount} prefix={' KES '}
+                                                      separator=","/>}/>
 
-                                </Card.Header>
-                            </Card>
-                        })
-
-                    }
+                            </Card.Header>
+                        </Card>;
+                    })}
                 </Col>
             </Row>
 

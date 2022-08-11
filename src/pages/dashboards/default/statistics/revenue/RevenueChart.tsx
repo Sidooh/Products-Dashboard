@@ -1,7 +1,7 @@
 import * as echarts from 'echarts/core';
 import { LineChart } from 'echarts/charts';
 import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components';
-import { getColor, rgbaColor } from 'utils/helpers';
+import { getColor, rgbaColor } from '@nabcellent/sui-react';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import ECharts from 'components/common/echarts';

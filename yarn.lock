@@ -841,13 +841,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nabcellent/sui-react@npm:^1.3.4":
-  version: 1.3.4
-  resolution: "@nabcellent/sui-react@npm:1.3.4"
+"@nabcellent/sui-react@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@nabcellent/sui-react@npm:1.4.0"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 446c35cfd680079e0ed7cf19e13af5d1e977dec09248ee998f2bc8498fa6807a9606699518bde1ae02800a2788689dd42ef7d5d78b4835fa10871f835444e87d
+  checksum: e96d123e61eaa48ae30d07cda13bd2ea6fa22719eb640af52dd2950d290759d996ffc652be847c6aebc0aec1d549f64ba52a32b4822dd298de6d32d49e3968ca
   languageName: node
   linkType: hard
 
@@ -2853,7 +2853,7 @@ __metadata:
     "@mui/icons-material": ^5.8.4
     "@mui/lab": ^5.0.0-alpha.87
     "@mui/material": ^5.8.5
-    "@nabcellent/sui-react": ^1.3.4
+    "@nabcellent/sui-react": ^1.4.0
     "@reduxjs/toolkit": ^1.8.2
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^13.3.0

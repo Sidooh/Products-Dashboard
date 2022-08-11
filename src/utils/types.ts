@@ -91,6 +91,7 @@ export type Transaction = Model & {
     status: Status
     description: string
     destination: string
+    product_id: 1 | 2 | 3 | 4 | 5 | 6
     type: string
     amount: number
     payment?: Payment

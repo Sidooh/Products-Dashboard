@@ -45,7 +45,7 @@ const Show = () => {
 
             const queryError = (res: any, titleText: string) => toast({
                 titleText,
-                text: res?.error?.data?.message || res?.error.error,
+                text: res?.error.data.message,
                 icon: 'error',
                 timer: 7
             });
@@ -55,7 +55,6 @@ const Show = () => {
                 options.text = 'Are you sure you want to refund this transaction?';
                 options.preConfirm = async () => {
                     const res = await refundTransaction(transaction.id) as any;
-                    console.log(res);
 
                     if (res?.error) await queryError(res, 'Refund Error');
                 };
@@ -66,7 +65,6 @@ const Show = () => {
                 options.text = 'Are you sure you want to check this transactions\' payment?';
                 options.preConfirm = async () => {
                     const res = await checkPayment(transaction.id) as any;
-                    console.log(res);
 
                     if (res?.error) await queryError(res, 'Check Payment Error');
                 };
@@ -80,9 +78,8 @@ const Show = () => {
                     if (!requestId) return Sweet.showValidationMessage('Request ID is required.');
 
                     const res = await processTransaction({id: transaction.id, request_id: requestId}) as any;
-                    console.log(res);
 
-                    if(res?.error?.data?.message) return Sweet.showValidationMessage(res?.error.data.message);
+                    if(res?.error.data.message) return Sweet.showValidationMessage(res?.error.data.message);
                 };
             }
 
@@ -104,6 +101,7 @@ const Show = () => {
                 </Dropdown.Item>
             );
         }
+
         if (transaction.status === Status.PENDING && !transaction.tanda_request && [1, 5].includes(transaction.product_id)) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('check-request')}>

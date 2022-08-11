@@ -14,9 +14,9 @@ const TransactionSummaries = () => {
 
     return (
         <>
-            <Row className="g-3">
-                <Col md={6} xxl={12}>
-                    <Card>
+            <Row className="g-3 g-xxl-0 h-100">
+                <Col md={6} xxl={12} className={'mb-xxl-2'}>
+                    <Card className={'h-xl-100'}>
                         <CardBgCorner corner={2}/>
                         <Card.Body as={Row}>
                             <Col className="d-md-flex d-lg-block flex-between-center">
@@ -33,8 +33,8 @@ const TransactionSummaries = () => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col md={6} xxl={12}>
-                    <Card>
+                <Col md={6} xxl={12} className={'mt-xxl-2'}>
+                    <Card className={'h-xl-100'}>
                         <CardBgCorner/>
                         <Card.Body as={Row}>
                             <Col className="d-md-flex d-lg-block flex-between-center">

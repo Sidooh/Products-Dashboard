@@ -24,7 +24,7 @@ export const accountsAPI = createApi({
             providesTags: ['Account']
         }),
         account: builder.query<AccountDetails, number>({
-            query: id => `/${id}`,
+            query: id => `/${id}/details`,
             transformResponse: (response: ApiResponse<AccountDetails>) => response.data,
         }),
     })

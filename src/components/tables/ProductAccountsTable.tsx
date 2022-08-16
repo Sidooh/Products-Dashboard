@@ -1,28 +1,14 @@
 import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
-import { DataTable, SectionError, TableDate, Str, SectionLoader } from '@nabcellent/sui-react';
-import { useAccountsQuery } from 'features/accounts/accountsAPI';
-import { Navigate, useParams } from 'react-router-dom';
-import SidoohAccount from '../../components/common/SidoohAccount';
+import { DataTable, TableDate } from '@nabcellent/sui-react';
+import SidoohAccount from '../common/SidoohAccount';
+import TableActions from '../common/TableActions';
+import { ProductAccount } from '../../utils/types';
 
-const Accounts = () => {
-    const {product} = useParams();
-    console.log(product);
-
-    if (!['utility', 'airtime'].includes(String(product))) return <Navigate to={'/'}/>;
-
-    let {data, isLoading, isSuccess, isError, error} = useAccountsQuery(product!);
-
-    if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
-
-    let {data: accounts} = data;
-    console.log(accounts);
-
+const ProductAccountsTable = ({title, accounts}: { title: string, accounts: ProductAccount[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
-                <DataTable title={`${Str.ucFirst(product!)} Accounts`} columns={[
+                <DataTable title={title} columns={[
                     {
                         accessorKey: 'customer',
                         accessorFn: (row: any) => row.account.phone,
@@ -57,4 +43,4 @@ const Accounts = () => {
     );
 };
 
-export default Accounts;
+export default ProductAccountsTable;

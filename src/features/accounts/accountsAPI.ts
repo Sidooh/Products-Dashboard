@@ -19,7 +19,7 @@ export const accountsAPI = createApi({
     }),
     endpoints: (builder) => ({
         //  Earning Endpoints
-        accounts: builder.query<ApiResponse<ProductAccount[]>, string>({
+        accounts: builder.query<ApiResponse<ProductAccount[]>, 'airtime' | 'utility'>({
             query: product => `/${product}-accounts?with=account`,
             providesTags: ['Account']
         }),

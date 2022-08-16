@@ -17,7 +17,8 @@ const EarningAccounts = lazy(() => import('pages/earnings/EarningAccounts'));
 const Cashbacks = lazy(() => import('pages/earnings/Cashbacks'));
 const Subscriptions = lazy(() => import('pages/subscriptions'));
 const SubscriptionTypes = lazy(() => import('pages/subscriptions/SubscriptionTypes'));
-const Accounts = lazy(() => import('pages/accounts'));
+const AirtimeAccounts = lazy(() => import('pages/product-accounts/Airtime'));
+const UtilityAccounts = lazy(() => import('pages/product-accounts/Utility'));
 
 const Layout = () => {
     const HTMLClassList = document.getElementsByTagName('html')[0].classList;
@@ -49,7 +50,8 @@ const Layout = () => {
                     <Route path={'/subscriptions'} element={<Subscriptions/>}/>
                     <Route path={'/subscriptions-types'} element={<SubscriptionTypes/>}/>
 
-                    <Route path={'/accounts/:product'} element={<Accounts/>}/>
+                    <Route path={'/airtime-accounts'} element={<AirtimeAccounts/>}/>
+                    <Route path={'/utility-accounts'} element={<UtilityAccounts/>}/>
 
                     <Route path={'/accounts/:id/details'} element={<ShowAccountDetails/>}/>
 

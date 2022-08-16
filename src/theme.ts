@@ -34,8 +34,8 @@ export const theme = createTheme({
                 input: {
                     appearance: 'none',
                     borderRadius: '.25rem',
-                    backgroundColor: 'var(--falcon-input-bg)',
-                    boxShadow: 'var(--falcon-box-shadow-inset)!important',
+                    backgroundColor: 'var(--sidooh-input-bg)',
+                    boxShadow: 'var(--sidooh-box-shadow-inset)!important',
                     padding: 'padding: .3125rem 1rem;!important'
                 }
             }

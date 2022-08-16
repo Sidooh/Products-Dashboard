@@ -1,7 +1,7 @@
 import * as echarts from 'echarts/core';
 import { LineChart } from 'echarts/charts';
 import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components';
-import { getColor, rgbaColor } from '@nabcellent/sui-react';
+import { rgbaColor } from '@nabcellent/sui-react';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import ECharts from 'components/common/echarts';
@@ -18,132 +18,132 @@ echarts.use([LineChart, TooltipComponent, GridComponent, LegendComponent]);
 
 const getOptions = (labels: string[], data: any, status: string | Status, isDark: boolean) => ({
     tooltip: {
-        trigger           : 'axis',
-        axisPointer       : {
+        trigger: 'axis',
+        axisPointer: {
             type: 'cross'
         },
-        padding           : [7, 10],
-        backgroundColor   : getColor('100'),
-        borderColor       : getColor('300'),
-        borderWidth       : 1,
+        padding: [7, 10],
+        backgroundColor: '#f9fafd',
+        borderColor: '#d8e2ef',
+        borderWidth: 1,
         transitionDuration: 0,
-        textStyle         : {
+        textStyle: {
             fontWeight: 500,
-            fontSize  : 12,
-            color     : getColor('dark')
+            fontSize: 12,
+            color: '#0b1727'
         },
-        formatter         : (params: any) => {
+        formatter: (params: any) => {
             let label = `<b>${params[0]?.axisValue}</b> <br>`;
-            if (params[1]) label += `Today - ${params[1]?.value} KES<br>`;
-            label += `Yesterday - ${params[0].value} KES`;
+            if (params[1]) label += `Today - KES ${params[1]?.value}<br>`;
+            label += `Yesterday - KES ${params[0].value}`;
 
             return label;
         }
     },
-    xAxis  : {
-        show     : true,
-        type     : 'category',
-        data     : labels,
+    xAxis: {
+        show: true,
+        type: 'category',
+        data: labels,
         splitLine: {
-            show     : true,
+            show: true,
             lineStyle: {
                 color: rgbaColor('#fff', 0.1)
             },
         },
-        axisLine : {
+        axisLine: {
             lineStyle: {
                 color: rgbaColor('#fff', 0.1)
             }
         },
-        axisTick : {
-            show     : true,
-            length   : 10,
+        axisTick: {
+            show: true,
+            length: 10,
             lineStyle: {
                 color: rgbaColor('#fff', 0.1)
             }
         },
         axisLabel: {
-            color     : getColor('400'),
+            color: '#b6c1d2',
             fontWeight: 600,
-            fontSize  : 10,
-            margin    : 15,
-            interval  : window.innerWidth < 768 ? 'auto' : 0,
-            rotate    : '30',
+            fontSize: 10,
+            margin: 15,
+            interval: window.innerWidth < 768 ? 'auto' : 0,
+            rotate: '30',
         },
     },
-    yAxis  : {
-        type       : 'value',
+    yAxis: {
+        type: 'value',
         axisPointer: {
             show: false
         },
-        splitLine  : {
+        splitLine: {
             show: false
         },
-        axisLabel  : {
+        axisLabel: {
             show: false
         },
-        axisTick   : {show: false},
-        axisLine   : {show: false}
+        axisTick: {show: false},
+        axisLine: {show: false}
     },
-    series : [
+    series: [
         {
-            type     : 'line',
-            smooth   : true,
-            data     : data.yesterday[status]?.datasets ?? Array(data.yesterday["ALL"].datasets.length).fill(0),
-            symbol   : 'emptyCircle',
+            type: 'line',
+            smooth: true,
+            data: data.yesterday[status]?.datasets ?? Array(data.yesterday["ALL"].datasets.length).fill(0),
+            symbol: 'emptyCircle',
             itemStyle: {
-                color: isDark ? getColor('primary') : getColor('red')
+                color: isDark ? '#0f1b4c' : '#f42e00'
             },
             lineStyle: {
                 color: isDark
-                    ? rgbaColor(getColor('primary'), 0.8)
-                    : rgbaColor(getColor('red'), 0.8)
+                    ? rgbaColor('#0f1b4c', 0.8)
+                    : rgbaColor('#f42e00', 0.8)
             },
         },
         {
-            type     : 'line',
-            smooth   : true,
-            data     : data.today[status]?.datasets ?? Array(data.today["ALL"].datasets.length).fill(0),
-            symbol   : 'emptyCircle',
+            type: 'line',
+            smooth: true,
+            data: data.today[status]?.datasets ?? Array(data.today["ALL"].datasets.length).fill(0),
+            symbol: 'emptyCircle',
             itemStyle: {
-                color: isDark ? getColor('primary') : getColor('white')
+                color: isDark ? '#0f1b4c' : '#fff'
             },
             lineStyle: {
                 color: isDark
-                    ? rgbaColor(getColor('primary'), 0.8)
-                    : rgbaColor(getColor('white'), 0.8)
+                    ? rgbaColor('#0f1b4c', 0.8)
+                    : rgbaColor('#fff', 0.8)
             },
             areaStyle: {
                 color: {
-                    type      : 'linear',
-                    x         : 0,
-                    y         : 0,
-                    x2        : 0,
-                    y2        : 1,
+                    type: 'linear',
+                    x: 0,
+                    y: 0,
+                    x2: 0,
+                    y2: 1,
                     colorStops: [
                         {
                             offset: 0,
-                            color : isDark
-                                ? rgbaColor(getColor('primary'), 0.5)
+                            color: isDark
+                                ? rgbaColor('#0f1b4c', 0.5)
                                 : rgbaColor('#fff', 0.5)
                         },
                         {
                             offset: 1,
-                            color : isDark
-                                ? rgbaColor(getColor('primary'), 0)
+                            color: isDark
+                                ? rgbaColor('#0f1b4c', 0)
                                 : rgbaColor('#fff', 0)
                         }
                     ]
                 }
             },
-            emphasis : {
+            emphasis: {
                 lineStyle: {
                     width: 2
                 }
             }
         }
     ],
-    grid   : {left: 35, right: 2, bottom: '25%', top: 0}
+    grid: {left: 35, right: 2, bottom: '25%', top: 0}
 });
 
 const RevenueChart = ({data, labels, style, status}: PaymentChartType) => {

@@ -12,13 +12,13 @@ import { CONFIG } from '../../../config';
 const TopNavRightSideNavItem = () => {
     const dispatch = useAppDispatch();
 
-    const {isDark} = useAppSelector((state: RootState) => state.theme);
+    const { isDark } = useAppSelector((state: RootState) => state.theme);
 
     return (
         <Nav navbar className="navbar-nav-icons ms-auto flex-row align-items-center" as="ul">
             <Nav.Item as={'li'}>
                 <Nav.Link className="px-2 theme-control-toggle"
-                          onClick={() => dispatch(setTheme({key: 'isDark', value: !isDark}))}>
+                          onClick={() => dispatch(setTheme({ key: 'isDark', value: !isDark }))}>
                     <Tooltip title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}>
                         <div className="theme-control-toggle-label">
                             <FontAwesomeIcon icon={isDark ? faSun : faMoon} className="fs-0"/>
@@ -33,6 +33,7 @@ const TopNavRightSideNavItem = () => {
                     title: 'Accounts',
                     link: CONFIG.sidooh.services.accounts.dashboard.url,
                     contentClass: 'bg-soft-primary text-primary',
+                    enabled: true
                 },
                 {
                     avatarText: 'E',
@@ -45,25 +46,28 @@ const TopNavRightSideNavItem = () => {
                     title: 'Notify',
                     link: CONFIG.sidooh.services.notify.dashboard.url,
                     contentClass: 'bg-soft-primary text-primary',
-                    enabled:true
+                    enabled: true
                 },
                 {
                     avatarText: 'p',
                     title: 'Payments',
                     link: CONFIG.sidooh.services.payments.dashboard.url,
                     contentClass: 'bg-soft-primary text-primary',
+                    enabled: true
                 },
                 {
                     avatarText: 'S',
                     title: 'Savings',
                     link: CONFIG.sidooh.services.savings.dashboard.url,
                     contentClass: 'bg-soft-primary text-primary',
+                    enabled: true
                 },
                 {
                     avatarText: 'U',
                     title: 'USSD',
                     link: CONFIG.sidooh.services.ussd.dashboard.url,
                     contentClass: 'bg-soft-primary text-primary',
+                    enabled: true
                 },
             ]}/>
             <ProfileDropdown/>

@@ -1,5 +1,4 @@
 import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
 import { useCashbacksQuery } from 'features/cashbacks/cashbacksApi';
 import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
 import { Cashback } from 'utils/types';
@@ -33,23 +32,19 @@ const EarningAccounts = () => {
                         header: 'Type',
                     },
                     {
+                        accessorKey: 'cashback',
+                        header: 'Cashback',
+                        cell: ({ row }: any) => currencyFormat(row.original.amount)
+                    },
+                    {
                         accessorKey: 'amount',
                         header: 'Amount',
-                        cell: ({ row }: any) => (
-                            <span>
-                                {currencyFormat(row.original.transaction.amount)} <br/>
-                                <small>Cashback:<b> {currencyFormat(row.original.amount)}</b></small>
-                            </span>
-                        )
+                        cell: ({ row }: any) => currencyFormat(row.original.transaction.amount)
                     },
                     {
                         accessorKey: 'updated_at',
                         header: 'Last Update',
                         cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
-                    },
-                    {
-                        id: 'actions',
-                        cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'cashback'}/>
                     }
                 ]} data={cashbacks}/>
             </Card.Body>

@@ -9,14 +9,21 @@ import SettingsPanel from 'components/settings-panel/SettingsPanel';
 import ShowAccountDetails from "../pages/dashboards/account";
 
 const Login = lazy(() => import('pages/auth/Login'));
+
 const Dashboard = lazy(() => import('pages/dashboards/default'));
 const Analytics = lazy(() => import('pages/dashboards/analytics'));
+
 const Transactions = lazy(() => import('pages/transactions'));
 const ShowTransaction = lazy(() => import('pages/transactions/Show'));
-const EarningAccounts = lazy(() => import('pages/earnings/EarningAccounts'));
-const Cashbacks = lazy(() => import('pages/earnings/Cashbacks'));
+
+const EarningAccounts = lazy(() => import('pages/earning-accounts'));
+const ShowEarningAccount = lazy(() => import('pages/earning-accounts/Show'));
+
+const Cashbacks = lazy(() => import('pages/cashbacks'));
+
 const Subscriptions = lazy(() => import('pages/subscriptions'));
 const SubscriptionTypes = lazy(() => import('pages/subscriptions/SubscriptionTypes'));
+
 const AirtimeAccounts = lazy(() => import('pages/product-accounts/Airtime'));
 const UtilityAccounts = lazy(() => import('pages/product-accounts/Utility'));
 
@@ -44,8 +51,10 @@ const Layout = () => {
                     <Route path={'/transactions'} element={<Transactions/>}/>
                     <Route path={'/transactions/:id'} element={<ShowTransaction/>}/>
 
-                    <Route path={'/earnings/accounts'} element={<EarningAccounts/>}/>
-                    <Route path={'/earnings/cashbacks'} element={<Cashbacks/>}/>
+                    <Route path={'/earning-accounts'} element={<EarningAccounts/>}/>
+                    <Route path={'/earning-accounts/:id'} element={<ShowEarningAccount/>}/>
+
+                    <Route path={'/cashbacks'} element={<Cashbacks/>}/>
 
                     <Route path={'/subscriptions'} element={<Subscriptions/>}/>
                     <Route path={'/subscriptions-types'} element={<SubscriptionTypes/>}/>

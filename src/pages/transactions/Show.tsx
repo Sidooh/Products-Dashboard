@@ -8,21 +8,21 @@ import {
 } from 'features/transactions/transactionsAPI';
 import moment from 'moment';
 import { PaymentType } from 'utils/enums';
-import { lazy } from 'react';
+import { Fragment, lazy } from 'react';
 import { CONFIG } from 'config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRotateLeft, faArrowsRotate, faBars, faCodePullRequest } from '@fortawesome/free-solid-svg-icons';
 import { currencyFormat, SectionError, SectionLoader, Status, StatusChip, toast } from '@nabcellent/sui-react';
 import CardBgCorner from 'components/CardBgCorner';
-import { Sweet } from '../../utils/helpers';
+import { Sweet } from 'utils/helpers';
 import { SweetAlertOptions } from 'sweetalert2';
 
 const MpesaPayment = lazy(() => import('./MpesaPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
 
 const Show = () => {
-        const {id} = useParams<{ id: any }>();
-        const {data: transaction, isError, error, isLoading, isSuccess} = useTransactionQuery(Number(id));
+        const { id } = useParams<{ id: any }>();
+        const { data: transaction, isError, error, isLoading, isSuccess } = useTransactionQuery(Number(id));
 
         const [processTransaction] = useTransactionProcessMutation();
         const [refundTransaction] = useTransactionRefundMutation();
@@ -50,6 +50,8 @@ const Show = () => {
                 timer: 7
             });
 
+            const querySuccess = (titleText: string) => toast({ titleText, icon: 'success', timer: 7 });
+
             if (action === 'refund') {
                 options.title = 'Refund';
                 options.text = 'Are you sure you want to refund this transaction?';
@@ -57,6 +59,7 @@ const Show = () => {
                     const res = await refundTransaction(transaction.id) as any;
                     console.log(res);
 
+                    if (res?.data?.id) await querySuccess('Refund Successful!');
                     if (res?.error) await queryError(res, 'Refund Error');
                 };
             }
@@ -68,21 +71,23 @@ const Show = () => {
                     const res = await checkPayment(transaction.id) as any;
                     console.log(res);
 
-                    if (res?.error) await queryError(res, 'Check Payment Error');
+                    if (res?.data?.id) await querySuccess('Check Payment Complete!');
+                    if (res?.error) await queryError(res, 'Check Payment Error!');
                 };
             }
 
             if (action === 'check-request') {
                 options.title = 'Check Request';
                 options.input = 'text';
-                options.inputAttributes = {placeholder: 'Request ID'};
+                options.inputAttributes = { placeholder: 'Request ID' };
                 options.preConfirm = async (requestId: string) => {
                     if (!requestId) return Sweet.showValidationMessage('Request ID is required.');
 
-                    const res = await processTransaction({id: transaction.id, request_id: requestId}) as any;
+                    const res = await processTransaction({ id: transaction.id, request_id: requestId }) as any;
                     console.log(res);
 
-                    if(res?.error?.data?.message) return Sweet.showValidationMessage(res?.error.data.message);
+                    if (res?.data?.id) await querySuccess('Check Request Complete!');
+                    if (res?.error?.data?.message) return Sweet.showValidationMessage(res?.error.data.message);
                 };
             }
 
@@ -104,7 +109,10 @@ const Show = () => {
                 </Dropdown.Item>
             );
         }
-        if (transaction.status === Status.PENDING && !transaction.tanda_request && [1, 5].includes(transaction.product_id)) {
+        if (transaction.status === Status.PENDING && !transaction.tanda_request && [
+            1,
+            5
+        ].includes(transaction.product_id)) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('check-request')}>
                     <FontAwesomeIcon icon={faCodePullRequest}/>&nbsp; Check Request
@@ -129,7 +137,9 @@ const Show = () => {
                                         <Dropdown.Toggle size={'sm'} as={'a'} className={'cursor-pointer'}>
                                             <FontAwesomeIcon icon={faBars}/>
                                         </Dropdown.Toggle>
-                                        <Dropdown.Menu>{transactionDropdownItems.map(action => action)}</Dropdown.Menu>
+                                        <Dropdown.Menu>
+                                            {transactionDropdownItems.map((item, i) => <Fragment key={i}>{item}</Fragment>)}
+                                        </Dropdown.Menu>
                                     </Dropdown>
                                 </Col>
                             )}

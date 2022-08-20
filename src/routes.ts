@@ -47,13 +47,13 @@ const routes:RouteType[] = [
             {
                 name: 'Accounts',
                 icon: faChalkboardUser,
-                to: '/earnings/accounts',
+                to: '/earning-accounts',
                 active: true
             },
             {
                 name: 'Cashbacks',
                 icon: faCoins,
-                to: '/earnings/cashbacks',
+                to: '/cashbacks',
                 active: true
             },
         ]

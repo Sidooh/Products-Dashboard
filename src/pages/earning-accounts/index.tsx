@@ -1,20 +1,18 @@
 import { Card } from 'react-bootstrap';
 import TableActions from 'components/common/TableActions';
-import { useEarningAccountsQuery } from 'features/earnings/earningsAPI';
+import { useEarningAccountsQuery } from 'features/earning-accounts/earningAccountsApi';
 import { groupBy } from 'utils/helpers';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { EarningAccount } from 'utils/types';
 import { DataTable, SectionError, SectionLoader, TableDate, currencyFormat } from '@nabcellent/sui-react';
 
-const EarningAccounts = () => {
-    let {data, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
+const Index = () => {
+    let {data:accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !accounts) return <SectionLoader/>;
 
-    let {data: accounts} = data;
     console.log(accounts);
-    console.log(groupBy(accounts, 'account_id', true));
 
     return (
         <Card className={'mb-3'}>
@@ -27,17 +25,13 @@ const EarningAccounts = () => {
                         cell: ({row}: any) => <SidoohAccount account={row.original[0].account}/>
                     },
                     {
-                        accessorKey: 'type',
-                        header: 'Type',
+                        accessorKey: 'total',
+                        header: 'Total Earnings(self + invite)',
                         cell: ({row}: any) => row.original.map((acc: EarningAccount) => (
-                            <div>
-                                <b><small className={'m-0'}>{acc.type}</small></b><br/>
-                                <small>
-                                    Self <b>{currencyFormat(acc.self_amount)}</b>
-                                    &nbsp; | &nbsp;
-                                    Invite <b>{currencyFormat(acc.invite_amount)}</b>
-                                </small>
-                            </div>
+                            <strong>
+                                <small className={'m-0'}>{acc.type}</small>: {currencyFormat((Number(acc.self_amount) + Number(acc.invite_amount)))}
+                                <br/>
+                            </strong>
                         ))
                     },
                     {
@@ -48,7 +42,7 @@ const EarningAccounts = () => {
                     {
                         id: 'actions',
                         header: '',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'earnings-account'}/>
+                        cell: ({row}: any) => <TableActions entityId={row.original[0].id} entity={'earning-accounts'}/>
                     }
                 ]} data={groupBy(accounts, 'account_id', true)}/>
             </Card.Body>
@@ -56,4 +50,4 @@ const EarningAccounts = () => {
     );
 };
 
-export default EarningAccounts;
+export default Index;

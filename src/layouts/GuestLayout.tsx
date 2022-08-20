@@ -16,9 +16,7 @@ const GuestLayout = () => {
                     <Logo src={IMAGES.logos.sidooh} width={120}/>
                     <Card>
                         <Card.Body className="p-4 p-sm-5">
-                            <Suspense fallback={<PageLoader/>}>
-                                <Outlet/>
-                            </Suspense>
+                            <Suspense fallback={<PageLoader/>}><Outlet/></Suspense>
                         </Card.Body>
                     </Card>
                 </Col>

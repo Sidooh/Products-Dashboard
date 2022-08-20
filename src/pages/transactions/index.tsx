@@ -3,6 +3,8 @@ import TableActions from 'components/common/TableActions';
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { DataTable, SectionError, SectionLoader, StatusChip, TableDate, currencyFormat } from '@nabcellent/sui-react';
+import { Transaction } from '../../utils/types';
+import moment from 'moment';
 
 const Transactions = () => {
     let {data:transactions, isLoading, isSuccess, isError, error} = useTransactionsQuery();
@@ -19,6 +21,7 @@ const Transactions = () => {
                     {
                         accessorKey: 'customer',
                         header: 'Customer',
+                        accessorFn: (row:Transaction) => `${row.account.phone}: ${row.account.user?.name}`,
                         cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
@@ -44,6 +47,7 @@ const Transactions = () => {
                     {
                         accessorKey: 'created_at',
                         header: 'Date',
+                        accessorFn: (row:Transaction) => moment(row.created_at).calendar(),
                         cell: ({row}: any) => <TableDate date={row.original.created_at}/>
                     },
                     {

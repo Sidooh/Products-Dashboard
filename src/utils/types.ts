@@ -1,4 +1,5 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Account } from '@nabcellent/sui-react';
 import { Status } from './enums';
 
 export interface ApiResponse<T> {
@@ -73,18 +74,6 @@ export type TandaRequest = Model & {
     destination: string
     last_modified: string
     status: number
-}
-
-export type User = Model & {
-    name: string
-    email: string
-}
-
-export type Account = Model & {
-    phone: string
-    user?: User
-    user_id: number,
-    status: string
 }
 
 export type Transaction = Model & {

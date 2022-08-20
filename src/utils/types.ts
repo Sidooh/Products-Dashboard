@@ -111,6 +111,7 @@ export type Cashback = Model & {
     amount: number
     type: string
     transaction?: Transaction
+    account?: Account
 }
 
 export type ProductAccount = Model & {

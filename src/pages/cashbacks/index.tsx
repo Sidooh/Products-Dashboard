@@ -1,22 +1,28 @@
 import { Card } from 'react-bootstrap';
 import TableActions from 'components/common/TableActions';
-import { useCashbacksQuery } from 'features/earnings/earningsAPI';
-import { DataTable, SectionError, SectionLoader, TableDate, currencyFormat } from '@nabcellent/sui-react';
+import { useCashbacksQuery } from 'features/cashbacks/cashbacksApi';
+import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
 import { Cashback } from 'utils/types';
+import SidoohAccount from 'components/common/SidoohAccount';
 
 const EarningAccounts = () => {
-    let {data, isLoading, isSuccess, isError, error} = useCashbacksQuery();
+    let { data: cashbacks, isLoading, isSuccess, isError, error } = useCashbacksQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !cashbacks) return <SectionLoader/>;
 
-    let {data: cashbacks} = data;
     console.log(cashbacks);
 
     return (
         <Card className={'mb-3'}>
             <Card.Body>
                 <DataTable title={'Cashbacks'} columns={[
+                    {
+                        accessorKey: 'customer',
+                        accessorFn: (row: Cashback) => row?.account?.phone,
+                        header: 'Customer',
+                        cell: ({ row }: any) => <SidoohAccount account={row.original.account}/>
+                    },
                     {
                         accessorKey: 'description',
                         accessorFn: (row: Cashback) => row.transaction?.description,
@@ -29,7 +35,7 @@ const EarningAccounts = () => {
                     {
                         accessorKey: 'amount',
                         header: 'Amount',
-                        cell: ({row}: any) => (
+                        cell: ({ row }: any) => (
                             <span>
                                 {currencyFormat(row.original.transaction.amount)} <br/>
                                 <small>Cashback:<b> {currencyFormat(row.original.amount)}</b></small>
@@ -39,11 +45,11 @@ const EarningAccounts = () => {
                     {
                         accessorKey: 'updated_at',
                         header: 'Last Update',
-                        cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
+                        cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
                     },
                     {
                         id: 'actions',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'cashback'}/>
+                        cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'cashback'}/>
                     }
                 ]} data={cashbacks}/>
             </Card.Body>

@@ -46,7 +46,7 @@ export const transactionsApi = createApi({
         }),
         transactionProcess: builder.mutation<Transaction, { id: number, request_id: string }>({
             query: ({id, ...patch}) => ({
-                url: `/transactions/${id}/process`,
+                url: `/transactions/${id}/check-request`,
                 method: 'POST',
                 body: patch
             }),

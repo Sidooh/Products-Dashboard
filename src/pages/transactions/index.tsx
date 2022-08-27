@@ -1,21 +1,17 @@
 import { Card } from 'react-bootstrap';
-import StatusChip from 'components/chips/StatusChip';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
-import DataTable from 'components/common/datatable';
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
-import { SectionLoader } from 'components/common/Loader';
-import { SectionError } from 'components/common/Error';
-import { currencyFormat } from 'utils/helpers';
-import SidoohAccount from '../../components/common/SidoohAccount';
+import SidoohAccount from 'components/common/SidoohAccount';
+import { DataTable, SectionError, SectionLoader, StatusChip, TableDate, currencyFormat } from '@nabcellent/sui-react';
+import { Transaction } from '../../utils/types';
+import moment from 'moment';
 
 const Transactions = () => {
-    let {data, isLoading, isSuccess, isError, error} = useTransactionsQuery();
+    let {data:transactions, isLoading, isSuccess, isError, error} = useTransactionsQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !transactions) return <SectionLoader/>;
 
-    let {data: transactions} = data;
     console.log(transactions);
 
     return (
@@ -25,6 +21,7 @@ const Transactions = () => {
                     {
                         accessorKey: 'customer',
                         header: 'Customer',
+                        accessorFn: (row:Transaction) => `${row.account.phone}: ${row.account.user?.name}`,
                         cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
@@ -45,12 +42,12 @@ const Transactions = () => {
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'transaction'}
-                                                          entityId={row.original.id}/>
+                        cell: ({row}: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'created_at',
                         header: 'Date',
+                        accessorFn: (row:Transaction) => moment(row.created_at).calendar(),
                         cell: ({row}: any) => <TableDate date={row.original.created_at}/>
                     },
                     {

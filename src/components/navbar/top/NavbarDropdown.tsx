@@ -2,9 +2,9 @@ import { memo, ReactNode, useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { Card, Dropdown } from 'react-bootstrap';
-import { capitalize } from 'utils/helpers';
 import breakpoints, { topNavbarBreakpoint } from 'constants/breakpoints';
 import { IMAGES } from 'constants/images';
+import { capitalize } from '@nabcellent/sui-react';
 
 type NavbarDropdownType = {
     title: string,
@@ -15,20 +15,14 @@ const NavbarDropdown = ({title, children}: NavbarDropdownType) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     return (
-        <Dropdown
-            show={dropdownOpen}
-            onToggle={() => setDropdownOpen(!dropdownOpen)}
+        <Dropdown show={dropdownOpen} onToggle={() => setDropdownOpen(!dropdownOpen)}
             onMouseOver={() => {
                 let windowWidth = window.innerWidth;
-                if (windowWidth >= breakpoints[topNavbarBreakpoint]) {
-                    setDropdownOpen(true);
-                }
+                if (windowWidth >= breakpoints[topNavbarBreakpoint]) setDropdownOpen(true)
             }}
             onMouseLeave={() => {
                 let windowWidth = window.innerWidth;
-                if (windowWidth >= breakpoints[topNavbarBreakpoint]) {
-                    setDropdownOpen(false);
-                }
+                if (windowWidth >= breakpoints[topNavbarBreakpoint]) setDropdownOpen(false)
             }}
         >
             <Dropdown.Toggle as={Link} to="#!" className="nav-link fw-semi-bold">

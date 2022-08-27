@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { ApiResponse, Transaction } from 'utils/types';
 import { RootState } from 'app/store';
-import { Status } from '../../utils/enums';
+import { Status } from 'utils/enums';
 
 export const transactionsApi = createApi({
     reducerPath: 'transactionsApi',
@@ -20,7 +20,7 @@ export const transactionsApi = createApi({
     }),
     endpoints: (builder) => ({
         //  Transaction Endpoints
-        transactions: builder.query<ApiResponse<Transaction[]>, Status|void>({
+        transactions: builder.query<Transaction[], Status|void>({
             query: (status?: Status) => {
                 let url = '/transactions?with=account,payment';
 
@@ -28,6 +28,7 @@ export const transactionsApi = createApi({
 
                 return url;
             },
+            transformResponse: (response: ApiResponse<Transaction[]>) => response.data,
             providesTags: ['Transaction']
         }),
         transaction: builder.query<Transaction, number>({
@@ -35,23 +36,29 @@ export const transactionsApi = createApi({
             transformResponse: (response: ApiResponse<Transaction>) => response.data,
             providesTags: ['Transaction']
         }),
-        transactionProcess: builder.mutation<ApiResponse<Transaction>, { id: number, request_id: string }>({
+        transactionRefund: builder.mutation<Transaction, number>({
+            query: (id) => ({
+                url: `/transactions/${id}/refund`,
+                method: 'POST',
+            }),
+            transformResponse: (response: ApiResponse<Transaction>) => response.data,
+            invalidatesTags: ['Transaction'],
+        }),
+        transactionProcess: builder.mutation<Transaction, { id: number, request_id: string }>({
             query: ({id, ...patch}) => ({
-                url: `/transactions/${id}/process`,
+                url: `/transactions/${id}/check-request`,
                 method: 'POST',
                 body: patch
             }),
-            transformResponse: (response: { data: ApiResponse<Transaction> }) => response.data,
+            transformResponse: (response: ApiResponse<Transaction>) => response.data,
             invalidatesTags: ['Transaction']
         }),
-
-        checkPayment: builder.mutation<ApiResponse<Transaction>, { id: number }>({
-            query: ({id, ...patch}) => ({
+        checkPayment: builder.mutation<Transaction, number>({
+            query: id => ({
                 url: `/transactions/${id}/check-payment`,
                 method: 'POST',
-                body: patch
             }),
-            transformResponse: (response: { data: ApiResponse<Transaction> }) => response.data,
+            transformResponse: (response: ApiResponse<Transaction>) => response.data,
             invalidatesTags: ['Transaction']
         }),
 
@@ -62,5 +69,6 @@ export const {
     useTransactionsQuery,
     useTransactionQuery,
     useTransactionProcessMutation,
+    useTransactionRefundMutation,
     useCheckPaymentMutation
 } = transactionsApi;

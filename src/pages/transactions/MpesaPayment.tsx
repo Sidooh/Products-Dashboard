@@ -1,28 +1,11 @@
 import { Card, Table } from 'react-bootstrap';
 import { Payment } from 'utils/types';
-import { currencyFormat } from '../../utils/helpers';
 import moment from 'moment';
-import StatusChip from "../../components/chips/StatusChip";
 import { CONFIG } from "../../config";
-import { Status } from "../../utils/enums";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowsRotate, faEye } from "@fortawesome/free-solid-svg-icons";
-import { IconButton } from "@mui/material";
-import { useCheckPaymentMutation } from "../../features/transactions/transactionsAPI";
-import { SectionLoader } from "../../components/common/Loader";
+import { currencyFormat, StatusChip } from '@nabcellent/sui-react';
+import { ReadMore } from '@mui/icons-material';
 
 const MpesaPayment = ({payment}: { payment: Payment }) => {
-    const [
-        checkPayment, // This is the mutation trigger
-        {isLoading}, // This is the destructured mutation result
-    ] = useCheckPaymentMutation();
-
-    const onCheckPayment = (): void => {
-        checkPayment({id: payment.transaction_id});
-    };
-
-    if (isLoading) return <SectionLoader/>;
-
     return (
         <Card className="mb-3">
             <Card.Header className="pb-0">
@@ -48,19 +31,10 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                             {moment(payment.updated_at).format('MMM D, Y')}<br/>
                             <small>{moment(payment.updated_at).format('hh:mm A')}</small>
                         </td>
-                        <td className="align-middle text-start">
-                            <StatusChip status={payment.status} entity={'payment'} entityId={Number(payment.id)}/>
-                            {payment.status === Status.PENDING &&
-                                <IconButton size={'small'} sx={{ml: 1}} onClick={onCheckPayment}>
-                                    <FontAwesomeIcon icon={faArrowsRotate}/>
-                                </IconButton>
-                            }
-                        </td>
+                        <td className="align-middle text-start"><StatusChip status={payment.status}/></td>
                         <td>
-                            <a href={`${CONFIG.sidooh.services.payments.dashboard.url}/payments/${payment.payment_id}`}>
-                                <IconButton size={'small'} sx={{ml: 1}} onClick={onCheckPayment}>
-                                    <FontAwesomeIcon icon={faEye}/>
-                                </IconButton>
+                            <a href={`${CONFIG.sidooh.services.payments.dashboard.url}/payments/${payment.payment_id}`}
+                               target={'_blank'}><ReadMore/>
                             </a>
                         </td>
                     </tr>

@@ -1,10 +1,9 @@
 import { Card } from 'react-bootstrap';
-import DataTable from 'components/common/datatable';
-import StatusChip from 'components/chips/StatusChip';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { Transaction } from 'utils/types';
+import { DataTable, StatusChip, TableDate } from '@nabcellent/sui-react';
+import moment from 'moment';
 
 const Transactions = ({tableTitle, transactions}: { tableTitle: string, transactions: Transaction[] }) => {
     return (
@@ -14,6 +13,7 @@ const Transactions = ({tableTitle, transactions}: { tableTitle: string, transact
                     {
                         accessorKey: 'customer',
                         header: 'Customer',
+                        accessorFn: (row: Transaction) => `${row.account?.phone}: ${row.account?.user?.name}`,
                         cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
@@ -37,11 +37,11 @@ const Transactions = ({tableTitle, transactions}: { tableTitle: string, transact
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'transaction'}
-                                                          entityId={row.original.id}/>
+                        cell: ({row}: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'updated_at',
+                        accessorFn: (row: Transaction) => moment(row.created_at).calendar(),
                         header: 'Date',
                         cell: ({row}: any) => <TableDate date={row.original.updated_at}/>
                     },

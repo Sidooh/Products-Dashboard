@@ -1,7 +1,4 @@
-import { CONFIG } from 'config';
-import PhoneChip from 'components/chips/PhoneChip';
-import {ReadMore} from "@mui/icons-material";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SidoohAccount = ({ account }) => {
     if (!account) return null;

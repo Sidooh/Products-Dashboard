@@ -1,9 +1,10 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Account } from '@nabcellent/sui-react';
 import { Status } from './enums';
 
 export interface ApiResponse<T> {
     status: string;
-    data:T
+    data: T;
 }
 
 export type ToastDataType = {
@@ -34,79 +35,60 @@ export type RouteType = {
     children: RouteChildType[]
 }
 
-export type StkCallback = {
-    id: string
+type Model = {
+    id: number
+    created_at: string
+    updated_at: string
+}
+
+export type StkCallback = Model & {
     amount: number
     result_desc: string
     checkout_request_id: string
-    created_at: string
 }
 
-export type StkRequest = {
-    id: string
+export type StkRequest = Model & {
     checkout_request_id: string
     amount: number
     phone: number
     reference: string
     status: Status
-    created_at: string
     response?: StkCallback
 }
 
-export type Payment = {
-    id: number
+export type Payment = Model & {
     payment_id: number
     amount: number
     type: string
     subtype: string
     status: Status
-    updated_at: string
     transaction_id: number
 }
 
-export type TandaRequest = {
+export type TandaRequest = Model & {
     request_id: number
     receipt_number: number
     amount: number
     provider: string
     message: string
     destination: string
-    updated_at: string
     last_modified: string
     status: number
 }
 
-export type User = {
-    id: number
-    name: string
-    email: string
-}
-
-export type Account = {
-    id: number
-    phone: string
-    user?: User
-    user_id: number,
-    created_at: string,
-    status: string
-}
-
-export type Transaction = {
-    id: number
+export type Transaction = Model & {
     status: Status
     description: string
     destination: string
+    product_id: 1 | 2 | 3 | 4 | 5 | 6
     type: string
     amount: number
-    created_at: string
-    updated_at: string
     payment?: Payment
     tanda_request?: TandaRequest
-    account?: Account
+    account: Account
 }
 
-export type EarningAccount = {
-    id?: number
+export type EarningAccount = Model & {
     account_id: number
     type: string
     self_amount: number
@@ -114,22 +96,20 @@ export type EarningAccount = {
     account?: Account
 }
 
-export type Cashback = {
-    id?: number
+export type Cashback = Model & {
     amount: number
     type: string
     transaction?: Transaction
+    account?: Account
 }
 
-export type ProductAccount = {
-    id?: number
+export type ProductAccount = Model & {
     provider: string
     account_number: number
     priority: number
 }
 
-export type Voucher = {
-    id: number
+export type Voucher = Model & {
     type: string
     balance: number
 }
@@ -147,4 +127,19 @@ export type AccountDetails = {
     recentTransactions: Transaction[]
     voucher: Voucher,
     earningAccounts: EarningAccount[]
+}
+
+export type SubscriptionType = Model & {
+    title: string
+    price: number
+    duration: number
+    period: string
+}
+
+export type Subscription = Model & {
+    amount: number
+    start_date: string
+    end_date: string
+    account: Account
+    subscription_type: SubscriptionType
 }

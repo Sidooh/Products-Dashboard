@@ -1,10 +1,8 @@
-import { SectionError } from 'components/common/Error';
-import { ComponentLoader } from 'components/common/Loader';
 import { Card, Col, Row } from "react-bootstrap";
 import { useGetDashboardSummariesQuery } from "features/products/productsAPI";
-import CardBgCorner from 'components/CardBgCorner';
-import { Chip } from '@mui/material';
 import CountUp from 'react-countup';
+import { Badge, ComponentLoader, SectionError } from "@nabcellent/sui-react";
+import CardBgCorner from 'components/CardBgCorner';
 
 const TransactionSummaries = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardSummariesQuery();
@@ -16,39 +14,40 @@ const TransactionSummaries = () => {
 
     return (
         <>
-            <Row className="g-3">
-                <Col md={6} xxl={12}>
-                    <Card style={{'height': '150px'}}>
+            <Row className="g-3 g-xxl-0 h-100">
+                <Col md={6} xxl={12} className={'mb-xxl-2'}>
+                    <Card className={'h-xl-100'}>
                         <CardBgCorner corner={2}/>
-                        <Card.Body>
-                            <Row className="flex-between-center">
-                                <Col className="d-md-flex d-lg-block flex-between-center">
-                                    <h5 className="mb-md-0 mb-lg-2">Transactions</h5>
-                                    <Chip sx={{px: .5}} variant={'outlined'} color={'success'} className={`mt-2 mb-3`}
-                                          label={<CountUp end={stats.total_transactions_today} separator=","/>}/>
-                                    <h4 className="fs-3 fw-normal text-700">
-                                        <CountUp end={stats.total_transactions} separator=","/>
-                                    </h4>
-                                </Col>
-                            </Row>
+                        <Card.Body as={Row}>
+                            <Col className="d-md-flex d-lg-block flex-between-center">
+                                <h5 className="mb-md-0 mb-lg-2">Transactions</h5>
+                                <h4 className="fs-3 fw-normal text-700">
+                                    <CountUp end={stats.total_transactions} separator=","/>
+                                </h4>
+                            </Col>
+                            <Col className={'d-flex align-items-start justify-content-end'}>
+                                <Badge pill>
+                                    <CountUp end={stats.total_transactions_today} separator=","/>
+                                </Badge>
+                            </Col>
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col md={6} xxl={12}>
-                    <Card style={{'height': '150px'}}>
+                <Col md={6} xxl={12} className={'mt-xxl-2'}>
+                    <Card className={'h-xl-100'}>
                         <CardBgCorner/>
-                        <Card.Body>
-                            <Row className="sflex-between-center">
-                                <Col className="d-md-flex d-lg-block flex-between-center">
-                                    <h5 className="mb-md-0 mb-lg-2">Revenue</h5>
-                                    <Chip sx={{px: .5}} variant={'outlined'} color={'success'} className={`mt-2 mb-3`}
-                                          label={<CountUp end={stats.total_revenue_today} prefix={' KES '}
-                                                          separator=","/>}/>
-                                    <h4 className="fs-3 fw-normal text-700 align-text-bottom">
-                                        <CountUp end={stats.total_revenue} prefix={'KES '} separator=","/>
-                                    </h4>
-                                </Col>
-                            </Row>
+                        <Card.Body as={Row}>
+                            <Col className="d-md-flex d-lg-block flex-between-center">
+                                <h5 className="mb-md-0 mb-lg-2">Revenue</h5>
+                                <h4 className="fs-3 fw-normal text-700">
+                                    <CountUp end={stats.total_revenue} separator=","/>
+                                </h4>
+                            </Col>
+                            <Col className={'d-flex align-items-start justify-content-end'}>
+                                <Badge bg={'success'} pill>
+                                    <CountUp prefix={'KES '} end={stats.total_revenue_today} separator=","/>
+                                </Badge>
+                            </Col>
                         </Card.Body>
                     </Card>
                 </Col>

@@ -5,7 +5,9 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import 'toastify-js/src/toastify.css';
+
+import '@nabcellent/sui-react/dist/css/theme.css';
+import '@nabcellent/sui-react/dist/css/user.css';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);

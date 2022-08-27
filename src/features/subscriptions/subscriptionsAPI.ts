@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { EarningAccount, Cashback, ApiResponse } from 'utils/types';
+import { ApiResponse, Subscription } from 'utils/types';
 import { RootState } from 'app/store';
 
 export const subscriptionsAPI = createApi({
     reducerPath: 'subscriptionsApi',
     keepUnusedDataFor: 60 * 5, // Five minutes
-    tagTypes: ['Subscription', 'SubscriptionType'],
+    tagTypes: ['Subscription'],
     baseQuery: fetchBaseQuery({
         baseUrl: `${CONFIG.sidooh.services.products.api.url}/subscriptions`,
         prepareHeaders: (headers, {getState}) => {
@@ -19,18 +19,14 @@ export const subscriptionsAPI = createApi({
     }),
     endpoints: (builder) => ({
         //  Earning Endpoints
-        subscriptions: builder.query<ApiResponse<EarningAccount[]>, void>({
+        subscriptions: builder.query<Subscription[], void>({
             query: () => '?with=account',
-            providesTags: ['Subscription']
-        }),
-        subscriptionTypes: builder.query<ApiResponse<Cashback[]>, void>({
-            query: () => `/subscription-types`,
-            providesTags: ['SubscriptionType']
-        }),
+            providesTags: ['Subscription'],
+            transformResponse: (response:ApiResponse<Subscription[]>) => response.data
+        })
     })
 });
 
 export const {
     useSubscriptionsQuery,
-    useSubscriptionTypesQuery,
 } = subscriptionsAPI;

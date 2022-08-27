@@ -1,21 +1,17 @@
 import { Card } from 'react-bootstrap';
-import TableDate from 'components/common/TableDate';
 import TableActions from 'components/common/TableActions';
-import DataTable from 'components/common/datatable';
 import { useSubscriptionsQuery } from 'features/subscriptions/subscriptionsAPI';
-import { SectionLoader } from 'components/common/Loader';
-import { SectionError } from 'components/common/Error';
 import moment from 'moment';
-import SidoohAccount from '../../components/common/SidoohAccount';
-import StatusChip from '../../components/chips/StatusChip';
+import SidoohAccount from 'components/common/SidoohAccount';
+import { DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
+import { Subscription } from 'utils/types';
 
 const Subscriptions = () => {
-    let {data, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
+    let {data:subscriptions, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !subscriptions) return <SectionLoader/>;
 
-    let {data: subscriptions} = data;
     console.log(subscriptions);
 
     return (
@@ -24,30 +20,29 @@ const Subscriptions = () => {
                 <DataTable title={'Subscriptions'} columns={[
                     {
                         accessorKey: 'customer',
-                        accessorFn: row => row.account.phone,
+                        accessorFn: (row: Subscription) => `${row.account?.phone}: ${row.account?.user?.name}`,
                         header: 'Customer',
                         cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
                         accessorKey: 'type',
                         header: 'Type',
-                        accessorFn: row => row.subscription_type.title
+                        accessorFn: (row: Subscription) => row.subscription_type.title
                     },
                     {
                         accessorKey: 'status',
                         header: 'Status',
-                        cell: ({row}: any) => <StatusChip status={row.original.status} entity={'transaction'}
-                                                          entityId={row.original.id}/>
+                        cell: ({row}: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'start_date',
                         header: 'Start Date',
-                        accessorFn: row => moment(row.start_date).calendar(),
+                        accessorFn: (row: Subscription) => moment(row.start_date).calendar(),
                     },
                     {
                         accessorKey: 'end_date',
                         header: 'End Date',
-                        accessorFn: row => moment(row.end_date).calendar(),
+                        accessorFn: (row: Subscription) => moment(row.end_date).calendar(),
                     },
                     {
                         accessorKey: 'created_at',

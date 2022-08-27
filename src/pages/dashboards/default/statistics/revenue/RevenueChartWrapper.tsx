@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { Card, Col, Form, Row } from 'react-bootstrap';
-import Flex from 'components/common/Flex';
 import RevenueChart from './RevenueChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { Status } from 'utils/enums';
 import { useGetDashboardRevenueDataQuery } from 'features/products/productsAPI';
-import { SectionError } from 'components/common/Error';
-import { ComponentLoader } from 'components/common/Loader';
 import CountUp from 'react-countup';
+import { ComponentLoader, Flex, SectionError } from '@nabcellent/sui-react';
 
 const RevenueChartWrapper = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardRevenueDataQuery();

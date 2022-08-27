@@ -1,123 +1,186 @@
 import { useParams } from 'react-router-dom';
-import { Card, Col, FormControl, Row } from 'react-bootstrap';
-import StatusChip from 'components/chips/StatusChip';
-import CardBgCorner from 'components/CardBgCorner';
-import { useTransactionProcessMutation, useTransactionQuery } from '../../features/transactions/transactionsAPI';
-import { SectionError } from '../../components/common/Error';
-import { SectionLoader } from '../../components/common/Loader';
+import { Card, Col, Dropdown, Row } from 'react-bootstrap';
+import {
+    useCheckPaymentMutation,
+    useTransactionProcessMutation,
+    useTransactionQuery,
+    useTransactionRefundMutation
+} from 'features/transactions/transactionsAPI';
 import moment from 'moment';
-import { currencyFormat } from '../../utils/helpers';
-import { PaymentType, Status } from '../../utils/enums';
-import { lazy, useState } from 'react';
-import { CONFIG } from '../../config';
-import Flex from '../../components/common/Flex';
+import { PaymentType } from 'utils/enums';
+import { Fragment, lazy } from 'react';
+import { CONFIG } from 'config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
-import { IconButton, Tooltip } from '@mui/material';
+import { faArrowRotateLeft, faArrowsRotate, faBars, faCodePullRequest } from '@fortawesome/free-solid-svg-icons';
+import { currencyFormat, SectionError, SectionLoader, Status, StatusChip, toast } from '@nabcellent/sui-react';
+import CardBgCorner from 'components/CardBgCorner';
+import { Sweet } from 'utils/helpers';
+import { SweetAlertOptions } from 'sweetalert2';
 
 const MpesaPayment = lazy(() => import('./MpesaPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
 
 const Show = () => {
-    const {id} = useParams<{ id: any }>();
-    const {data: transaction, isError, error, isLoading, isSuccess} = useTransactionQuery(Number(id));
+        const { id } = useParams<{ id: any }>();
+        const { data: transaction, isError, error, isLoading, isSuccess } = useTransactionQuery(Number(id));
 
-    const [requestId, setRequestId] = useState('');
+        const [processTransaction] = useTransactionProcessMutation();
+        const [refundTransaction] = useTransactionRefundMutation();
+        const [checkPayment] = useCheckPaymentMutation();
 
-    const [
-        processTransaction, // This is the mutation trigger
-        {isLoading: isUpdating}, // This is the destructured mutation result
-    ] = useTransactionProcessMutation();
+        if (isError) return <SectionError error={error}/>;
+        if (isLoading || !isSuccess || !transaction) return <SectionLoader/>;
 
-    if (isError) return <SectionError error={error}/>;
-    if (isLoading || isUpdating || !isSuccess || !transaction) return <SectionLoader/>;
+        console.log(transaction);
 
-    const onProcessTransaction = (): void => {
-        processTransaction({id: transaction.id, request_id: requestId});
-    };
+        const queryTransaction = async (action: 'refund' | 'check-payment' | 'check-request') => {
+            let options: SweetAlertOptions = {
+                backdrop: `rgba(0, 0, 150, 0.4)`,
+                showLoaderOnConfirm: true,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Proceed',
+                allowOutsideClick: () => !Sweet.isLoading()
+            };
 
-    return (
-        <>
-            <Card className={'mb-3'}>
-                <CardBgCorner/>
-                <Card.Body className="position-relative">
-                    <h5>Transaction Details: #{transaction.id}</h5>
-                    <p className="fs--1">{moment(transaction.created_at).format('MMM D, Y, hh:mm A')}</p>
-                    <strong className="me-2">Status:</strong>
+            const queryError = (res: any, titleText: string) => toast({
+                titleText,
+                text: res?.error?.data?.message || res?.error.error,
+                icon: 'error',
+                timer: 7
+            });
 
-                    <Row>
-                        <Col lg={6} className="mb-4 mb-lg-0">
-                            <StatusChip status={transaction.status} entity={'transaction'} entityId={Number(id)}/>
-                        </Col>
-                        <Col lg={6} className="mb-4 mb-lg-0 text-end">
-                            {transaction.status === Status.PENDING && transaction.payment?.status === Status.COMPLETED &&
-                                <Flex alignItems={'center'}>
-                                    <FormControl size={'sm'} value={requestId} placeholder={'Request ID'}
-                                                 onChange={(e) => setRequestId(e.currentTarget.value)}/>
-                                    <Tooltip title={'Process Transaction'}>
-                                        <IconButton size={'small'} sx={{ml: 1}} onClick={onProcessTransaction}>
-                                            <FontAwesomeIcon icon={faArrowsRotate}/>
-                                        </IconButton>
-                                    </Tooltip>
-                                </Flex>
-                            }
-                        </Col>
-                    </Row>
-                </Card.Body>
-            </Card>
+            const querySuccess = (titleText: string) => toast({ titleText, icon: 'success', timer: 7 });
 
-            <Card className="mb-3">
-                <Card.Body>
-                    <Row>
-                        <Col lg={6} className="mb-4 mb-lg-0">
-                            <h5 className="mb-3 fs-0">Account</h5>
-                            <h6 className="mb-2">
-                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${transaction.account?.user_id}`}
-                                   target={'_blank'}>
-                                    {transaction.account?.user?.name}
-                                </a>
-                            </h6>
-                            <p className="mb-0 fs--1">
-                                <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${transaction.account?.id}`}
-                                   target={'_blank'}>
-                                    {transaction.account?.phone}
-                                </a>
-                            </p>
-                        </Col>
-                        <Col lg={6} className="mb-4 mb-lg-0">
-                            <h5 className="mb-3 fs-0">Details</h5>
-                            <h6 className="mb-2">{transaction.description} - {transaction.destination}</h6>
-                            <p className="mb-0 fs--1"><strong>Type: </strong>{transaction.type}</p>
-                            <div className="fs--1"><strong>Amount: </strong>({currencyFormat(transaction.amount)})</div>
-                        </Col>
-                        {/*<Col lg={4}>*/}
-                        {/*    <h5 className="mb-3 fs-0">*/}
-                        {/*        Payment*/}
-                        {/*    </h5>*/}
-                        {/*    <div className="d-flex">*/}
-                        {/*        <img className="me-3" src={IMAGES.icons.cash} width="40" height="40" alt=""/>*/}
-                        {/*        <div className="flex-1">*/}
-                        {/*            <h6 className="mb-0">{transaction.payment?.type} {transaction.payment?.subtype}</h6>*/}
-                        {/*            <p className="mb-0 fs--1">*/}
-                        {/*                <strong>Amount: </strong>{currencyFormat(transaction.amount)}*/}
-                        {/*            </p>*/}
-                        {/*            <div className="fs--1">*/}
-                        {/*                <strong className="me-2">Status: </strong>*/}
-                        {/*                <StatusChip status={transaction.payment?.status}*/}
-                        {/*                            entity={'transaction'} entityId={Number(id)}/>*/}
-                        {/*            </div>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*</Col>*/}
-                    </Row>
-                </Card.Body>
-            </Card>
+            if (action === 'refund') {
+                options.title = 'Refund';
+                options.text = 'Are you sure you want to refund this transaction?';
+                options.preConfirm = async () => {
+                    const res = await refundTransaction(transaction.id) as any;
+                    console.log(res);
 
-            {transaction.payment?.type === PaymentType.MPESA && <MpesaPayment payment={transaction.payment}/>}
+                    if (res?.data?.id) await querySuccess('Refund Successful!');
+                    if (res?.error) await queryError(res, 'Refund Error');
+                };
+            }
 
-            {transaction.tanda_request && <TandaTransaction request={transaction.tanda_request}/>}
-        </>
-    );
-};
+            if (action === 'check-payment') {
+                options.title = 'Check Payment';
+                options.text = 'Are you sure you want to check this transactions\' payment?';
+                options.preConfirm = async () => {
+                    const res = await checkPayment(transaction.id) as any;
+                    console.log(res);
+
+                    if (res?.data?.id) await querySuccess('Check Payment Complete!');
+                    if (res?.error) await queryError(res, 'Check Payment Error!');
+                };
+            }
+
+            if (action === 'check-request') {
+                options.title = 'Check Request';
+                options.input = 'text';
+                options.inputAttributes = { placeholder: 'Request ID' };
+                options.preConfirm = async (requestId: string) => {
+                    if (!requestId) return Sweet.showValidationMessage('Request ID is required.');
+
+                    const res = await processTransaction({ id: transaction.id, request_id: requestId }) as any;
+                    console.log(res);
+
+                    if (res?.data?.id) await querySuccess('Check Request Complete!');
+                    if (res?.error?.data?.message) return Sweet.showValidationMessage(res?.error.data.message);
+                };
+            }
+
+            await Sweet.fire(options);
+        };
+
+        const transactionDropdownItems = [];
+        if (transaction.status === Status.PENDING && String(transaction?.tanda_request?.status) === '000002') {
+            transactionDropdownItems.push(
+                <Dropdown.Item as="button" onClick={() => queryTransaction('refund')}>
+                    <FontAwesomeIcon icon={faArrowRotateLeft}/>&nbsp; Refund
+                </Dropdown.Item>
+            );
+        }
+        if (transaction.payment?.status === Status.PENDING) {
+            transactionDropdownItems.push(
+                <Dropdown.Item as="button" onClick={() => queryTransaction('check-payment')}>
+                    <FontAwesomeIcon icon={faArrowsRotate}/>&nbsp; Check Payment
+                </Dropdown.Item>
+            );
+        }
+        if (transaction.status === Status.PENDING && !transaction.tanda_request && [
+            1,
+            5
+        ].includes(transaction.product_id)) {
+            transactionDropdownItems.push(
+                <Dropdown.Item as="button" onClick={() => queryTransaction('check-request')}>
+                    <FontAwesomeIcon icon={faCodePullRequest}/>&nbsp; Check Request
+                </Dropdown.Item>
+            );
+        }
+
+        return (
+            <>
+                <Card className={'mb-3'}>
+                    <CardBgCorner corner={2}/>
+                    <Card.Body className="position-relative">
+                        <Row>
+                            <Col>
+                                <h5>Transaction Details: #{transaction.id}</h5>
+                                <p className="fs--1">{moment(transaction.created_at).format('MMM D, Y, hh:mm A')}</p>
+                                <StatusChip status={transaction.status}/>
+                            </Col>
+                            {transactionDropdownItems.length > 0 && (
+                                <Col sm={'auto'} className="d-flex align-items-end justify-content-end">
+                                    <Dropdown>
+                                        <Dropdown.Toggle size={'sm'} as={'a'} className={'cursor-pointer'}>
+                                            <FontAwesomeIcon icon={faBars}/>
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            {transactionDropdownItems.map((item, i) => <Fragment key={i}>{item}</Fragment>)}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </Col>
+                            )}
+                        </Row>
+                    </Card.Body>
+                </Card>
+
+                <Card className="mb-3">
+                    <Card.Body>
+                        <Row>
+                            <Col lg={6} className="mb-4 mb-lg-0">
+                                <h5 className="mb-3 fs-0">Account</h5>
+                                <h6 className="mb-2">
+                                    <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${transaction.account?.user_id}`}
+                                       target={'_blank'}>
+                                        {transaction.account?.user?.name}
+                                    </a>
+                                </h6>
+                                <p className="mb-0 fs--1">
+                                    <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${transaction.account?.id}`}
+                                       target={'_blank'}>
+                                        {transaction.account?.phone}
+                                    </a>
+                                </p>
+                            </Col>
+                            <Col lg={6} className="mb-4 mb-lg-0">
+                                <h5 className="mb-3 fs-0">Details</h5>
+                                <h6 className="mb-2">{transaction.description} - {transaction.destination}</h6>
+                                <p className="mb-0 fs--1"><strong>Type: </strong>{transaction.type}</p>
+                                <div className="fs--1"><strong>Amount: </strong>({currencyFormat(transaction.amount)})</div>
+                            </Col>
+                        </Row>
+                    </Card.Body>
+                </Card>
+
+                {transaction.payment?.type === PaymentType.MPESA && <MpesaPayment payment={transaction.payment}/>}
+
+                {transaction.tanda_request && <TandaTransaction request={transaction.tanda_request}/>}
+            </>
+        );
+    }
+;
 
 export default Show;

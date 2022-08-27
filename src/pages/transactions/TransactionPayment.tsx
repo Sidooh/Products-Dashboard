@@ -43,7 +43,7 @@ const TransactionPayment = ({payment}: { payment?: Payment }) => {
                         <td className="align-middle text-start"><StatusChip status={payment.status}/></td>
                         <td>
                             <a href={`${CONFIG.sidooh.services.payments.dashboard.url}/payments/${payment.payment_id}`}
-                               target={'_blank'}><FontAwesomeIcon icon={faEye}/>
+                               target={'_blank'} rel={'noreferrer noopener'}><FontAwesomeIcon icon={faEye}/>
                             </a>
                         </td>
                     </tr>

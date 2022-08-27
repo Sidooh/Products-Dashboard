@@ -3,9 +3,18 @@ import { Payment } from 'utils/types';
 import moment from 'moment';
 import { CONFIG } from "../../config";
 import { currencyFormat, StatusChip } from '@nabcellent/sui-react';
-import { ReadMore } from '@mui/icons-material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationCircle, faEye } from '@fortawesome/free-solid-svg-icons';
 
-const MpesaPayment = ({payment}: { payment: Payment }) => {
+const TransactionPayment = ({payment}: { payment?: Payment }) => {
+    if(!payment) return (
+        <Card className={'mb-3 bg-soft-danger'}>
+            <Card.Header className={'fw-bolder'}>
+                <FontAwesomeIcon icon={faExclamationCircle}/> This Transaction Has No Payment.
+            </Card.Header>
+        </Card>
+    )
+
     return (
         <Card className="mb-3">
             <Card.Header className="pb-0">
@@ -34,7 +43,7 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
                         <td className="align-middle text-start"><StatusChip status={payment.status}/></td>
                         <td>
                             <a href={`${CONFIG.sidooh.services.payments.dashboard.url}/payments/${payment.payment_id}`}
-                               target={'_blank'}><ReadMore/>
+                               target={'_blank'}><FontAwesomeIcon icon={faEye}/>
                             </a>
                         </td>
                     </tr>
@@ -45,4 +54,4 @@ const MpesaPayment = ({payment}: { payment: Payment }) => {
     );
 };
 
-export default MpesaPayment;
+export default TransactionPayment;

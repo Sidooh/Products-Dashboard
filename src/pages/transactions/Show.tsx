@@ -7,7 +7,6 @@ import {
     useTransactionRefundMutation
 } from 'features/transactions/transactionsAPI';
 import moment from 'moment';
-import { PaymentType } from 'utils/enums';
 import { Fragment, lazy } from 'react';
 import { CONFIG } from 'config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,7 +16,7 @@ import CardBgCorner from 'components/CardBgCorner';
 import { Sweet } from 'utils/helpers';
 import { SweetAlertOptions } from 'sweetalert2';
 
-const MpesaPayment = lazy(() => import('./MpesaPayment'));
+const TransactionPayment = lazy(() => import('./TransactionPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
 
 const Show = () => {
@@ -175,7 +174,7 @@ const Show = () => {
                     </Card.Body>
                 </Card>
 
-                {transaction.payment?.type === PaymentType.MPESA && <MpesaPayment payment={transaction.payment}/>}
+                <TransactionPayment payment={transaction.payment}/>
 
                 {transaction.tanda_request && <TandaTransaction request={transaction.tanda_request}/>}
             </>

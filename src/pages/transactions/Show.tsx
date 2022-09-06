@@ -122,7 +122,10 @@ const Show = () => {
                 </Dropdown.Item>
             );
         }
-        if (txStatus === Status.PENDING && transaction.payment?.status === Status.COMPLETED && (!transaction.tanda_request || String(transaction?.tanda_request?.status) !== '000000')) {
+        if (txStatus === Status.PENDING && transaction.payment?.status === Status.COMPLETED && (!transaction.tanda_request || ![
+            '000000',
+            '000001'
+        ].includes(String(transaction?.tanda_request?.status)))) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('refund')}>
                     <FontAwesomeIcon icon={faArrowRotateLeft}/>&nbsp; Refund

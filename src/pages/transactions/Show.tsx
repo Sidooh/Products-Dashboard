@@ -10,7 +10,13 @@ import moment from 'moment';
 import { Fragment, lazy } from 'react';
 import { CONFIG } from 'config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRotateLeft, faArrowsRotate, faBars, faCodePullRequest } from '@fortawesome/free-solid-svg-icons';
+import {
+    faArrowRotateLeft,
+    faArrowsRotate,
+    faBars,
+    faCodePullRequest,
+    faArrowRotateRight
+} from '@fortawesome/free-solid-svg-icons';
 import { currencyFormat, SectionError, SectionLoader, Status, StatusChip, toast } from '@nabcellent/sui-react';
 import CardBgCorner from 'components/CardBgCorner';
 import { Sweet } from 'utils/helpers';
@@ -107,7 +113,14 @@ const Show = () => {
         };
 
         const transactionDropdownItems = [];
-        if (transaction.status === Status.PENDING && String(transaction?.tanda_request?.status) === '000002') {
+        if (!transaction.tanda_request && transaction.status === Status.PENDING) {
+            transactionDropdownItems.push(
+                <Dropdown.Item as="button" onClick={() => queryTransaction('retry')}>
+                    <FontAwesomeIcon icon={faArrowRotateRight}/>&nbsp; Retry
+                </Dropdown.Item>
+            );
+        }
+        if (transaction.status === Status.PENDING && (!transaction.tanda_request || String(transaction?.tanda_request?.status) === '000002')) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('refund')}>
                     <FontAwesomeIcon icon={faArrowRotateLeft}/>&nbsp; Refund
@@ -127,13 +140,6 @@ const Show = () => {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('check-request')}>
                     <FontAwesomeIcon icon={faCodePullRequest}/>&nbsp; Check Request
-                </Dropdown.Item>
-            );
-        }
-        if (!transaction.tanda_request && transaction.status === Status.PENDING) {
-            transactionDropdownItems.push(
-                <Dropdown.Item as="button" onClick={() => queryTransaction('retry')}>
-                    <FontAwesomeIcon icon={faCodePullRequest}/>&nbsp; Retry
                 </Dropdown.Item>
             );
         }

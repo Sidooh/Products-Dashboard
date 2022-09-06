@@ -37,6 +37,8 @@ const Show = () => {
         if (isError) return <SectionError error={error}/>;
         if (isLoading || !isSuccess || !transaction) return <SectionLoader/>;
 
+        const txStatus = transaction.status;
+
         console.log(transaction);
 
         const queryTransaction = async (action: 'retry' | 'refund' | 'check-payment' | 'check-request') => {
@@ -113,14 +115,14 @@ const Show = () => {
         };
 
         const transactionDropdownItems = [];
-        if (!transaction.tanda_request && transaction.status === Status.PENDING) {
+        if (txStatus === Status.PENDING && !transaction.tanda_request) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('retry')}>
                     <FontAwesomeIcon icon={faArrowRotateRight}/>&nbsp; Retry
                 </Dropdown.Item>
             );
         }
-        if (transaction.status === Status.PENDING && (!transaction.tanda_request || String(transaction?.tanda_request?.status) === '000002')) {
+        if (txStatus === Status.PENDING && transaction.payment?.status === Status.COMPLETED && (!transaction.tanda_request || String(transaction?.tanda_request?.status) !== '000000')) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('refund')}>
                     <FontAwesomeIcon icon={faArrowRotateLeft}/>&nbsp; Refund
@@ -134,7 +136,7 @@ const Show = () => {
                 </Dropdown.Item>
             );
         }
-        if (transaction.status === Status.PENDING && !transaction.tanda_request && [
+        if (txStatus === Status.PENDING && !transaction.tanda_request && [
             1, 5
         ].includes(transaction.product_id)) {
             transactionDropdownItems.push(
@@ -153,7 +155,7 @@ const Show = () => {
                             <Col>
                                 <h5>Transaction Details: #{transaction.id}</h5>
                                 <p className="fs--1">{moment(transaction.created_at).format('MMM D, Y, hh:mm A')}</p>
-                                <StatusChip status={transaction.status}/>
+                                <StatusChip status={txStatus}/>
                             </Col>
                             {transactionDropdownItems.length > 0 && (
                                 <Col sm={'auto'} className="d-flex align-items-end justify-content-end">

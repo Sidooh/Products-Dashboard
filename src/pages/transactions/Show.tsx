@@ -4,7 +4,7 @@ import {
     useCheckPaymentMutation,
     useTransactionProcessMutation,
     useTransactionQuery,
-    useTransactionRefundMutation
+    useTransactionRefundMutation, useTransactionRetryMutation
 } from 'features/transactions/transactionsAPI';
 import moment from 'moment';
 import { Fragment, lazy } from 'react';
@@ -24,6 +24,7 @@ const Show = () => {
         const { data: transaction, isError, error, isLoading, isSuccess } = useTransactionQuery(Number(id));
 
         const [processTransaction] = useTransactionProcessMutation();
+        const [retryTransaction] = useTransactionRetryMutation();
         const [refundTransaction] = useTransactionRefundMutation();
         const [checkPayment] = useCheckPaymentMutation();
 
@@ -32,7 +33,7 @@ const Show = () => {
 
         console.log(transaction);
 
-        const queryTransaction = async (action: 'refund' | 'check-payment' | 'check-request') => {
+        const queryTransaction = async (action: 'retry' | 'refund' | 'check-payment' | 'check-request') => {
             let options: SweetAlertOptions = {
                 backdrop: `rgba(0, 0, 150, 0.4)`,
                 showLoaderOnConfirm: true,
@@ -50,6 +51,18 @@ const Show = () => {
             });
 
             const querySuccess = (titleText: string) => toast({ titleText, icon: 'success', timer: 7 });
+
+            if (action === 'retry') {
+                options.title = 'Retry Transaction';
+                options.text = 'Are you sure you want to retry this transaction?';
+                options.preConfirm = async () => {
+                    const res = await retryTransaction(transaction.id) as any;
+                    console.log(res);
+
+                    if (res?.data?.id) await querySuccess('Retry Successful!');
+                    if (res?.error) await queryError(res, 'Retry Error');
+                };
+            }
 
             if (action === 'refund') {
                 options.title = 'Refund';
@@ -109,12 +122,18 @@ const Show = () => {
             );
         }
         if (transaction.status === Status.PENDING && !transaction.tanda_request && [
-            1,
-            5
+            1, 5
         ].includes(transaction.product_id)) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('check-request')}>
                     <FontAwesomeIcon icon={faCodePullRequest}/>&nbsp; Check Request
+                </Dropdown.Item>
+            );
+        }
+        if (!transaction.tanda_request && transaction.status === Status.PENDING) {
+            transactionDropdownItems.push(
+                <Dropdown.Item as="button" onClick={() => queryTransaction('retry')}>
+                    <FontAwesomeIcon icon={faCodePullRequest}/>&nbsp; Retry
                 </Dropdown.Item>
             );
         }

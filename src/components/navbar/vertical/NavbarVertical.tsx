@@ -65,7 +65,7 @@ const NavbarVertical = () => {
                 })} variant="light">
             <Flex alignItems="center">
                 <ToggleButton/>
-                <Logo src={IMAGES.logos.sidooh} at="navbar-vertical" width={70}/>
+                <Logo src={IMAGES.logos.sidooh} at="navbar-vertical" width={100}/>
             </Flex>
             <Navbar.Collapse in={showBurgerMenu} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                              style={{

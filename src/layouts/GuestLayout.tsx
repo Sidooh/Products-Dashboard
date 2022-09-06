@@ -3,8 +3,12 @@ import { Card, Col, Container, Row } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import { IMAGES } from 'constants/images';
 import { Logo, PageLoader } from '@nabcellent/sui-react';
+import { useAppSelector } from '../app/hooks';
+import { RootState } from '../app/store';
 
 const GuestLayout = () => {
+    const { isDark } = useAppSelector((state: RootState) => state.theme);
+
     return (
         <Container fluid className="py-0">
             <Row className="flex-center min-vh-100 g-0">
@@ -16,7 +20,7 @@ const GuestLayout = () => {
                     <Logo src={IMAGES.logos.sidooh} width={120}/>
                     <Card>
                         <Card.Body className="p-4 p-sm-5">
-                            <Suspense fallback={<PageLoader/>}><Outlet/></Suspense>
+                            <Suspense fallback={<PageLoader isDark={isDark}/>}><Outlet/></Suspense>
                         </Card.Body>
                     </Card>
                 </Col>

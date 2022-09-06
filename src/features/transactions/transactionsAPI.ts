@@ -36,6 +36,14 @@ export const transactionsApi = createApi({
             transformResponse: (response: ApiResponse<Transaction>) => response.data,
             providesTags: ['Transaction']
         }),
+        transactionRetry: builder.mutation<Transaction, number>({
+            query: (id) => ({
+                url: `/transactions/${id}/retry`,
+                method: 'POST',
+            }),
+            transformResponse: (response: ApiResponse<Transaction>) => response.data,
+            invalidatesTags: ['Transaction'],
+        }),
         transactionRefund: builder.mutation<Transaction, number>({
             query: (id) => ({
                 url: `/transactions/${id}/refund`,
@@ -69,6 +77,7 @@ export const {
     useTransactionsQuery,
     useTransactionQuery,
     useTransactionProcessMutation,
+    useTransactionRetryMutation,
     useTransactionRefundMutation,
     useCheckPaymentMutation
 } = transactionsApi;

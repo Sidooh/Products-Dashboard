@@ -4,13 +4,19 @@ import {
     useCheckPaymentMutation,
     useTransactionProcessMutation,
     useTransactionQuery,
-    useTransactionRefundMutation
+    useTransactionRefundMutation, useTransactionRetryMutation
 } from 'features/transactions/transactionsAPI';
 import moment from 'moment';
 import { Fragment, lazy } from 'react';
 import { CONFIG } from 'config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRotateLeft, faArrowsRotate, faBars, faCodePullRequest } from '@fortawesome/free-solid-svg-icons';
+import {
+    faArrowRotateLeft,
+    faArrowsRotate,
+    faBars,
+    faCodePullRequest,
+    faArrowRotateRight
+} from '@fortawesome/free-solid-svg-icons';
 import { currencyFormat, SectionError, SectionLoader, Status, StatusChip, toast } from '@nabcellent/sui-react';
 import CardBgCorner from 'components/CardBgCorner';
 import { Sweet } from 'utils/helpers';
@@ -24,15 +30,18 @@ const Show = () => {
         const { data: transaction, isError, error, isLoading, isSuccess } = useTransactionQuery(Number(id));
 
         const [processTransaction] = useTransactionProcessMutation();
+        const [retryTransaction] = useTransactionRetryMutation();
         const [refundTransaction] = useTransactionRefundMutation();
         const [checkPayment] = useCheckPaymentMutation();
 
         if (isError) return <SectionError error={error}/>;
         if (isLoading || !isSuccess || !transaction) return <SectionLoader/>;
 
+        const txStatus = transaction.status;
+
         console.log(transaction);
 
-        const queryTransaction = async (action: 'refund' | 'check-payment' | 'check-request') => {
+        const queryTransaction = async (action: 'retry' | 'refund' | 'check-payment' | 'check-request') => {
             let options: SweetAlertOptions = {
                 backdrop: `rgba(0, 0, 150, 0.4)`,
                 showLoaderOnConfirm: true,
@@ -50,6 +59,18 @@ const Show = () => {
             });
 
             const querySuccess = (titleText: string) => toast({ titleText, icon: 'success', timer: 7 });
+
+            if (action === 'retry') {
+                options.title = 'Retry Transaction';
+                options.text = 'Are you sure you want to retry this transaction?';
+                options.preConfirm = async () => {
+                    const res = await retryTransaction(transaction.id) as any;
+                    console.log(res);
+
+                    if (res?.data?.id) await querySuccess('Retry Successful!');
+                    if (res?.error) await queryError(res, 'Retry Error');
+                };
+            }
 
             if (action === 'refund') {
                 options.title = 'Refund';
@@ -94,7 +115,17 @@ const Show = () => {
         };
 
         const transactionDropdownItems = [];
-        if (transaction.status === Status.PENDING && String(transaction?.tanda_request?.status) === '000002') {
+        if (txStatus === Status.PENDING && !transaction.tanda_request) {
+            transactionDropdownItems.push(
+                <Dropdown.Item as="button" onClick={() => queryTransaction('retry')}>
+                    <FontAwesomeIcon icon={faArrowRotateRight}/>&nbsp; Retry
+                </Dropdown.Item>
+            );
+        }
+        if (txStatus === Status.PENDING && transaction.payment?.status === Status.COMPLETED && (!transaction.tanda_request || ![
+            '000000',
+            '000001'
+        ].includes(String(transaction?.tanda_request?.status)))) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('refund')}>
                     <FontAwesomeIcon icon={faArrowRotateLeft}/>&nbsp; Refund
@@ -108,9 +139,8 @@ const Show = () => {
                 </Dropdown.Item>
             );
         }
-        if (transaction.status === Status.PENDING && !transaction.tanda_request && [
-            1,
-            5
+        if (txStatus === Status.PENDING && !transaction.tanda_request && [
+            1, 5
         ].includes(transaction.product_id)) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('check-request')}>
@@ -128,7 +158,7 @@ const Show = () => {
                             <Col>
                                 <h5>Transaction Details: #{transaction.id}</h5>
                                 <p className="fs--1">{moment(transaction.created_at).format('MMM D, Y, hh:mm A')}</p>
-                                <StatusChip status={transaction.status}/>
+                                <StatusChip status={txStatus}/>
                             </Col>
                             {transactionDropdownItems.length > 0 && (
                                 <Col sm={'auto'} className="d-flex align-items-end justify-content-end">

@@ -1,4 +1,5 @@
 import { CONFIG } from 'config';
+import { logger } from 'utils/logger';
 
 const API_URL = `${CONFIG.sidooh.services.accounts.api.url}/users/signin`;
 
@@ -22,7 +23,7 @@ export const authAPI = {
         if (token) {
             localStorage.setItem('auth', JSON.stringify({token}));
         } else {
-            console.error(errors);
+            logger.error(errors);
         }
 
         return {token};

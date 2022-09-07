@@ -4,7 +4,6 @@ import moment from 'moment';
 import { currencyFormat } from '@nabcellent/sui-react';
 
 const TandaTransaction = ({request}: { request: TandaRequest }) => {
-    console.log(request);
     return (
         <Card className="mb-3">
             <Card.Header className="pb-0"><h5 className="fs-0">Transaction - Tanda</h5></Card.Header>

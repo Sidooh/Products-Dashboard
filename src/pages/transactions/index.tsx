@@ -5,6 +5,7 @@ import SidoohAccount from 'components/common/SidoohAccount';
 import { DataTable, SectionError, SectionLoader, StatusChip, TableDate, currencyFormat } from '@nabcellent/sui-react';
 import { Transaction } from '../../utils/types';
 import moment from 'moment';
+import { logger } from 'utils/logger';
 
 const Transactions = () => {
     let {data:transactions, isLoading, isSuccess, isError, error} = useTransactionsQuery();
@@ -12,7 +13,7 @@ const Transactions = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !transactions) return <SectionLoader/>;
 
-    console.log(transactions);
+    logger.log(transactions);
 
     return (
         <Card className={'mb-3'}>

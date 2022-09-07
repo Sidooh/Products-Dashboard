@@ -3,6 +3,7 @@ import { useCashbacksQuery } from 'features/cashbacks/cashbacksApi';
 import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
 import { Cashback } from 'utils/types';
 import SidoohAccount from 'components/common/SidoohAccount';
+import { logger } from 'utils/logger';
 
 const EarningAccounts = () => {
     let { data: cashbacks, isLoading, isSuccess, isError, error } = useCashbacksQuery();
@@ -10,7 +11,7 @@ const EarningAccounts = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !cashbacks) return <SectionLoader/>;
 
-    console.log(cashbacks);
+    logger.log(cashbacks);
 
     return (
         <Card className={'mb-3'}>

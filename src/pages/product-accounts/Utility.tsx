@@ -1,6 +1,7 @@
 import { SectionError, SectionLoader } from '@nabcellent/sui-react';
 import { useAccountsQuery } from 'features/accounts/accountsAPI';
 import ProductAccountsTable from 'components/tables/ProductAccountsTable';
+import { logger } from 'utils/logger';
 
 const UtilityAccounts = () => {
     let {data, isLoading, isSuccess, isError, error} = useAccountsQuery('utility');
@@ -9,7 +10,7 @@ const UtilityAccounts = () => {
     if (isLoading || !isSuccess || !data) return <SectionLoader/>;
 
     let {data: accounts} = data;
-    console.log(accounts);
+    logger.log(accounts);
 
     return <ProductAccountsTable title={'Utility Accounts'} accounts={accounts}/>
 };

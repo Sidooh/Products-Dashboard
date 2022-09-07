@@ -5,6 +5,7 @@ import { groupBy } from 'utils/helpers';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { EarningAccount } from 'utils/types';
 import { DataTable, SectionError, SectionLoader, TableDate, currencyFormat } from '@nabcellent/sui-react';
+import { logger } from 'utils/logger';
 
 const Index = () => {
     let {data:accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
@@ -12,7 +13,7 @@ const Index = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !accounts) return <SectionLoader/>;
 
-    console.log(accounts);
+    logger.log(accounts);
 
     return (
         <Card className={'mb-3'}>

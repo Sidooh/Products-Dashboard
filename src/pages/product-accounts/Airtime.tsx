@@ -1,5 +1,6 @@
 import { SectionError, SectionLoader } from '@nabcellent/sui-react';
 import { useAccountsQuery } from 'features/accounts/accountsAPI';
+import { logger } from 'utils/logger';
 import ProductAccountsTable from '../../components/tables/ProductAccountsTable';
 
 const AirtimeAccounts = () => {
@@ -9,7 +10,7 @@ const AirtimeAccounts = () => {
     if (isLoading || !isSuccess || !data) return <SectionLoader/>;
 
     let {data: accounts} = data;
-    console.log(accounts);
+    logger.log(accounts);
 
     return <ProductAccountsTable title={'Airtime Accounts'} accounts={accounts}/>
 };

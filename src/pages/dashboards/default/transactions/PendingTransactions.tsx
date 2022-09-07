@@ -5,6 +5,7 @@ import { Status } from 'utils/enums';
 import Transactions from './Transactions';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { logger } from 'utils/logger';
 
 const PendingTransactions = () => {
     let { data: transactions, isLoading, isSuccess, isError, error } = useTransactionsQuery(Status.PENDING);
@@ -12,7 +13,7 @@ const PendingTransactions = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !transactions) return <ComponentLoader/>;
 
-    console.log('Pending Transactions', transactions);
+    logger.log('Pending Transactions', transactions);
 
     return transactions.length ? <Transactions tableTitle={'Pending Transactions'} transactions={transactions}/> : (
         <Card className={'mb-3 bg-soft-primary'}>

@@ -6,13 +6,13 @@ import classNames from 'classnames';
 import { useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import { ErrorBoundary, Footer, SectionError, SectionLoader } from '@nabcellent/sui-react';
-import { CONFIG } from '../config';
+import { CONFIG } from 'config';
 
 const MainLayout = () => {
-    const {hash, pathname} = useLocation();
+    const { hash, pathname } = useLocation();
     const isKanban = pathname.includes('kanban');
 
-    const {isFluid, navbarPosition} = useAppSelector((state: RootState) => state.theme);
+    const { isFluid, navbarPosition } = useAppSelector((state: RootState) => state.theme);
 
     useEffect(() => {
         setTimeout(() => {
@@ -20,7 +20,7 @@ const MainLayout = () => {
                 const id = hash.replace('#', '');
                 const element = document.getElementById(id);
                 if (element) {
-                    element.scrollIntoView({block: 'start', behavior: 'smooth'});
+                    element.scrollIntoView({ block: 'start', behavior: 'smooth' });
                 }
             }
         }, 0);
@@ -34,7 +34,7 @@ const MainLayout = () => {
         <div className={isFluid ? 'container-fluid' : 'container'}>
             {(navbarPosition === 'vertical' || navbarPosition === 'combo') && <NavbarVertical/>}
 
-            <div className={classNames('content', {'pb-0': isKanban})}>
+            <div className={classNames('content', { 'pb-0': isKanban })}>
                 <NavbarTop/>
                 {/*------ Main Routes ------*/}
                 <ErrorBoundary FallbackComponent={SectionError} onReset={() => window.location.reload()}>

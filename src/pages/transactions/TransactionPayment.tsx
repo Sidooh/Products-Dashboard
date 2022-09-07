@@ -1,7 +1,7 @@
 import { Card, Table } from 'react-bootstrap';
 import { Payment } from 'utils/types';
 import moment from 'moment';
-import { CONFIG } from "../../config";
+import { CONFIG } from 'config';
 import { currencyFormat, StatusChip } from '@nabcellent/sui-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle, faEye } from '@fortawesome/free-solid-svg-icons';

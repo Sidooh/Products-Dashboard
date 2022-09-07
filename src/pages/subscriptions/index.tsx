@@ -5,6 +5,7 @@ import moment from 'moment';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
 import { Subscription } from 'utils/types';
+import { logger } from 'utils/logger';
 
 const Subscriptions = () => {
     let {data:subscriptions, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
@@ -12,7 +13,7 @@ const Subscriptions = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !subscriptions) return <SectionLoader/>;
 
-    console.log(subscriptions);
+    logger.log(subscriptions);
 
     return (
         <Card className={'mb-3'}>

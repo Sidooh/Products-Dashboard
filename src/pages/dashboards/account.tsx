@@ -14,6 +14,7 @@ import TableActions from "components/common/TableActions";
 import { useAccountQuery } from "features/accounts/accountsAPI";
 import CountUp from "react-countup";
 import CardBgCorner from 'components/CardBgCorner';
+import { logger } from 'utils/logger';
 
 const ShowAccountDetails = () => {
     const {id} = useParams<{ id: any }>();
@@ -24,7 +25,7 @@ const ShowAccountDetails = () => {
 
     const account = data.account;
 
-    console.log(data);
+    logger.log(data);
 
     return (
         <>

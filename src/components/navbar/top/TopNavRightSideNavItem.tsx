@@ -7,7 +7,7 @@ import { RootState } from 'app/store';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { Tooltip } from '@mui/material';
 import { Waffle } from '@nabcellent/sui-react';
-import { CONFIG } from '../../../config';
+import { CONFIG } from 'config';
 
 const TopNavRightSideNavItem = () => {
     const dispatch = useAppDispatch();

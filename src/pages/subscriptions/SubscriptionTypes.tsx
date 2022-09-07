@@ -3,6 +3,7 @@ import { useSubscriptionTypesQuery } from 'features/subscription-types/subscript
 import { currencyFormat, DataTable, SectionError, SectionLoader } from '@nabcellent/sui-react';
 import { SubscriptionType } from 'utils/types';
 import pluralize from 'pluralize';
+import { logger } from 'utils/logger';
 
 const SubscriptionTypes = () => {
     let { data: subTypes, isLoading, isSuccess, isError, error } = useSubscriptionTypesQuery();
@@ -10,7 +11,7 @@ const SubscriptionTypes = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !subTypes) return <SectionLoader/>;
 
-    console.log(subTypes);
+    logger.log(subTypes);
 
     return (
         <Card className={'mb-3'}>

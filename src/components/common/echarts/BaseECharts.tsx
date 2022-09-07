@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { bind, clear } from 'size-sensor';
 import * as echarts from 'echarts';
 import { EChartsType } from 'echarts/types/dist/echarts';
+import { logger } from 'utils/logger';
 
 export const isFunction = (v: any) => typeof v === 'function';
 
@@ -102,7 +103,7 @@ const BaseECharts = ({
                     height: 'auto',
                 });
             } catch (e) {
-                console.warn(e);
+                logger.warn(e);
             }
         }
 
@@ -140,7 +141,7 @@ const BaseECharts = ({
                 try {
                     clear(htmlElement);
                 } catch (e) {
-                    console.warn(e);
+                    logger.warn(e);
                 }
 
                 // dispose echarts instance

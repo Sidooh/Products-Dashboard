@@ -4,7 +4,8 @@ import {
     useCheckPaymentMutation,
     useTransactionProcessMutation,
     useTransactionQuery,
-    useTransactionRefundMutation, useTransactionRetryMutation
+    useTransactionRefundMutation,
+    useTransactionRetryMutation
 } from 'features/transactions/transactionsAPI';
 import moment from 'moment';
 import { Fragment, lazy } from 'react';
@@ -12,15 +13,16 @@ import { CONFIG } from 'config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowRotateLeft,
+    faArrowRotateRight,
     faArrowsRotate,
     faBars,
-    faCodePullRequest,
-    faArrowRotateRight
+    faCodePullRequest
 } from '@fortawesome/free-solid-svg-icons';
 import { currencyFormat, SectionError, SectionLoader, Status, StatusChip, toast } from '@nabcellent/sui-react';
 import CardBgCorner from 'components/CardBgCorner';
 import { Sweet } from 'utils/helpers';
 import { SweetAlertOptions } from 'sweetalert2';
+import { logger } from 'utils/logger';
 
 const TransactionPayment = lazy(() => import('./TransactionPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
@@ -39,7 +41,7 @@ const Show = () => {
 
         const txStatus = transaction.status;
 
-        console.log(transaction);
+        logger.info(transaction);
 
         const queryTransaction = async (action: 'retry' | 'refund' | 'check-payment' | 'check-request') => {
             let options: SweetAlertOptions = {
@@ -65,7 +67,7 @@ const Show = () => {
                 options.text = 'Are you sure you want to retry this transaction?';
                 options.preConfirm = async () => {
                     const res = await retryTransaction(transaction.id) as any;
-                    console.log(res);
+                    logger.log(res);
 
                     if (res?.data?.id) await querySuccess('Retry Successful!');
                     if (res?.error) await queryError(res, 'Retry Error');
@@ -77,7 +79,7 @@ const Show = () => {
                 options.text = 'Are you sure you want to refund this transaction?';
                 options.preConfirm = async () => {
                     const res = await refundTransaction(transaction.id) as any;
-                    console.log(res);
+                    logger.log(res);
 
                     if (res?.data?.id) await querySuccess('Refund Successful!');
                     if (res?.error) await queryError(res, 'Refund Error');
@@ -89,7 +91,7 @@ const Show = () => {
                 options.text = 'Are you sure you want to check this transactions\' payment?';
                 options.preConfirm = async () => {
                     const res = await checkPayment(transaction.id) as any;
-                    console.log(res);
+                    logger.log(res);
 
                     if (res?.data?.id) await querySuccess('Check Payment Complete!');
                     if (res?.error) await queryError(res, 'Check Payment Error!');
@@ -104,7 +106,7 @@ const Show = () => {
                     if (!requestId) return Sweet.showValidationMessage('Request ID is required.');
 
                     const res = await processTransaction({ id: transaction.id, request_id: requestId }) as any;
-                    console.log(res);
+                    logger.log(res);
 
                     if (res?.data?.id) await querySuccess('Check Request Complete!');
                     if (res?.error?.data?.message) return Sweet.showValidationMessage(res?.error.data.message);
@@ -183,14 +185,12 @@ const Show = () => {
                                 <h5 className="mb-3 fs-0">Account</h5>
                                 <h6 className="mb-2">
                                     <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${transaction.account?.user_id}`}
-                                       target={'_blank'}>
-                                        {transaction.account?.user?.name}
+                                       target={'_blank'}>{transaction.account?.user?.name}
                                     </a>
                                 </h6>
                                 <p className="mb-0 fs--1">
                                     <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${transaction.account?.id}`}
-                                       target={'_blank'}>
-                                        {transaction.account?.phone}
+                                       target={'_blank'}>{transaction.account?.phone}
                                     </a>
                                 </p>
                             </Col>

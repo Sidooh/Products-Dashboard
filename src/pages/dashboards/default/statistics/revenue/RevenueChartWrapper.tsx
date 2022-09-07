@@ -6,7 +6,8 @@ import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { Status } from 'utils/enums';
 import { useGetDashboardRevenueDataQuery } from 'features/products/productsAPI';
 import CountUp from 'react-countup';
-import { ComponentLoader, Flex, SectionError, logger } from '@nabcellent/sui-react';
+import { ComponentLoader, Flex, SectionError } from '@nabcellent/sui-react';
+import { logger } from 'utils/logger';
 
 const RevenueChartWrapper = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardRevenueDataQuery();

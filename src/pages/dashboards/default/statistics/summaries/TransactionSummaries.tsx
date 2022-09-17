@@ -19,7 +19,7 @@ const TransactionSummaries = () => {
                     <Card className={'h-xl-100'}>
                         <CardBgCorner corner={2}/>
                         <Card.Body as={Row}>
-                            <Col className="d-md-flex d-lg-block flex-between-center">
+                            <Col className="d-md-flex flex-column justify-content-center">
                                 <h5 className="mb-md-0 mb-lg-2">Transactions</h5>
                                 <h4 className="fs-3 fw-normal text-700">
                                     <CountUp end={stats.total_transactions} separator=","/>
@@ -37,7 +37,7 @@ const TransactionSummaries = () => {
                     <Card className={'h-xl-100'}>
                         <CardBgCorner/>
                         <Card.Body as={Row}>
-                            <Col className="d-md-flex d-lg-block flex-between-center">
+                            <Col className="d-md-flex flex-column justify-content-center">
                                 <h5 className="mb-md-0 mb-lg-2">Revenue</h5>
                                 <h4 className="fs-3 fw-normal text-700">
                                     <CountUp end={stats.total_revenue} separator=","/>

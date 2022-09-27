@@ -2,7 +2,7 @@ import { Card } from 'react-bootstrap';
 import { DataTable, TableDate } from '@nabcellent/sui-react';
 import SidoohAccount from '../common/SidoohAccount';
 import TableActions from '../common/TableActions';
-import { ProductAccount } from '../../utils/types';
+import { ProductAccount } from 'utils/types';
 
 const ProductAccountsTable = ({title, accounts}: { title: string, accounts: ProductAccount[] }) => {
     return (
@@ -11,7 +11,7 @@ const ProductAccountsTable = ({title, accounts}: { title: string, accounts: Prod
                 <DataTable title={title} columns={[
                     {
                         accessorKey: 'customer',
-                        accessorFn: (row: any) => row.account.phone,
+                        accessorFn: (row: ProductAccount) => `${row.account.phone}: ${row.account.user?.name}`,
                         header: 'Customer',
                         cell: ({row}: any) => <SidoohAccount account={row.original.account}/>
                     },

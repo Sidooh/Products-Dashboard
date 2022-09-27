@@ -4,7 +4,7 @@ import { useEarningAccountsQuery } from 'features/earning-accounts/earningAccoun
 import { groupBy } from 'utils/helpers';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { EarningAccount } from 'utils/types';
-import { DataTable, SectionError, SectionLoader, TableDate, currencyFormat } from '@nabcellent/sui-react';
+import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
 
 const Index = () => {
@@ -21,7 +21,7 @@ const Index = () => {
                 <DataTable title={'Earning Accounts'} columns={[
                     {
                         accessorKey: 'customer',
-                        accessorFn: (row: EarningAccount[]) => row[0]?.account?.phone,
+                        accessorFn: (row: EarningAccount[]) => `${row[0].account?.phone}: ${row[0].account?.user?.name}`,
                         header: 'Customer',
                         cell: ({row}: any) => <SidoohAccount account={row.original[0].account}/>
                     },

@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom';
 import { Card, Col, Dropdown, Row } from 'react-bootstrap';
 import {
     useCheckPaymentMutation,
+    useCompletePaymentMutation,
+    useFailPaymentMutation,
     useTransactionProcessMutation,
     useTransactionQuery,
     useTransactionRefundMutation,
@@ -28,13 +30,15 @@ const TransactionPayment = lazy(() => import('./TransactionPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
 
 const Show = () => {
-        const { id } = useParams<{ id: any }>();
-        const { data: transaction, isError, error, isLoading, isSuccess } = useTransactionQuery(Number(id));
+        const {id} = useParams<{ id: any }>();
+        const {data: transaction, isError, error, isLoading, isSuccess} = useTransactionQuery(Number(id));
 
         const [processTransaction] = useTransactionProcessMutation();
         const [retryTransaction] = useTransactionRetryMutation();
         const [refundTransaction] = useTransactionRefundMutation();
         const [checkPayment] = useCheckPaymentMutation();
+        const [completePayment] = useCompletePaymentMutation();
+        const [failPayment] = useFailPaymentMutation();
 
         if (isError) return <SectionError error={error}/>;
         if (isLoading || !isSuccess || !transaction) return <SectionLoader/>;
@@ -42,6 +46,8 @@ const Show = () => {
         const txStatus = transaction.status;
 
         logger.info(transaction);
+
+        const querySuccess = (titleText: string) => toast({titleText, icon: 'success', timer: 7});
 
         const queryTransaction = async (action: 'retry' | 'refund' | 'check-payment' | 'check-request') => {
             let options: SweetAlertOptions = {
@@ -59,8 +65,6 @@ const Show = () => {
                 icon: 'error',
                 timer: 7
             });
-
-            const querySuccess = (titleText: string) => toast({ titleText, icon: 'success', timer: 7 });
 
             if (action === 'retry') {
                 options.title = 'Retry Transaction';
@@ -101,11 +105,11 @@ const Show = () => {
             if (action === 'check-request') {
                 options.title = 'Check Request';
                 options.input = 'text';
-                options.inputAttributes = { placeholder: 'Request ID' };
+                options.inputAttributes = {placeholder: 'Request ID'};
                 options.preConfirm = async (requestId: string) => {
                     if (!requestId) return Sweet.showValidationMessage('Request ID is required.');
 
-                    const res = await processTransaction({ id: transaction.id, request_id: requestId }) as any;
+                    const res = await processTransaction({id: transaction.id, request_id: requestId}) as any;
                     logger.log(res);
 
                     if (res?.data?.id) await querySuccess('Check Request Complete!');
@@ -160,7 +164,35 @@ const Show = () => {
                             <Col>
                                 <h5>Transaction Details: #{transaction.id}</h5>
                                 <p className="fs--1">{moment(transaction.created_at).format('MMM D, Y, hh:mm A')}</p>
-                                <StatusChip status={txStatus}/>
+                                <StatusChip status={txStatus}
+                                            statuses={[Status.COMPLETED, Status.FAILED, Status.PENDING, Status.REFUNDED]}
+                                            onStatusChange={async status => {
+                                                await Sweet.fire({
+                                                    backdrop: `rgba(0, 0, 150, 0.4)`,
+                                                    showLoaderOnConfirm: true,
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonText: 'Proceed',
+                                                    title: 'Update Status',
+                                                    html: `Are you sure you want to update the status of this transaction to <b>${status}</b>?`,
+                                                    allowOutsideClick: () => !Sweet.isLoading(),
+                                                    preConfirm: async () => {
+                                                        let res;
+                                                        if (status === Status.COMPLETED) {
+                                                            res = await completePayment(transaction.id) as any;
+                                                        } else if (status === Status.FAILED) {
+                                                            res = await failPayment(transaction.id) as any;
+                                                        }
+
+                                                        if (res?.data?.id) await querySuccess('Transaction status updated!');
+                                                        if (res?.error?.data?.message) await toast({
+                                                            titleText: res?.error.data.message,
+                                                            icon: 'error',
+                                                            timer: 7
+                                                        });
+                                                    }
+                                                });
+                                            }}/>
                             </Col>
                             {transactionDropdownItems.length > 0 && (
                                 <Col sm={'auto'} className="d-flex align-items-end justify-content-end">

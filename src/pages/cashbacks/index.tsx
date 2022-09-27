@@ -19,7 +19,7 @@ const EarningAccounts = () => {
                 <DataTable title={'Cashbacks'} columns={[
                     {
                         accessorKey: 'customer',
-                        accessorFn: (row: Cashback) => row?.account?.phone,
+                        accessorFn: (row: Cashback) => `${row.account?.phone}: ${row.account?.user?.name}`,
                         header: 'Customer',
                         cell: ({ row }: any) => <SidoohAccount account={row.original.account}/>
                     },

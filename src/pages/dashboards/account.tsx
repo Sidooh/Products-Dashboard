@@ -149,8 +149,8 @@ const ShowAccountDetails = () => {
                     </Card>
                 </Col>
                 {data.earningAccounts.map(e => (
-                    <Col>
-                        <Card className={'bg-line-chart-gradient'} key={e.id}>
+                    <Col key={e.id}>
+                        <Card className={'bg-line-chart-gradient'}>
                             <Card.Header className={'bg-transparent light'} as={Row}>
                                 <Col>
                                     <h6 className="text-white">{e.type}</h6>

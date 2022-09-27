@@ -8,7 +8,7 @@ import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } fro
 import { logger } from 'utils/logger';
 
 const Index = () => {
-    let {data:accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
+    let {data: accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !accounts) return <SectionLoader/>;
@@ -28,9 +28,10 @@ const Index = () => {
                     {
                         accessorKey: 'total',
                         header: 'Total Earnings(self + invite)',
-                        cell: ({row}: any) => row.original.map((acc: EarningAccount) => (
-                            <strong>
-                                <small className={'m-0'}>{acc.type}</small>: {currencyFormat((Number(acc.self_amount) + Number(acc.invite_amount)))}
+                        cell: ({row}: any) => row.original.map((acc: EarningAccount, i: number) => (
+                            <strong key={`total-${i}`}>
+                                <small
+                                    className={'m-0'}>{acc.type}</small>: {currencyFormat((Number(acc.self_amount) + Number(acc.invite_amount)))}
                                 <br/>
                             </strong>
                         ))

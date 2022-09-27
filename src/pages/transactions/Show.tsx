@@ -217,12 +217,12 @@ const Show = () => {
                                 <h5 className="mb-3 fs-0">Account</h5>
                                 <h6 className="mb-2">
                                     <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${transaction.account?.user_id}`}
-                                       target={'_blank'}>{transaction.account?.user?.name}
+                                       target={'_blank'} rel={'noreferrer noopener'}>{transaction.account?.user?.name}
                                     </a>
                                 </h6>
                                 <p className="mb-0 fs--1">
                                     <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/accounts/${transaction.account?.id}`}
-                                       target={'_blank'}>{transaction.account?.phone}
+                                       target={'_blank'} rel={'noreferrer noopener'}>{transaction.account?.phone}
                                     </a>
                                 </p>
                             </Col>

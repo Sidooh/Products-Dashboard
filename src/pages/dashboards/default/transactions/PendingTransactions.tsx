@@ -1,7 +1,6 @@
-import { ComponentLoader, SectionError } from '@nabcellent/sui-react';
+import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
 import { Card } from 'react-bootstrap';
-import { Status } from 'utils/enums';
 import Transactions from './Transactions';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

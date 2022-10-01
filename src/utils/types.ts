@@ -1,6 +1,5 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Account } from '@nabcellent/sui-react';
-import { Status } from './enums';
+import { Account, Status } from '@nabcellent/sui-react';
 
 export interface ApiResponse<T> {
     status: string;
@@ -128,6 +127,7 @@ export type AccountDetails = {
     recentTransactions: Transaction[]
     voucher: Voucher,
     earningAccounts: EarningAccount[]
+    subscriptions: Subscription[]
 }
 
 export type SubscriptionType = Model & {
@@ -142,5 +142,6 @@ export type Subscription = Model & {
     start_date: string
     end_date: string
     account: Account
+    status: Status
     subscription_type: SubscriptionType
 }

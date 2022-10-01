@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { ApiResponse, Transaction } from 'utils/types';
 import { RootState } from 'app/store';
-import { Status } from 'utils/enums';
+import { Status } from '@nabcellent/sui-react';
 
 export const transactionsApi = createApi({
     reducerPath: 'transactionsApi',

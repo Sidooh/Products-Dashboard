@@ -1,8 +1,7 @@
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
 import Transactions from './Transactions';
 import { Transaction } from 'utils/types';
-import { Status } from 'utils/enums';
-import { ComponentLoader, SectionError } from '@nabcellent/sui-react';
+import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
 
 const RecentTransactions = () => {

@@ -4,8 +4,9 @@ import {
     Badge,
     currencyFormat,
     DataTable,
+    Flex,
     SectionError,
-    SectionLoader,
+    SectionLoader, Status,
     StatusChip,
     TableDate
 } from '@nabcellent/sui-react';
@@ -15,6 +16,7 @@ import { useAccountQuery } from "features/accounts/accountsAPI";
 import CountUp from "react-countup";
 import CardBgCorner from 'components/CardBgCorner';
 import { logger } from 'utils/logger';
+import { Subscription } from "../../utils/types";
 
 const ShowAccountDetails = () => {
     const {id} = useParams<{ id: any }>();
@@ -25,6 +27,7 @@ const ShowAccountDetails = () => {
 
     const account = data.account;
 
+    const isAgent = data.subscriptions.some(s => s.status === Status.ACTIVE)
     logger.log(data);
 
     return (
@@ -32,7 +35,11 @@ const ShowAccountDetails = () => {
             <Card className={'mb-3'}>
                 <CardBgCorner corner={3}/>
                 <Card.Body className="position-relative">
-                    <h5>Account: #{account.id}</h5>
+                    <Flex justifyContent={'between'} alignItems={'center'}>
+                        <h5>Account: #{account.id}</h5>
+                        {isAgent && <Badge pill>AGENT</Badge>}
+                    </Flex>
+
                     <Row>
                         <Col lg={6} className="mb-4 mb-lg-0">
                             <h6 className="mb-2">
@@ -134,6 +141,38 @@ const ShowAccountDetails = () => {
                             cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
                         }
                     ]} data={data.recentTransactions}/>
+                </Card.Body>
+            </Card>
+
+            <Card className={'mb-3'}>
+                <Card.Body>
+                    <DataTable title={'Subscriptions'} columns={[
+                        {
+                            accessorKey: 'type',
+                            header: 'Type',
+                            accessorFn: (row: Subscription) => row.subscription_type.title
+                        },
+                        {
+                            accessorKey: 'status',
+                            header: 'Status',
+                            cell: ({row}: any) => <StatusChip status={row.original.status}/>
+                        },
+                        {
+                            accessorKey: 'start_date',
+                            header: 'Start Date',
+                            cell: ({row}: any) => <TableDate date={row.original.start_date}/>,
+                        },
+                        {
+                            accessorKey: 'end_date',
+                            header: 'End Date',
+                            cell: ({row}: any) => <TableDate date={row.original.end_date}/>,
+                        },
+                        {
+                            accessorKey: 'created_at',
+                            header: 'Created',
+                            cell: ({row}: any) => <TableDate date={row.original.created_at}/>
+                        }
+                    ]} data={data.subscriptions}/>
                 </Card.Body>
             </Card>
 

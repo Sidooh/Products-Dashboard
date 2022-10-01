@@ -3,10 +3,9 @@ import { Card, Col, Form, Row } from 'react-bootstrap';
 import RevenueChart from './RevenueChart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
-import { Status } from 'utils/enums';
 import { useGetDashboardRevenueDataQuery } from 'features/products/productsAPI';
 import CountUp from 'react-countup';
-import { ComponentLoader, Flex, SectionError } from '@nabcellent/sui-react';
+import { ComponentLoader, Flex, SectionError, Status } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
 
 const RevenueChartWrapper = () => {

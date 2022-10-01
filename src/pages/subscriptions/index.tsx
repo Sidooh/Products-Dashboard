@@ -1,14 +1,12 @@
 import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
 import { useSubscriptionsQuery } from 'features/subscriptions/subscriptionsAPI';
-import moment from 'moment';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { DataTable, SectionError, SectionLoader, StatusChip, TableDate } from '@nabcellent/sui-react';
 import { Subscription } from 'utils/types';
 import { logger } from 'utils/logger';
 
 const Subscriptions = () => {
-    let {data:subscriptions, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
+    let {data: subscriptions, isLoading, isSuccess, isError, error} = useSubscriptionsQuery();
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !subscriptions) return <SectionLoader/>;
@@ -38,21 +36,17 @@ const Subscriptions = () => {
                     {
                         accessorKey: 'start_date',
                         header: 'Start Date',
-                        accessorFn: (row: Subscription) => moment(row.start_date).calendar(),
+                        cell: ({row}: any) => <TableDate date={row.original.start_date}/>,
                     },
                     {
                         accessorKey: 'end_date',
                         header: 'End Date',
-                        accessorFn: (row: Subscription) => moment(row.end_date).calendar(),
+                        cell: ({row}: any) => <TableDate date={row.original.end_date}/>,
                     },
                     {
                         accessorKey: 'created_at',
                         header: 'Created',
                         cell: ({row}: any) => <TableDate date={row.original.created_at}/>
-                    },
-                    {
-                        id: 'actions',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'subscription'}/>
                     }
                 ]} data={subscriptions}/>
             </Card.Body>

@@ -69,7 +69,22 @@ export const transactionsApi = createApi({
             transformResponse: (response: ApiResponse<Transaction>) => response.data,
             invalidatesTags: ['Transaction']
         }),
-
+        completePayment: builder.mutation<Transaction, number>({
+            query: id => ({
+                url: `/transactions/${id}/complete`,
+                method: 'POST',
+            }),
+            transformResponse: (response: ApiResponse<Transaction>) => response.data,
+            invalidatesTags: ['Transaction']
+        }),
+        failPayment: builder.mutation<Transaction, number>({
+            query: id => ({
+                url: `/transactions/${id}/fail`,
+                method: 'POST',
+            }),
+            transformResponse: (response: ApiResponse<Transaction>) => response.data,
+            invalidatesTags: ['Transaction']
+        }),
     })
 });
 
@@ -79,5 +94,7 @@ export const {
     useTransactionProcessMutation,
     useTransactionRetryMutation,
     useTransactionRefundMutation,
-    useCheckPaymentMutation
+    useCheckPaymentMutation,
+    useCompletePaymentMutation,
+    useFailPaymentMutation
 } = transactionsApi;

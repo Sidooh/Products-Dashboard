@@ -1,6 +1,7 @@
 # build stage
 FROM node:lts-alpine as build-stage
 
+ARG VITE_LOG_LEVEL
 ARG VITE_ACCOUNTS_API_URL
 ARG VITE_PRODUCTS_API_URL
 ARG VITE_NOTIFY_API_URL

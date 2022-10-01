@@ -4,15 +4,16 @@ import { useEarningAccountsQuery } from 'features/earning-accounts/earningAccoun
 import { groupBy } from 'utils/helpers';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { EarningAccount } from 'utils/types';
-import { DataTable, SectionError, SectionLoader, TableDate, currencyFormat } from '@nabcellent/sui-react';
+import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
+import { logger } from 'utils/logger';
 
 const Index = () => {
-    let {data:accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
+    let {data: accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !accounts) return <SectionLoader/>;
 
-    console.log(accounts);
+    logger.log(accounts);
 
     return (
         <Card className={'mb-3'}>
@@ -20,16 +21,17 @@ const Index = () => {
                 <DataTable title={'Earning Accounts'} columns={[
                     {
                         accessorKey: 'customer',
-                        accessorFn: (row: EarningAccount[]) => row[0]?.account?.phone,
+                        accessorFn: (row: EarningAccount[]) => `${row[0].account?.phone}: ${row[0].account?.user?.name}`,
                         header: 'Customer',
                         cell: ({row}: any) => <SidoohAccount account={row.original[0].account}/>
                     },
                     {
                         accessorKey: 'total',
                         header: 'Total Earnings(self + invite)',
-                        cell: ({row}: any) => row.original.map((acc: EarningAccount) => (
-                            <strong>
-                                <small className={'m-0'}>{acc.type}</small>: {currencyFormat((Number(acc.self_amount) + Number(acc.invite_amount)))}
+                        cell: ({row}: any) => row.original.map((acc: EarningAccount, i: number) => (
+                            <strong key={`total-${i}`}>
+                                <small
+                                    className={'m-0'}>{acc.type}</small>: {currencyFormat((Number(acc.self_amount) + Number(acc.invite_amount)))}
                                 <br/>
                             </strong>
                         ))

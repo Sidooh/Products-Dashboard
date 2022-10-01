@@ -6,6 +6,7 @@ import moment from 'moment/moment';
 import { useParams } from 'react-router-dom';
 import SidoohAccount from '../../components/common/SidoohAccount';
 import CountUp from 'react-countup';
+import { logger } from 'utils/logger';
 
 const Show = () => {
     const id = Number(useParams().id);
@@ -14,7 +15,7 @@ const Show = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !account) return <SectionLoader/>;
 
-    console.log(account);
+    logger.log(account);
 
     return (
         <>

@@ -107,6 +107,7 @@ export type ProductAccount = Model & {
     provider: string
     account_number: number
     priority: number
+    account: Account
 }
 
 export type Voucher = Model & {

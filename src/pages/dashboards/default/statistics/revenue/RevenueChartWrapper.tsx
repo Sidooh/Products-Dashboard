@@ -7,10 +7,11 @@ import { Status } from 'utils/enums';
 import { useGetDashboardRevenueDataQuery } from 'features/products/productsAPI';
 import CountUp from 'react-countup';
 import { ComponentLoader, Flex, SectionError } from '@nabcellent/sui-react';
+import { logger } from 'utils/logger';
 
 const RevenueChartWrapper = () => {
     const {data, isError, error, isLoading, isSuccess} = useGetDashboardRevenueDataQuery();
-    console.log(data);
+    logger.log(data);
 
     const [paymentStatus, setPaymentStatus] = useState<Status>(Status.COMPLETED);
 

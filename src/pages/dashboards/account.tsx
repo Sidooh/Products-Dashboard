@@ -144,37 +144,39 @@ const ShowAccountDetails = () => {
                 </Card.Body>
             </Card>
 
-            <Card className={'mb-3'}>
-                <Card.Body>
-                    <DataTable title={'Subscriptions'} columns={[
-                        {
-                            accessorKey: 'type',
-                            header: 'Type',
-                            accessorFn: (row: Subscription) => row.subscription_type.title
-                        },
-                        {
-                            accessorKey: 'status',
-                            header: 'Status',
-                            cell: ({row}: any) => <StatusChip status={row.original.status}/>
-                        },
-                        {
-                            accessorKey: 'start_date',
-                            header: 'Start Date',
-                            cell: ({row}: any) => <TableDate date={row.original.start_date}/>,
-                        },
-                        {
-                            accessorKey: 'end_date',
-                            header: 'End Date',
-                            cell: ({row}: any) => <TableDate date={row.original.end_date}/>,
-                        },
-                        {
-                            accessorKey: 'created_at',
-                            header: 'Created',
-                            cell: ({row}: any) => <TableDate date={row.original.created_at}/>
-                        }
-                    ]} data={data.subscriptions}/>
-                </Card.Body>
-            </Card>
+            {data?.subscriptions?.length > 0 && (
+                <Card className={'mb-3'}>
+                    <Card.Body>
+                        <DataTable title={'Subscriptions'} columns={[
+                            {
+                                accessorKey: 'type',
+                                header: 'Type',
+                                accessorFn: (row: Subscription) => row.subscription_type.title
+                            },
+                            {
+                                accessorKey: 'status',
+                                header: 'Status',
+                                cell: ({row}: any) => <StatusChip status={row.original.status}/>
+                            },
+                            {
+                                accessorKey: 'start_date',
+                                header: 'Start Date',
+                                cell: ({row}: any) => <TableDate date={row.original.start_date}/>,
+                            },
+                            {
+                                accessorKey: 'end_date',
+                                header: 'End Date',
+                                cell: ({row}: any) => <TableDate date={row.original.end_date}/>,
+                            },
+                            {
+                                accessorKey: 'created_at',
+                                header: 'Created',
+                                cell: ({row}: any) => <TableDate date={row.original.created_at}/>
+                            }
+                        ]} data={data.subscriptions}/>
+                    </Card.Body>
+                </Card>
+            )}
 
             <Row className="g-3">
                 <Col>

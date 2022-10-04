@@ -25,6 +25,7 @@ const Subscriptions = lazy(() => import('pages/subscriptions'));
 const SubscriptionTypes = lazy(() => import('pages/subscriptions/SubscriptionTypes'));
 
 const Enterprises = lazy(() => import('pages/enterprises'));
+const ShowEnterprise = lazy(() => import('pages/enterprises/Show'));
 const EnterpriseAccounts = lazy(() => import('pages/enterprise-accounts'));
 
 const AirtimeAccounts = lazy(() => import('pages/product-accounts/Airtime'));
@@ -63,6 +64,7 @@ const Layout = () => {
                     <Route path={'/subscriptions-types'} element={<SubscriptionTypes/>}/>
 
                     <Route path={'/enterprises'} element={<Enterprises/>}/>
+                    <Route path={'/enterprises/:id'} element={<ShowEnterprise/>}/>
                     <Route path={'/enterprise-accounts'} element={<EnterpriseAccounts/>}/>
 
                     <Route path={'/airtime-accounts'} element={<AirtimeAccounts/>}/>

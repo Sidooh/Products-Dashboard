@@ -7,7 +7,7 @@ import { ApiResponse } from "@nabcellent/sui-react";
 export const enterprisesApi = createApi({
     reducerPath: 'enterprisesApi',
     keepUnusedDataFor: 60 * 5, // Five minutes
-    tagTypes: ['Enterprise'],
+    tagTypes: ['Enterprises', 'Enterprise'],
     baseQuery: fetchBaseQuery({
         baseUrl: `${CONFIG.sidooh.services.products.api.url}/enterprises`,
         prepareHeaders: (headers, { getState }) => {
@@ -21,12 +21,18 @@ export const enterprisesApi = createApi({
     endpoints: (builder) => ({
         enterprises: builder.query<Enterprise[], void>({
             query: () => `/`,
-            providesTags: ['Enterprise'],
+            providesTags: ['Enterprises'],
             transformResponse: (response: ApiResponse<Enterprise[]>) => response.data
+        }),
+        enterprise: builder.query<Enterprise, number>({
+            query: id => `/${id}?with=enterprise_accounts`,
+            providesTags: ['Enterprise'],
+            transformResponse: (response: ApiResponse<Enterprise>) => response.data
         }),
     })
 });
 
 export const {
     useEnterprisesQuery,
+    useEnterpriseQuery,
 } = enterprisesApi;

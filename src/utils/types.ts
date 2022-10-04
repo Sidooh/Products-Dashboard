@@ -93,6 +93,7 @@ export type Subscription = Model & {
 
 export type Enterprise = Model & {
     name: string
+    enterprise_accounts: EnterpriseAccount[]
     admin: {
         account: Account
     }

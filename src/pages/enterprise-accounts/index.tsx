@@ -1,9 +1,8 @@
 import { Card } from 'react-bootstrap';
-import { DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
+import { DataTable, SectionError, SectionLoader, Status, StatusChip, TableDate } from '@nabcellent/sui-react';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { logger } from 'utils/logger';
 import { EnterpriseAccount } from "utils/types";
-import TableActions from "components/common/TableActions";
 import { useEnterpriseAccountsQuery } from "features/enterprise-accounts/enterpriseAccountsApi";
 
 const Enterprises = () => {
@@ -34,14 +33,16 @@ const Enterprises = () => {
                         header: 'Type',
                     },
                     {
+                        accessorKey: 'status',
+                        header: 'Status',
+                        cell: ({row}: any) => (
+                            <StatusChip status={row.original.status ? Status.ACTIVE : Status.INACTIVE}/>
+                        )
+                    },
+                    {
                         accessorKey: 'created_at',
                         header: 'Created',
                         cell: ({row}: any) => <TableDate date={row.original.created_at}/>
-                    },
-                    {
-                        id: 'actions',
-                        header: '',
-                        cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'enterprise-accounts'}/>
                     }
                 ]} data={accounts}/>
             </Card.Body>

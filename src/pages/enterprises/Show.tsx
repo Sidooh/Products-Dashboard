@@ -44,7 +44,7 @@ const Show = () => {
                             accessorKey: 'status',
                             header: 'Status',
                             cell: ({row}: any) => (
-                                <StatusChip status={row.original.status ? Status.ACTIVE : Status.INACTIVE}/>
+                                <StatusChip status={row.original.active ? Status.ACTIVE : Status.INACTIVE}/>
                             )
                         },
                         {

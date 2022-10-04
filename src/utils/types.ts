@@ -1,59 +1,4 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Account, Status } from '@nabcellent/sui-react';
-
-export interface ApiResponse<T> {
-    status: string;
-    data: T;
-}
-
-export type ToastDataType = {
-    type: 'success' | 'info' | 'warning' | 'danger';
-    msg: string;
-    duration?: number | undefined;
-    close?: boolean | undefined;
-    gravity?: 'top' | 'bottom' | undefined;
-    position?: 'left' | 'center' | 'right' | undefined;
-}
-
-export type RouteChildType = {
-    name: string
-    active: boolean
-    icon?: IconProp
-    to?: string
-    exact?: boolean
-    badge?: {
-        text?: string
-        type?: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark',
-    }
-    children?: RouteChildType[]
-}
-
-export type RouteType = {
-    label: string
-    labelDisable?: boolean
-    children: RouteChildType[]
-}
-
-type Model = {
-    id: number
-    created_at: string
-    updated_at: string
-}
-
-export type StkCallback = Model & {
-    amount: number
-    result_desc: string
-    checkout_request_id: string
-}
-
-export type StkRequest = Model & {
-    checkout_request_id: string
-    amount: number
-    phone: number
-    reference: string
-    status: Status
-    response?: StkCallback
-}
+import { Account, Status, Model } from '@nabcellent/sui-react';
 
 export type Payment = Model & {
     payment_id: number
@@ -144,4 +89,20 @@ export type Subscription = Model & {
     account: Account
     status: Status
     subscription_type: SubscriptionType
+}
+
+export type Enterprise = Model & {
+    name: string
+    admin: {
+        account: Account
+    }
+}
+
+export type EnterpriseAccount = Model & {
+    type: string
+    active: boolean
+    account_id: number
+    enterprise_id: number
+    enterprise: Enterprise
+    account: Account
 }

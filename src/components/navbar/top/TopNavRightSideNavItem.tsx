@@ -5,8 +5,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTheme } from 'features/theme/themeSlice';
 import { RootState } from 'app/store';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
-import { Tooltip } from '@mui/material';
-import { Waffle } from '@nabcellent/sui-react';
+import { Waffle, Tooltip } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
 
 const TopNavRightSideNavItem = () => {
@@ -19,7 +18,7 @@ const TopNavRightSideNavItem = () => {
             <Nav.Item as={'li'}>
                 <Nav.Link className="px-2 theme-control-toggle"
                           onClick={() => dispatch(setTheme({ key: 'isDark', value: !isDark }))}>
-                    <Tooltip title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}>
+                    <Tooltip title={`Switch to ${isDark ? 'dark' : 'light'} theme`}>
                         <div className="theme-control-toggle-label">
                             <FontAwesomeIcon icon={isDark ? faSun : faMoon} className="fs-0"/>
                         </div>

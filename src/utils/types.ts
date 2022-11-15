@@ -29,7 +29,17 @@ export type Transaction = Model & {
     amount: number
     payment?: Payment
     tanda_request?: TandaRequest
+    savings_transaction?: SavingsTransaction
     account: Account
+}
+
+export type SavingsTransaction = Model & {
+    savings_id: number
+    amount: number
+    description: string
+    type: string
+    status: Status
+    transaction: Transaction
 }
 
 export type EarningAccount = Model & {
@@ -89,21 +99,4 @@ export type Subscription = Model & {
     account: Account
     status: Status
     subscription_type: SubscriptionType
-}
-
-export type Enterprise = Model & {
-    name: string
-    enterprise_accounts: EnterpriseAccount[]
-    admin: {
-        account: Account
-    }
-}
-
-export type EnterpriseAccount = Model & {
-    type: string
-    active: boolean
-    account_id: number
-    enterprise_id: number
-    enterprise: Enterprise
-    account: Account
 }

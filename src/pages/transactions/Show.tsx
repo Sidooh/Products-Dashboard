@@ -25,13 +25,14 @@ import CardBgCorner from 'components/CardBgCorner';
 import { Sweet } from 'utils/helpers';
 import { SweetAlertOptions } from 'sweetalert2';
 import { logger } from 'utils/logger';
+import SavingsTransaction from "./SavingsTransaction";
 
 const TransactionPayment = lazy(() => import('./TransactionPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));
 
 const Show = () => {
-        const {id} = useParams<{ id: any }>();
-        const {data: transaction, isError, error, isLoading, isSuccess} = useTransactionQuery(Number(id));
+        const { id } = useParams<{ id: any }>();
+        const { data: transaction, isError, error, isLoading, isSuccess } = useTransactionQuery(Number(id));
 
         const [processTransaction] = useTransactionProcessMutation();
         const [retryTransaction] = useTransactionRetryMutation();
@@ -47,7 +48,7 @@ const Show = () => {
 
         logger.info(transaction);
 
-        const querySuccess = (titleText: string) => toast({titleText, icon: 'success', timer: 7});
+        const querySuccess = (titleText: string) => toast({ titleText, icon: 'success', timer: 7 });
 
         const queryTransaction = async (action: 'retry' | 'refund' | 'check-payment' | 'check-request') => {
             let options: SweetAlertOptions = {
@@ -105,11 +106,11 @@ const Show = () => {
             if (action === 'check-request') {
                 options.title = 'Check Request';
                 options.input = 'text';
-                options.inputAttributes = {placeholder: 'Request ID'};
+                options.inputAttributes = { placeholder: 'Request ID' };
                 options.preConfirm = async (requestId: string) => {
                     if (!requestId) return Sweet.showValidationMessage('Request ID is required.');
 
-                    const res = await processTransaction({id: transaction.id, request_id: requestId}) as any;
+                    const res = await processTransaction({ id: transaction.id, request_id: requestId }) as any;
                     logger.log(res);
 
                     if (res?.data?.id) await querySuccess('Check Request Complete!');
@@ -236,9 +237,9 @@ const Show = () => {
                     </Card.Body>
                 </Card>
 
-                <TransactionPayment payment={transaction.payment}/>
-
+                {transaction.payment && <TransactionPayment payment={transaction.payment}/>}
                 {transaction.tanda_request && <TandaTransaction request={transaction.tanda_request}/>}
+                {transaction.savings_transaction && <SavingsTransaction transaction={transaction.savings_transaction}/>}
             </>
         );
     }

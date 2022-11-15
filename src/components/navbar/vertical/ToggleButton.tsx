@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTheme } from 'features/theme/themeSlice';
-import { Tooltip } from '@mui/material';
+import { Tooltip } from '@nabcellent/sui-react';
 
 const ToggleButton = () => {
     const dispatch = useAppDispatch();

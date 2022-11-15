@@ -6,7 +6,7 @@ import {
     faPieChart,
     faSimCard,
     faSubscript,
-    faSuperscript, faBuildingUser, faUsersBetweenLines
+    faSuperscript
 } from '@fortawesome/free-solid-svg-icons';
 import { RouteType } from "@nabcellent/sui-react";
 
@@ -71,23 +71,6 @@ const routes:RouteType[] = [
                 name: 'Subscriptions',
                 icon: faSubscript,
                 to: '/subscriptions',
-                active: true
-            },
-        ]
-    },
-    {
-        label: 'Enterprise',
-        children: [
-            {
-                name: 'All Enterprises',
-                icon: faBuildingUser,
-                to: '/enterprises',
-                active: true
-            },
-            {
-                name: 'Enterprise Accounts',
-                icon: faUsersBetweenLines,
-                to: '/enterprise-accounts',
                 active: true
             },
         ]

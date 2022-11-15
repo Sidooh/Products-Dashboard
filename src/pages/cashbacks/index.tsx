@@ -5,7 +5,7 @@ import { Cashback } from 'utils/types';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { logger } from 'utils/logger';
 
-const EarningAccounts = () => {
+const Cashbacks = () => {
     let { data: cashbacks, isLoading, isSuccess, isError, error } = useCashbacksQuery();
 
     if (isError) return <SectionError error={error}/>;
@@ -53,4 +53,4 @@ const EarningAccounts = () => {
     );
 };
 
-export default EarningAccounts;
+export default Cashbacks;

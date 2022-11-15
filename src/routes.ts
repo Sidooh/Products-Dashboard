@@ -1,4 +1,3 @@
-import { RouteType } from "utils/types";
 import {
     faBolt,
     faChalkboardUser,
@@ -9,6 +8,7 @@ import {
     faSubscript,
     faSuperscript
 } from '@fortawesome/free-solid-svg-icons';
+import { RouteType } from "@nabcellent/sui-react";
 
 const routes:RouteType[] = [
     {

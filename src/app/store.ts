@@ -22,7 +22,7 @@ export const store = configureStore({
         [accountsAPI.reducerPath]: accountsAPI.reducer,
         [cashbacksApi.reducerPath]: cashbacksApi.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+    middleware: getDefaultMiddleware => getDefaultMiddleware()
         .concat(
             transactionsApi.middleware,
             productsAPI.middleware,

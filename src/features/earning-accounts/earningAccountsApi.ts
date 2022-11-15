@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { ApiResponse, EarningAccount } from 'utils/types';
+import { EarningAccount } from 'utils/types';
 import { RootState } from 'app/store';
+import { ApiResponse } from "@nabcellent/sui-react";
 
 export const earningAccountsApi = createApi({
     reducerPath: 'earningAccountsApi',

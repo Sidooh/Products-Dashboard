@@ -17,7 +17,7 @@ const GuestLayout = () => {
                          width="250"/>
                     <img className="bg-auth-circle-shape-2" src={IMAGES.icons.spotIllustrations.shape_1} alt=""
                          width="150"/>
-                    <Logo src={IMAGES.logos.sidooh} width={120}/>
+                    <Logo src={IMAGES.logos.sidooh} width={120} serviceName={'Products'}/>
                     <Card>
                         <Card.Body className="p-4 p-sm-5">
                             <Suspense fallback={<PageLoader isDark={isDark}/>}><Outlet/></Suspense>

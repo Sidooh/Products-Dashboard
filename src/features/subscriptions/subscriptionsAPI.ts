@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { ApiResponse, Subscription } from 'utils/types';
+import { Subscription } from 'utils/types';
 import { RootState } from 'app/store';
+import { ApiResponse } from "@nabcellent/sui-react";
 
 export const subscriptionsAPI = createApi({
     reducerPath: 'subscriptionsApi',

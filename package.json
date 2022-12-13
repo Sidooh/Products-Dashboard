@@ -12,7 +12,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
-    "@nabcellent/sui-react": "^2.6.3",
+    "@nabcellent/sui-react": "^2.7.0",
     "@reduxjs/toolkit": "^1.8.2",
     "@types/pluralize": "^0.0.29",
     "echarts": "^5.3.3",

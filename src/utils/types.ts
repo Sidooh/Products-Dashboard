@@ -80,7 +80,7 @@ export type AccountDetails = {
     totalRevenueMonth: number
     totalRevenue: number
     recentTransactions: Transaction[]
-    voucher: Voucher,
+    vouchers: Voucher[],
     earningAccounts: EarningAccount[]
     subscriptions: Subscription[]
 }

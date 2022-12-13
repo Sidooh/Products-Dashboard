@@ -9,7 +9,7 @@ export const accountsAPI = createApi({
     keepUnusedDataFor: 60 * 5, // Five minutes
     tagTypes: ['Account'],
     baseQuery: fetchBaseQuery({
-        baseUrl: `${CONFIG.sidooh.services.products.api.url}/accounts`,
+        baseUrl: CONFIG.sidooh.services.products.api.url,
         prepareHeaders: (headers, {getState}) => {
             const token = (getState() as RootState).auth.auth?.token;
 
@@ -21,11 +21,11 @@ export const accountsAPI = createApi({
     endpoints: (builder) => ({
         //  Earning Endpoints
         accounts: builder.query<ApiResponse<ProductAccount[]>, 'airtime' | 'utility'>({
-            query: product => `/${product}-accounts?with=account`,
+            query: product => `/${product}/accounts?with=account`,
             providesTags: ['Account']
         }),
         account: builder.query<AccountDetails, number>({
-            query: id => `/${id}/details`,
+            query: id => `/accounts/${id}/details`,
             transformResponse: (response: ApiResponse<AccountDetails>) => response.data,
         }),
     })

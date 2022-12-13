@@ -7,7 +7,6 @@ import { Route, Routes } from "react-router-dom";
 import GuestLayout from "./layouts/GuestLayout";
 import { Middleware } from "./middleware";
 import MainLayout from "./layouts/MainLayout";
-import ShowAccountDetails from "./pages/dashboards/account";
 import SettingsToggle from "./components/settings-panel/SettingsToggle";
 import SettingsPanel from "./components/settings-panel/SettingsPanel";
 
@@ -15,6 +14,8 @@ const Login = lazy(() => import('pages/auth/Login'));
 
 const Dashboard = lazy(() => import('pages/dashboards/default'));
 const Analytics = lazy(() => import('pages/dashboards/analytics'));
+
+const ShowAccountDetails = lazy(() => import('pages/AccountDetails'));
 
 const Transactions = lazy(() => import('pages/transactions'));
 const ShowTransaction = lazy(() => import('pages/transactions/Show'));

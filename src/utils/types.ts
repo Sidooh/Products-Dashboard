@@ -1,59 +1,4 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { Account, Status } from '@nabcellent/sui-react';
-
-export interface ApiResponse<T> {
-    status: string;
-    data: T;
-}
-
-export type ToastDataType = {
-    type: 'success' | 'info' | 'warning' | 'danger';
-    msg: string;
-    duration?: number | undefined;
-    close?: boolean | undefined;
-    gravity?: 'top' | 'bottom' | undefined;
-    position?: 'left' | 'center' | 'right' | undefined;
-}
-
-export type RouteChildType = {
-    name: string
-    active: boolean
-    icon?: IconProp
-    to?: string
-    exact?: boolean
-    badge?: {
-        text?: string
-        type?: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark',
-    }
-    children?: RouteChildType[]
-}
-
-export type RouteType = {
-    label: string
-    labelDisable?: boolean
-    children: RouteChildType[]
-}
-
-type Model = {
-    id: number
-    created_at: string
-    updated_at: string
-}
-
-export type StkCallback = Model & {
-    amount: number
-    result_desc: string
-    checkout_request_id: string
-}
-
-export type StkRequest = Model & {
-    checkout_request_id: string
-    amount: number
-    phone: number
-    reference: string
-    status: Status
-    response?: StkCallback
-}
+import { Account, Status, Model } from '@nabcellent/sui-react';
 
 export type Payment = Model & {
     payment_id: number
@@ -84,7 +29,17 @@ export type Transaction = Model & {
     amount: number
     payment?: Payment
     tanda_request?: TandaRequest
+    savings_transaction?: SavingsTransaction
     account: Account
+}
+
+export type SavingsTransaction = Model & {
+    savings_id: number
+    amount: number
+    description: string
+    type: string
+    status: Status
+    transaction: Transaction
 }
 
 export type EarningAccount = Model & {
@@ -125,7 +80,7 @@ export type AccountDetails = {
     totalRevenueMonth: number
     totalRevenue: number
     recentTransactions: Transaction[]
-    voucher: Voucher,
+    vouchers: Voucher[],
     earningAccounts: EarningAccount[]
     subscriptions: Subscription[]
 }

@@ -13,7 +13,11 @@ ARG VITE_USSD_DASHBOARD_URL
 
 WORKDIR /app
 
+RUN ["yarn", "set", "version", "berry"]
+RUN ["yarn", "plugin", "import", "typescript"]
+
 COPY ["package.json", "yarn.lock", "./"]
+COPY [".yarnrc.yml", "."]
 
 RUN ["yarn", "install"]
 

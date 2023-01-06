@@ -36,17 +36,17 @@ const Subscriptions = () => {
                     {
                         accessorKey: 'start_date',
                         header: 'Start Date',
-                        cell: ({row}: any) => <TableDate date={row.original.start_date}/>,
+                        cell: ({row}: any) => <TableDate date={row.original.start_date} dateOverTime/>,
                     },
                     {
                         accessorKey: 'end_date',
                         header: 'End Date',
-                        cell: ({row}: any) => <TableDate date={row.original.end_date}/>,
+                        cell: ({row}: any) => <TableDate date={row.original.end_date} dateOverTime/>,
                     },
                     {
                         accessorKey: 'created_at',
                         header: 'Created',
-                        cell: ({row}: any) => <TableDate date={row.original.created_at}/>
+                        cell: ({row}: any) => <TableDate date={row.original.created_at} dateOverTime/>
                     }
                 ]} data={subscriptions}/>
             </Card.Body>

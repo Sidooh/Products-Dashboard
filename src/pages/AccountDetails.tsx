@@ -16,11 +16,11 @@ import { useAccountQuery } from "features/accounts/accountsAPI";
 import CountUp from "react-countup";
 import CardBgCorner from 'components/CardBgCorner';
 import { logger } from 'utils/logger';
-import { Subscription } from "../../utils/types";
+import { Subscription } from "utils/types";
 
 const ShowAccountDetails = () => {
-    const {id} = useParams<{ id: any }>();
-    const {data, isError, error, isLoading, isSuccess} = useAccountQuery(Number(id));
+    const { id } = useParams<{ id: any }>();
+    const { data, isError, error, isLoading, isSuccess } = useAccountQuery(Number(id));
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <SectionLoader/>;
@@ -61,7 +61,7 @@ const ShowAccountDetails = () => {
 
             <Row className="g-3">
                 <Col md={6}>
-                    <Card style={{'height': '110px'}}>
+                    <Card style={{ 'height': '110px' }}>
                         <CardBgCorner corner={2}/>
                         <Card.Body>
                             <Row>
@@ -81,7 +81,7 @@ const ShowAccountDetails = () => {
                     </Card>
                 </Col>
                 <Col md={6}>
-                    <Card style={{'height': '110px'}}>
+                    <Card style={{ 'height': '110px' }}>
                         <CardBgCorner/>
                         <Card.Body>
                             <Row>
@@ -108,12 +108,13 @@ const ShowAccountDetails = () => {
                         {
                             accessorKey: 'id',
                             header: '#',
-                            cell: ({row}: any) => <Link to={`/transactions/${row.original.id}`}>{row.original.id}</Link>
+                            cell: ({ row }: any) => <Link
+                                to={`/transactions/${row.original.id}`}>{row.original.id}</Link>
                         },
                         {
                             accessorKey: 'description',
                             header: 'Description',
-                            cell: ({row}: any) => (
+                            cell: ({ row }: any) => (
                                 <span>
                                 {row.original.description}<br/>
                                     {row.original.destination !== account.phone &&
@@ -124,21 +125,21 @@ const ShowAccountDetails = () => {
                         {
                             accessorKey: 'amount',
                             header: 'Amount',
-                            cell: ({row}: any) => currencyFormat(row.original.amount)
+                            cell: ({ row }: any) => currencyFormat(row.original.amount)
                         },
                         {
                             accessorKey: 'status',
                             header: 'Status',
-                            cell: ({row}: any) => <StatusChip status={row.original.status}/>
+                            cell: ({ row }: any) => <StatusChip status={row.original.status}/>
                         },
                         {
                             accessorKey: 'created_at',
                             header: 'Date',
-                            cell: ({row}: any) => <TableDate date={row.original.created_at}/>
+                            cell: ({ row }: any) => <TableDate date={row.original.created_at}/>
                         },
                         {
                             id: 'actions',
-                            cell: ({row}: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
+                            cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
                         }
                     ]} data={data.recentTransactions}/>
                 </Card.Body>
@@ -156,22 +157,22 @@ const ShowAccountDetails = () => {
                             {
                                 accessorKey: 'status',
                                 header: 'Status',
-                                cell: ({row}: any) => <StatusChip status={row.original.status}/>
+                                cell: ({ row }: any) => <StatusChip status={row.original.status}/>
                             },
                             {
                                 accessorKey: 'start_date',
                                 header: 'Start Date',
-                                cell: ({row}: any) => <TableDate date={row.original.start_date}/>,
+                                cell: ({ row }: any) => <TableDate date={row.original.start_date} dateOverTime/>,
                             },
                             {
                                 accessorKey: 'end_date',
                                 header: 'End Date',
-                                cell: ({row}: any) => <TableDate date={row.original.end_date}/>,
+                                cell: ({ row }: any) => <TableDate date={row.original.end_date} dateOverTime/>,
                             },
                             {
                                 accessorKey: 'created_at',
                                 header: 'Created',
-                                cell: ({row}: any) => <TableDate date={row.original.created_at}/>
+                                cell: ({ row }: any) => <TableDate date={row.original.created_at} dateOverTime/>
                             }
                         ]} data={data.subscriptions}/>
                     </Card.Body>
@@ -179,16 +180,20 @@ const ShowAccountDetails = () => {
             )}
 
             <Row className="g-3">
-                <Col>
-                    <Card className={'bg-line-chart-gradient'}>
-                        <Card.Header className={'bg-transparent light'}>
-                            <h6 className="text-white">VOUCHER</h6>
-                            <h4 className="text-white m-0">
-                                <CountUp end={data.voucher.balance} prefix={'KES '} separator=","/>
-                            </h4>
-                        </Card.Header>
-                    </Card>
-                </Col>
+                {data.vouchers.length > 0 && (
+                    <Col>
+                        <Card className={'bg-line-chart-gradient'}>
+                            <Card.Header className={'bg-transparent light'}>
+                                <h6 className="text-white">VOUCHERS</h6>
+                                <h4 className="text-white m-0">
+                                    {data.vouchers.map(v => (
+                                        <CountUp end={v.balance} prefix={'KES '} separator=","/>
+                                    ))}
+                                </h4>
+                            </Card.Header>
+                        </Card>
+                    </Col>
+                )}
                 {data.earningAccounts.map(e => (
                     <Col key={e.id}>
                         <Card className={'bg-line-chart-gradient'}>

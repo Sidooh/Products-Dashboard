@@ -1,8 +1,3 @@
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2';
-
-export const isIterableArray = (array: any) => Array.isArray(array) && !!array.length;
-
 export const camelize = (str: string) => {
     return str.replace(/^\w|[A-Z]|\b\w|\s+/g, function (match, index) {
         if (+match === 0) return ''; // or if (/\s+/.test(match)) for white spaces
@@ -58,5 +53,3 @@ export const groupBy = (array:any[], key:string, asArray = false) => {
 
     return groupedData;
 };
-
-export const Sweet = withReactContent(Swal);

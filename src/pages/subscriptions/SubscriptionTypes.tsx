@@ -1,8 +1,7 @@
 import { Card } from 'react-bootstrap';
 import { useSubscriptionTypesQuery } from 'features/subscription-types/subscriptionTypesApi';
-import { currencyFormat, DataTable, SectionError, SectionLoader } from '@nabcellent/sui-react';
+import { currencyFormat, DataTable, SectionError, SectionLoader, toPlural } from '@nabcellent/sui-react';
 import { SubscriptionType } from 'utils/types';
-import pluralize from 'pluralize';
 import { logger } from 'utils/logger';
 
 const SubscriptionTypes = () => {
@@ -29,7 +28,7 @@ const SubscriptionTypes = () => {
                     {
                         accessorKey: 'duration',
                         header: 'Duration',
-                        accessorFn: (row: SubscriptionType) => `${row.duration} ${pluralize(row.period, row.duration)
+                        accessorFn: (row: SubscriptionType) => `${row.duration} ${toPlural(row.period, row.duration)
                             .toUpperCase()}`,
                     },
                     {

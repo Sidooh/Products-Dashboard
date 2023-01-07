@@ -20,9 +20,8 @@ import {
     faBars,
     faCodePullRequest
 } from '@fortawesome/free-solid-svg-icons';
-import { currencyFormat, SectionError, SectionLoader, Status, StatusChip, toast } from '@nabcellent/sui-react';
+import { currencyFormat, SectionError, SectionLoader, Status, StatusChip, toast, Sweet } from '@nabcellent/sui-react';
 import CardBgCorner from 'components/CardBgCorner';
-import { Sweet } from 'utils/helpers';
 import { SweetAlertOptions } from 'sweetalert2';
 import { logger } from 'utils/logger';
 import SavingsTransaction from "./SavingsTransaction";

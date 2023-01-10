@@ -10,7 +10,7 @@ export const transactionsApi = createApi({
     tagTypes: ['Transaction'],
     baseQuery: fetchBaseQuery({
         baseUrl: `${CONFIG.sidooh.services.products.api.url}`,
-        prepareHeaders: (headers, {getState}) => {
+        prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.auth?.token;
 
             if (token) headers.set('authorization', `Bearer ${token}`);
@@ -20,11 +20,11 @@ export const transactionsApi = createApi({
     }),
     endpoints: (builder) => ({
         //  Transaction Endpoints
-        transactions: builder.query<Transaction[], Status|void>({
+        transactions: builder.query<Transaction[], Status | void>({
             query: (status?: Status) => {
                 let url = '/transactions?with=account,payment';
 
-                if(status) url += `&status=${status}`;
+                if (status) url += `&status=${status}`;
 
                 return url;
             },
@@ -53,7 +53,7 @@ export const transactionsApi = createApi({
             invalidatesTags: ['Transaction'],
         }),
         transactionProcess: builder.mutation<Transaction, { id: number, request_id: string }>({
-            query: ({id, ...patch}) => ({
+            query: ({ id, ...patch }) => ({
                 url: `/transactions/${id}/check-request`,
                 method: 'POST',
                 body: patch
@@ -61,9 +61,9 @@ export const transactionsApi = createApi({
             transformResponse: (response: ApiResponse<Transaction>) => response.data,
             invalidatesTags: ['Transaction']
         }),
-        checkPayment: builder.mutation<Transaction, number>({
-            query: id => ({
-                url: `/transactions/${id}/check-payment`,
+        checkPayment: builder.mutation<Transaction, { id: number, payment_id?: number }>({
+            query: ({ id, payment_id }) => ({
+                url: `/transactions/${id}/check-payment?payment_id=${payment_id}`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Transaction>) => response.data,

@@ -43,11 +43,12 @@ const Show = () => {
         if (isError) return <SectionError error={error}/>;
         if (isLoading || !isSuccess || !transaction) return <SectionLoader/>;
 
+        const payment = transaction.payment;
         const txStatus = transaction.status;
 
         logger.info(transaction);
 
-        const querySuccess = (titleText: string) => toast({ titleText, icon: 'success', timer: 7 });
+        const querySuccess = (titleText: string) => toast({ titleText, icon: 'success' });
 
         const queryTransaction = async (action: 'retry' | 'refund' | 'check-payment' | 'check-request') => {
             let options: SweetAlertOptions = {
@@ -92,10 +93,16 @@ const Show = () => {
 
             if (action === 'check-payment') {
                 options.title = 'Check Payment';
-                options.text = 'Are you sure you want to check this transactions\' payment?';
-                options.preConfirm = async () => {
-                    const res = await checkPayment(transaction.id) as any;
-                    logger.log(res);
+
+                if (payment?.id) {
+                    options.text = 'Are you sure you want to check this transactions\' payment?';
+                } else {
+                    options.input = 'number';
+                    options.inputAttributes = { placeholder: 'Payment ID' };
+                }
+
+                options.preConfirm = async (payment_id: number) => {
+                    const res = await checkPayment({ id: transaction.id, payment_id: payment_id }) as any;
 
                     if (res?.data?.id) await querySuccess('Check Payment Complete!');
                     if (res?.error) await queryError(res, 'Check Payment Error!');
@@ -128,7 +135,7 @@ const Show = () => {
                 </Dropdown.Item>
             );
         }
-        if (txStatus === Status.PENDING && transaction.payment?.status === Status.COMPLETED && (!transaction.tanda_request || ![
+        if (txStatus === Status.PENDING && payment?.status === Status.COMPLETED && (!transaction.tanda_request || ![
             '000000',
             '000001'
         ].includes(String(transaction?.tanda_request?.status)))) {
@@ -138,7 +145,7 @@ const Show = () => {
                 </Dropdown.Item>
             );
         }
-        if (transaction.payment?.status === Status.PENDING) {
+        if (!payment || payment?.status === Status.PENDING) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('check-payment')}>
                     <FontAwesomeIcon icon={faArrowsRotate}/>&nbsp; Check Payment
@@ -236,7 +243,7 @@ const Show = () => {
                     </Card.Body>
                 </Card>
 
-                {transaction.payment && <TransactionPayment payment={transaction.payment}/>}
+                {payment && <TransactionPayment payment={payment}/>}
                 {transaction.tanda_request && <TandaTransaction request={transaction.tanda_request}/>}
                 {transaction.savings_transaction && <SavingsTransaction transaction={transaction.savings_transaction}/>}
             </>

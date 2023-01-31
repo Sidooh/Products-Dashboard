@@ -51,9 +51,9 @@ const Cashbacks = () => {
                     },
                     {
                         accessorKey: 'updated_at',
-                        accessorFn: (row: Cashback) => getRelativeDateAndTime(row.created_at).toString(),
+                        accessorFn: (row: Cashback) => getRelativeDateAndTime(row.updated_at).toString(),
                         header: 'Created',
-                        cell: ({ row }: any) => <TableDate date={row.original.created_at}/>
+                        cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
                     }
                 ]} data={cashbacks}/>
             </Card.Body>

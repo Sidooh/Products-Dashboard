@@ -5,7 +5,7 @@ import {
     DataTable,
     getRelativeDateAndTime,
     SectionError,
-    SectionLoader,
+    SectionLoader, StatusChip,
     TableDate
 } from '@nabcellent/sui-react';
 import { Cashback } from 'utils/types';
@@ -48,6 +48,11 @@ const Cashbacks = () => {
                         accessorKey: 'amount',
                         header: 'Amount',
                         cell: ({ row }: any) => currencyFormat(row.original.transaction.amount)
+                    },
+                    {
+                        accessorKey: 'status',
+                        header: 'Status',
+                        cell: ({ row }: any) => <StatusChip status={row.original.status}/>
                     },
                     {
                         accessorKey: 'updated_at',

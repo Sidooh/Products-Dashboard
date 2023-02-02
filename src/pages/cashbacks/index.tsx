@@ -1,6 +1,13 @@
 import { Card } from 'react-bootstrap';
 import { useCashbacksQuery } from 'features/cashbacks/cashbacksApi';
-import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
+import {
+    currencyFormat,
+    DataTable,
+    getRelativeDateAndTime,
+    SectionError,
+    SectionLoader,
+    TableDate
+} from '@nabcellent/sui-react';
 import { Cashback } from 'utils/types';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { logger } from 'utils/logger';
@@ -18,9 +25,9 @@ const Cashbacks = () => {
             <Card.Body>
                 <DataTable title={'Cashbacks'} columns={[
                     {
-                        accessorKey: 'customer',
-                        accessorFn: (row: Cashback) => `${row.account?.phone}: ${row.account?.user?.name}`,
-                        header: 'Customer',
+                        accessorKey: 'account',
+                        accessorFn: (row: Cashback) => `${row.account?.phone}: ${row.account?.user?.name ?? ''}`,
+                        header: 'Account',
                         cell: ({ row }: any) => <SidoohAccount account={row.original.account}/>
                     },
                     {
@@ -44,7 +51,8 @@ const Cashbacks = () => {
                     },
                     {
                         accessorKey: 'updated_at',
-                        header: 'Last Update',
+                        accessorFn: (row: Cashback) => getRelativeDateAndTime(row.updated_at).toString(),
+                        header: 'Created',
                         cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
                     }
                 ]} data={cashbacks}/>

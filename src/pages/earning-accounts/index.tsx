@@ -20,9 +20,9 @@ const Index = () => {
             <Card.Body>
                 <DataTable title={'Earning Accounts'} columns={[
                     {
-                        accessorKey: 'customer',
+                        accessorKey: 'account',
                         accessorFn: (row: EarningAccount[]) => `${row[0].account?.phone}: ${row[0].account?.user?.name}`,
-                        header: 'Customer',
+                        header: 'Account',
                         cell: ({row}: any) => <SidoohAccount account={row.original[0].account}/>
                     },
                     {

@@ -9,8 +9,7 @@ import { Middleware } from "./middleware";
 import MainLayout from "./layouts/MainLayout";
 import SettingsToggle from "./components/settings-panel/SettingsToggle";
 import SettingsPanel from "./components/settings-panel/SettingsPanel";
-
-const Login = lazy(() => import('pages/auth/Login'));
+import Login from "./pages/auth/Login";
 
 const Dashboard = lazy(() => import('pages/dashboards/default'));
 const Analytics = lazy(() => import('pages/dashboards/analytics'));

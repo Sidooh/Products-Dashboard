@@ -6,11 +6,9 @@ import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { useGetDashboardRevenueDataQuery } from 'features/products/productsAPI';
 import CountUp from 'react-countup';
 import { ComponentLoader, Flex, SectionError, Status } from '@nabcellent/sui-react';
-import { logger } from 'utils/logger';
 
 const RevenueChartWrapper = () => {
-    const {data, isError, error, isLoading, isSuccess} = useGetDashboardRevenueDataQuery();
-    logger.log(data);
+    const { data, isError, error, isLoading, isSuccess } = useGetDashboardRevenueDataQuery();
 
     const [paymentStatus, setPaymentStatus] = useState<Status>(Status.COMPLETED);
 
@@ -50,7 +48,7 @@ const RevenueChartWrapper = () => {
                     </Col>
                 </Row>
                 <RevenueChart data={data} labels={data.yesterday["ALL"].labels} status={paymentStatus}
-                              style={{height: '200px'}}/>
+                              style={{ height: '200px' }}/>
             </Card.Body>
         </Card>
     );

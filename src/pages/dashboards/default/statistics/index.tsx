@@ -3,7 +3,7 @@ import { lazy, Suspense } from 'react';
 import { ComponentLoader } from "@nabcellent/sui-react";
 
 const RevenueChartWrapper = lazy(() => import('./revenue/RevenueChartWrapper'));
-const TransactionSummaries = lazy(() => import('./summaries/TransactionSummaries'));
+const TransactionSummaries = lazy(() => import('./TransactionSummaries'));
 
 const DashboardStatistics = () => {
     return (

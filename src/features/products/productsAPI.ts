@@ -26,6 +26,7 @@ type RevenueData = {
 
 type ProvidersBalancesData = {
     tanda_float_balance: number
+    kyanda_float_balance: number
     at_airtime_balance: number
 }
 

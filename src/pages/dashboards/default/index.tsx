@@ -1,6 +1,7 @@
 import { lazy } from 'react';
+import ProviderBalances from "./ProviderBalances";
 
-const DashboardStatistics = lazy(() => import('./statistics/DashboardStatistics'));
+const DashboardStatistics = lazy(() => import('./statistics'));
 const DashboardTransactions = lazy(() => import('./transactions/DashboardTransactions'));
 
 const Dashboard = () => {
@@ -9,6 +10,8 @@ const Dashboard = () => {
             <DashboardStatistics/>
 
             <DashboardTransactions/>
+
+            <ProviderBalances/>
         </>
     );
 };

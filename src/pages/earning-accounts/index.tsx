@@ -1,14 +1,13 @@
 import { Card } from 'react-bootstrap';
 import TableActions from 'components/common/TableActions';
 import { useEarningAccountsQuery } from 'features/earning-accounts/earningAccountsApi';
-import { groupBy } from 'utils/helpers';
 import SidoohAccount from 'components/common/SidoohAccount';
 import { EarningAccount } from 'utils/types';
-import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
+import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate, groupBy } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
 
 const Index = () => {
-    let {data: accounts, isLoading, isSuccess, isError, error} = useEarningAccountsQuery();
+    let { data: accounts, isLoading, isSuccess, isError, error } = useEarningAccountsQuery();
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !accounts) return <SectionLoader/>;
@@ -21,30 +20,46 @@ const Index = () => {
                 <DataTable title={'Earning Accounts'} columns={[
                     {
                         accessorKey: 'account',
-                        accessorFn: (row: EarningAccount[]) => `${row[0].account?.phone}: ${row[0].account?.user?.name}`,
+                        accessorFn: (r: EarningAccount[]) => `${r[0].account?.phone}: ${r[0].account?.user?.name}`,
                         header: 'Account',
-                        cell: ({row}: any) => <SidoohAccount account={row.original[0].account}/>
+                        cell: ({ row }: any) => <SidoohAccount account={row.original[0].account}/>
                     },
                     {
-                        accessorKey: 'total',
+                        accessorKey: 'earnings',
                         header: 'Total Earnings(self + invite)',
-                        cell: ({row}: any) => row.original.map((acc: EarningAccount, i: number) => (
-                            <strong key={`total-${i}`}>
-                                <small
-                                    className={'m-0'}>{acc.type}</small>: {currencyFormat((Number(acc.self_amount) + Number(acc.invite_amount)))}
-                                <br/>
-                            </strong>
-                        ))
+                        accessorFn: (r: EarningAccount[]) => {
+                            const sum = r.reduce((p, c) => {
+                                if (c.type === 'WITHDRAWALS') return p += 0
+
+                                return p += Number(c.invite_amount) + Number(c.self_amount)
+                            }, 0)
+
+                            return currencyFormat(sum)
+                        }
+                    },
+                    {
+                        accessorKey: 'withdrawals',
+                        header: 'Total Withdrawals',
+                        accessorFn: (r: EarningAccount[]) => {
+                            const sum = r.reduce((p, c) => {
+                                if (c.type !== 'WITHDRAWALS') return p += 0
+
+                                return p += Number(c.invite_amount) + Number(c.self_amount)
+                            }, 0)
+
+                            return currencyFormat(sum)
+                        }
                     },
                     {
                         accessorKey: 'updated_at',
                         header: 'Last Update',
-                        cell: ({row}: any) => <TableDate date={row.original[0].updated_at}/>
+                        cell: ({ row }: any) => <TableDate date={row.original[0].updated_at}/>
                     },
                     {
                         id: 'actions',
                         header: '',
-                        cell: ({row}: any) => <TableActions entityId={row.original[0].id} entity={'earning-accounts'}/>
+                        cell: ({ row }: any) => <TableActions entityId={row.original[0].account_id}
+                                                              entity={'earning-accounts'}/>
                     }
                 ]} data={groupBy(accounts, 'account_id', true)}/>
             </Card.Body>

@@ -1,8 +1,10 @@
+import { ComponentLoader } from "@nabcellent/sui-react";
+import { Suspense } from "react";
+import SLA from "./SLA";
+
 const Dashboard = () => {
     return (
-        <div>
-            analytics
-        </div>
+        <Suspense fallback={<ComponentLoader/>}><SLA/></Suspense>
     );
 };
 

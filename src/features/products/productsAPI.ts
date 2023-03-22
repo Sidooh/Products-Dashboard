@@ -10,18 +10,10 @@ type DashboardSummariesData = {
     total_revenue_today: number
 }
 
-type ChartData = {
-    labels: string[],
-    datasets: number[]
-}
-
-interface RevenueDayData {
-    [key: string]: ChartData
-}
-
-type RevenueData = {
-    today: RevenueDayData
-    yesterday: RevenueDayData
+export type DashboardChartData = {
+    status: string,
+    date: number
+    amount: number
 }
 
 type ProvidersBalancesData = {
@@ -48,9 +40,9 @@ export const productsAPI = createApi({
             query: () => '/dashboard',
             transformResponse: (response: ApiResponse<DashboardSummariesData>) => response.data
         }),
-        getDashboardRevenueData: builder.query<RevenueData, void>({
-            query: () => '/dashboard/revenue-chart',
-            transformResponse: (response: ApiResponse<RevenueData>) => response.data
+        getDashboardChartData: builder.query<DashboardChartData[], void>({
+            query: () => '/dashboard/chart',
+            transformResponse: (response: ApiResponse<DashboardChartData[]>) => response.data
         }),
         getProvidersBalances: builder.query<ProvidersBalancesData, void>({
             query: () => '/dashboard/providers/balances',
@@ -61,6 +53,6 @@ export const productsAPI = createApi({
 
 export const {
     useGetDashboardSummariesQuery,
-    useGetDashboardRevenueDataQuery,
+    useGetDashboardChartDataQuery,
     useGetProvidersBalancesQuery
 } = productsAPI;

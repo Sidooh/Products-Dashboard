@@ -8,6 +8,7 @@ import { subscriptionsAPI } from 'features/subscriptions/subscriptionsAPI';
 import { accountsAPI } from 'features/accounts/accountsAPI';
 import { cashbacksApi } from 'features/cashbacks/cashbacksApi';
 import { subscriptionTypesApi } from 'features/subscription-types/subscriptionTypesApi';
+import { analyticsApi } from "../features/analytics/analyticsApi";
 
 export const store = configureStore({
     reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
         [subscriptionsAPI.reducerPath]: subscriptionsAPI.reducer,
         [accountsAPI.reducerPath]: accountsAPI.reducer,
         [cashbacksApi.reducerPath]: cashbacksApi.reducer,
+        [analyticsApi.reducerPath]: analyticsApi.reducer,
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware()
         .concat(
@@ -31,6 +33,7 @@ export const store = configureStore({
             subscriptionsAPI.middleware,
             accountsAPI.middleware,
             cashbacksApi.middleware,
+            analyticsApi.middleware,
         )
 });
 

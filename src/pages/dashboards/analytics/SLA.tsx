@@ -38,23 +38,23 @@ const Sla = () => {
                             const total = groupedSLAs[year].reduce((p, c) => p += c.count, 0)
 
                             return (
-                                <>
+                                <span key={`year-${year}`}>
                                     <h5 className={'text-center text-decoration-underline'}>{year}</h5>
-                                    <Row key={year}>
+                                    <Row className={'g-3'}>
                                         {groupedSLAs[year].map((sla, i) => (
-                                            <Col key={`sla-${i}`} md={6} xxl={3}
-                                                 className={` text-center ${i !== groupedSLAs[year].length - 1 && 'border-end'}`}>
+                                            <Col key={`sla-${year + i}`} md={6} xxl={3}
+                                                 className={` text-center ${i !== groupedSLAs[year].length - 1 && 'border-xxl-end'}`}>
                                                 <div
                                                     className={`icon-circle icon-circle-primary text-${getStatusColor(sla.status)} fw-bold`}>
                                                     <span
                                                         className="me-1 fs-2">{Math.round((sla.count / total) * 100)}</span>
                                                     <FontAwesomeIcon icon={faPercent}/>
                                                 </div>
-                                                <h6 className={`mb-1 text-${getStatusColor(sla.status)}`}>{sla.status}</h6>
+                                                <h6 className={`mb-1 fw-bold text-${getStatusColor(sla.status)}`}>{sla.status}</h6>
                                             </Col>
                                         ))}
                                     </Row>
-                                </>
+                                </span>
                             )
                         })}
                     </Card.Body>

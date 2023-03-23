@@ -15,6 +15,7 @@ WORKDIR /app
 
 COPY ["package.json", "yarn.lock", ".yarnrc.yml", "./"]
 COPY [".yarn/releases/", "./.yarn/releases/"]
+COPY [".yarn/plugins/", "./.yarn/plugins/"]
 
 RUN ["yarn", "install"]
 

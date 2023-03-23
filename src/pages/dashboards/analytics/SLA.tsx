@@ -4,6 +4,8 @@ import { Card, Col, Row } from "react-bootstrap";
 import { getStatusColor, LoadingButton, SectionError, SectionLoader, Tooltip, groupBy } from "@nabcellent/sui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPercent, faSync } from "@fortawesome/free-solid-svg-icons";
+import classNames from "classnames";
+import CardBgCorner from "../../../components/CardBgCorner";
 
 const Sla = () => {
     const { data, isError, error, isLoading, isSuccess, refetch } = useGetSLAQuery()
@@ -33,19 +35,25 @@ const Sla = () => {
                 </h5>
 
                 <Card>
-                    <Card.Body>
+                    <CardBgCorner corner={5}/>
+                    <Card.Body style={{
+                        backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, 1), #4a2613)'
+                    }}>
                         {Object.keys(groupedSLAs).map(year => {
                             const total = groupedSLAs[year].reduce((p, c) => p += c.count, 0)
 
                             return (
                                 <span key={`year-${year}`}>
-                                    <h5 className={'text-center text-decoration-underline'}>{year}</h5>
-                                    <Row className={'g-3'}>
+                                    <h5 className={'text-center text-light text-decoration-underline'}>{year}</h5>
+                                    <Row className={'g-2'}>
                                         {groupedSLAs[year].map((sla, i) => (
                                             <Col key={`sla-${year + i}`} md={6} xxl={3}
-                                                 className={` text-center ${i !== groupedSLAs[year].length - 1 && 'border-xxl-end'}`}>
+                                                 className={classNames(`text-center py-3 border-bottom`, {
+                                                     'border-xxl-end': i !== groupedSLAs[year].length - 1,
+                                                     'border-md-end': i % 2 === 0,
+                                                 })}>
                                                 <div
-                                                    className={`icon-circle icon-circle-primary text-${getStatusColor(sla.status)} fw-bold`}>
+                                                    className={`icon-circle icon-circle-${getStatusColor(sla.status)} text-${getStatusColor(sla.status)} fw-bold`}>
                                                     <span
                                                         className="me-1 fs-2">{Math.round((sla.count / total) * 100)}</span>
                                                     <FontAwesomeIcon icon={faPercent}/>

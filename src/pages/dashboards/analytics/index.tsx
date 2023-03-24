@@ -49,6 +49,8 @@ const Analytics = () => {
             <Revenue/>
 
             <SLA/>
+
+            {/*<TransactionNumbers/>*/}
         </Row>
     );
 };

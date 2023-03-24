@@ -16,7 +16,7 @@ import {
 import { ChartData, ChartOptions } from "chart.js";
 import { useGetTelcoTransactionsQuery } from 'features/analytics/analyticsApi';
 import { defaultLineChartOptions } from "utils/helpers";
-import LineChart from "../../../components/LineChart";
+import LineChart from "../../../components/charts/LineChart";
 
 type Dataset = { telco: Telco, dataset: number[], color: string | number[], hidden: boolean }
 

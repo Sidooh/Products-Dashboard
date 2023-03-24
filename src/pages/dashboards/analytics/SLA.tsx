@@ -32,9 +32,7 @@ const Sla = () => {
 
             <Card>
                 <CardBgCorner corner={5}/>
-                <Card.Body style={{
-                    backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, 1), #4a2613)'
-                }}>
+                <Card.Body style={{ backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, 1), #4a2613)' }}>
                     {Object.keys(groupedSLAs).map(year => {
                         const total = groupedSLAs[year].reduce((p, c) => p += c.count, 0)
 

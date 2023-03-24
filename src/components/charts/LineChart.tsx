@@ -1,4 +1,4 @@
-import CardBgCorner from "./CardBgCorner";
+import CardBgCorner from "../CardBgCorner";
 import { Card, Form } from "react-bootstrap";
 import { chartSelectOptions, Frequency, LoadingButton, Period, Status, Str } from "@nabcellent/sui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -14,7 +14,7 @@ import {
 import { ChartData, ChartOptions } from "chart.js";
 import { useGetProductTransactionsQuery } from 'features/analytics/analyticsApi';
 import { defaultLineChartOptions, getProductColor } from "utils/helpers";
-import LineChart from "../../../components/LineChart";
+import LineChart from "../../../components/charts/LineChart";
 import { Product } from "../../../utils/enums";
 
 type Dataset = { product: string, dataset: number[], color: string | number[], hidden: boolean }

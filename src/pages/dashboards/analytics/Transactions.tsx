@@ -14,7 +14,7 @@ import {
 import { ChartData, ChartOptions, TooltipItem } from "chart.js";
 import { useGetTransactionsQuery } from 'features/analytics/analyticsApi';
 import { defaultLineChartOptions } from "../../../utils/helpers";
-import LineChart from "../../../components/LineChart";
+import LineChart from "../../../components/charts/LineChart";
 
 const Transactions = () => {
     const { data, isError, error, isLoading, isSuccess, refetch } = useGetTransactionsQuery();
@@ -54,8 +54,6 @@ const Transactions = () => {
             } else {
                 rawData = groupedData[txStatus]
             }
-
-            console.log(rawData)
 
             drawChart(rawData)
         }

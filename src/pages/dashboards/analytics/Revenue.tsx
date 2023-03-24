@@ -15,7 +15,7 @@ import {
 import { ChartData, ChartOptions, TooltipItem } from "chart.js";
 import { useGetRevenueQuery } from 'features/analytics/analyticsApi';
 import { defaultLineChartOptions } from "../../../utils/helpers";
-import LineChart from "../../../components/LineChart";
+import LineChart from "../../../components/charts/LineChart";
 
 const Revenue = () => {
     const { data, isError, error, isLoading, isSuccess, refetch } = useGetRevenueQuery();

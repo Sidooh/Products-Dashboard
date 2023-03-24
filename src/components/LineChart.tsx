@@ -76,9 +76,7 @@ const LineChart = ({
                             ))}
                         </Form.Select>
                     </div>
-                    <div className={'d-flex justify-content-end mt-2'}>
-                        {extraModifiers}
-                    </div>
+                    <div className={'d-flex justify-content-end mt-2'}>{extraModifiers}</div>
                 </div>
 
                 <Line options={options} data={data}/>

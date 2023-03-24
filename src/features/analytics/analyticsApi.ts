@@ -3,6 +3,7 @@ import { CONFIG } from 'config';
 import { RootState } from 'app/store';
 import { ApiResponse, Status, Telco } from '@nabcellent/sui-react';
 import { DashboardChartData } from "../products/productsAPI";
+import { Product } from "../../utils/enums";
 
 export type SLAResponse = {
     year: number,
@@ -10,8 +11,12 @@ export type SLAResponse = {
     status: Status
 }
 
-export type TelcoTransactionResponse = {
+export type TelcoChartResponse = {
     [key in Telco]: DashboardChartData[]
+}
+
+export type ProductChartResponse = {
+    [key in Product]: DashboardChartData[]
 }
 
 export const analyticsApi = createApi({
@@ -40,13 +45,21 @@ export const analyticsApi = createApi({
             query: () => '/revenue',
             transformResponse: (res: ApiResponse<DashboardChartData[]>) => res.data
         }),
-        getTelcoTransactions: builder.query<TelcoTransactionResponse, void>({
+        getTelcoTransactions: builder.query<TelcoChartResponse, void>({
             query: () => '/telco-transactions',
-            transformResponse: (res: ApiResponse<TelcoTransactionResponse>) => res.data
+            transformResponse: (res: ApiResponse<TelcoChartResponse>) => res.data
         }),
-        getTelcoRevenue: builder.query<TelcoTransactionResponse, void>({
+        getTelcoRevenue: builder.query<TelcoChartResponse, void>({
             query: () => '/telco-revenue',
-            transformResponse: (res: ApiResponse<TelcoTransactionResponse>) => res.data
+            transformResponse: (res: ApiResponse<TelcoChartResponse>) => res.data
+        }),
+        getProductTransactions: builder.query<ProductChartResponse, void>({
+            query: () => '/product-transactions',
+            transformResponse: (res: ApiResponse<ProductChartResponse>) => res.data
+        }),
+        getProductRevenue: builder.query<ProductChartResponse, void>({
+            query: () => '/product-revenue',
+            transformResponse: (res: ApiResponse<ProductChartResponse>) => res.data
         })
     })
 });
@@ -56,5 +69,7 @@ export const {
     useGetTransactionsQuery,
     useGetRevenueQuery,
     useGetTelcoTransactionsQuery,
-    useGetTelcoRevenueQuery
+    useGetTelcoRevenueQuery,
+    useGetProductTransactionsQuery,
+    useGetProductRevenueQuery
 } = analyticsApi;

@@ -1,6 +1,7 @@
-import { rgbaColor } from "@nabcellent/sui-react";
+import { hexToRgb, rgbaColor } from "@nabcellent/sui-react";
 import { ChartOptions } from "chart.js";
 import { merge } from "chart.js/helpers";
+import { Product } from "./enums";
 
 export const camelize = (str: string) => {
     return str.replace(/^\w|[A-Z]|\b\w|\s+/g, function (match, index) {
@@ -117,3 +118,22 @@ export const defaultLineChartOptions = (options?: ChartOptions<'line'>): ChartOp
         }
     }
 }, options)
+
+export const getProductColor = (product: Product, asRGB = false) => {
+    let color = '#000'
+    if (product === Product.AIRTIME) {
+        color = '#1978a2'
+    } else if (product === Product.SUBSCRIPTION) {
+        color = '#648381'
+    } else if (product === Product.MERCHANT) {
+        color = '#F42E00'
+    } else if (product === Product.VOUCHER) {
+        color = '#F5B700'
+    } else if (product === Product.UTILITY) {
+        color = '#00a862'
+    } else if (product === Product.WITHDRAWAL) {
+        color = '#000'
+    }
+
+    return asRGB ? hexToRgb(color) : color
+}

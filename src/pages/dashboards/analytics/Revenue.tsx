@@ -29,6 +29,7 @@ const Revenue = () => {
 
     const drawChart = (data: RawAnalytics[]) => {
         const aid = new ChartAid(chartPeriodOpt, chartFreqOpt, 'amount')
+        aid.timeIsUTC = true
         let { labels, dataset } = aid.getDataset(data)
 
         setLabels(labels)

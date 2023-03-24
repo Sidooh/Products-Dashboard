@@ -40,10 +40,10 @@ Chart.defaults.font.family = "'Avenir', sans-serif"
 const DashboardChart = () => {
     const { data, isError, error, isLoading, isSuccess } = useGetDashboardChartDataQuery();
 
-    const [txStatus, setPaymentStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
+    const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
     const [chartFreqOpt, setChartFreqOpt] = useState(Frequency.HOURLY)
-    const [chartPeriodOpt, setChartPeriodOpt] = useState(Period.TODAY)
+    const [chartPeriodOpt, setChartPeriodOpt] = useState(Period.LAST_24_HOURS)
     const [labels, setLabels] = useState<string[]>([])
     const [dataset, setDataset] = useState<number[]>([])
 
@@ -167,7 +167,7 @@ const DashboardChart = () => {
                 </div>
                 <div className="position-absolute d-flex right-0 me-3">
                     <button className="btn btn-sm btn-outline-light me-2 refresh-chart" type="button"
-                            title="Update Chart">
+                            title="Update LineChart">
                         <FontAwesomeIcon icon={faSync}/>
                     </button>
                     <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
@@ -191,7 +191,7 @@ const DashboardChart = () => {
                         ))}
                     </Form.Select>
                     <Form.Select className="px-2" size="sm" value={txStatus}
-                                 onChange={e => setPaymentStatus(e.target.value as Status)}>
+                                 onChange={e => setTxStatus(e.target.value as Status)}>
                         <option value="ALL">All</option>
                         {[Status.COMPLETED, Status.FAILED, Status.PENDING, Status.REFUNDED].map((status, i) => (
                             <option key={`status-${i}`} value={status}>{status}</option>

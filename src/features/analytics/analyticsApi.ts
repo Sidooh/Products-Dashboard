@@ -1,12 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
-import { ApiResponse, Status } from '@nabcellent/sui-react';
+import { ApiResponse, Status, Telco } from '@nabcellent/sui-react';
+import { DashboardChartData } from "../products/productsAPI";
 
 export type SLAResponse = {
     year: number,
     count: number,
     status: Status
+}
+
+export type TelcoTransactionResponse = {
+    [key in Telco]: DashboardChartData[]
 }
 
 export const analyticsApi = createApi({
@@ -25,11 +30,31 @@ export const analyticsApi = createApi({
     endpoints: (builder) => ({
         getSLA: builder.query<SLAResponse[], void>({
             query: () => '/sla',
-            transformResponse: (response: ApiResponse<SLAResponse[]>) => response.data
+            transformResponse: (res: ApiResponse<SLAResponse[]>) => res.data
         }),
+        getTransactions: builder.query<DashboardChartData[], void>({
+            query: () => '/transactions',
+            transformResponse: (res: ApiResponse<DashboardChartData[]>) => res.data
+        }),
+        getRevenue: builder.query<DashboardChartData[], void>({
+            query: () => '/revenue',
+            transformResponse: (res: ApiResponse<DashboardChartData[]>) => res.data
+        }),
+        getTelcoTransactions: builder.query<TelcoTransactionResponse, void>({
+            query: () => '/telco-transactions',
+            transformResponse: (res: ApiResponse<TelcoTransactionResponse>) => res.data
+        }),
+        getTelcoRevenue: builder.query<TelcoTransactionResponse, void>({
+            query: () => '/telco-revenue',
+            transformResponse: (res: ApiResponse<TelcoTransactionResponse>) => res.data
+        })
     })
 });
 
 export const {
     useGetSLAQuery,
+    useGetTransactionsQuery,
+    useGetRevenueQuery,
+    useGetTelcoTransactionsQuery,
+    useGetTelcoRevenueQuery
 } = analyticsApi;

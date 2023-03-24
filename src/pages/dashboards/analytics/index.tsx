@@ -1,11 +1,47 @@
-import { ComponentLoader } from "@nabcellent/sui-react";
-import { Suspense } from "react";
 import SLA from "./SLA";
+import Revenue from "./Revenue";
+import Transactions from "./Transactions";
+import { Row } from "react-bootstrap";
+import {
+    CategoryScale,
+    Chart,
+    Filler,
+    Legend,
+    LinearScale,
+    LineElement,
+    PointElement,
+    SubTitle,
+    Title,
+    Tooltip
+} from "chart.js";
+import TelcoTransactions from "./TelcoTransactions";
+import TelcoRevenue from "./TelcoRevenue";
 
-const Dashboard = () => {
+Chart.register(Title, SubTitle, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, Filler)
+Chart.defaults.color = '#fff'
+Chart.defaults.font.weight = '700'
+Chart.defaults.font.family = "'Avenir', sans-serif"
+
+const Analytics = () => {
     return (
-        <Suspense fallback={<ComponentLoader/>}><SLA/></Suspense>
+        <Row className={'g-3'}>
+            <h5 className="text-primary text-center position-relative">
+                <span className="bg-200 px-3">TRANSACTIONS</span>
+                <span className="border position-absolute top-50 translate-middle-y w-100 start-0 z-index--1"/>
+            </h5>
+            <Transactions/>
+            <Revenue/>
+
+            <h5 className="text-primary text-center position-relative">
+                <span className="bg-200 px-3">TRANSACTIONS BY TELCO</span>
+                <span className="border position-absolute top-50 translate-middle-y w-100 start-0 z-index--1"/>
+            </h5>
+            <TelcoTransactions/>
+            <TelcoRevenue/>
+
+            <SLA/>
+        </Row>
     );
 };
 
-export default Dashboard;
+export default Analytics;

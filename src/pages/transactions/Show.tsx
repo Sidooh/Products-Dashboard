@@ -127,18 +127,18 @@ const Show = () => {
             await Sweet.fire(options);
         };
 
+        const tandaRequests = transaction.tanda_requests
+
         const transactionDropdownItems = [];
-        if (txStatus === Status.PENDING && !transaction.tanda_request) {
+        if (txStatus === Status.PENDING && !Boolean(tandaRequests?.length)) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('retry')}>
                     <FontAwesomeIcon icon={faArrowRotateRight}/>&nbsp; Retry
                 </Dropdown.Item>
             );
         }
-        if (txStatus === Status.PENDING && payment?.status === Status.COMPLETED && (!transaction.tanda_request || ![
-            '000000',
-            '000001'
-        ].includes(String(transaction?.tanda_request?.status)))) {
+
+        if (txStatus === Status.PENDING && payment?.status === Status.COMPLETED && (!Boolean(tandaRequests?.length) || tandaRequests?.every(r => !['000000', '000001'].includes(String(r.status))))) {
             transactionDropdownItems.push(
                 <Dropdown.Item as="button" onClick={() => queryTransaction('refund')}>
                     <FontAwesomeIcon icon={faArrowRotateLeft}/>&nbsp; Refund
@@ -152,7 +152,7 @@ const Show = () => {
                 </Dropdown.Item>
             );
         }
-        if (txStatus === Status.PENDING && !transaction.tanda_request && [
+        if (txStatus === Status.PENDING && !Boolean(tandaRequests?.length) && [
             1, 5
         ].includes(transaction.product_id)) {
             transactionDropdownItems.push(
@@ -244,7 +244,7 @@ const Show = () => {
                 </Card>
 
                 {payment && <TransactionPayment payment={payment}/>}
-                {transaction.tanda_request && <TandaTransaction request={transaction.tanda_request}/>}
+                {Boolean(tandaRequests?.length) && <TandaTransaction requests={tandaRequests!!}/>}
                 {transaction.savings_transaction && <SavingsTransaction transaction={transaction.savings_transaction}/>}
             </>
         );

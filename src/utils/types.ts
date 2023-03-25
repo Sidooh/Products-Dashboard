@@ -28,7 +28,7 @@ export type Transaction = Model & {
     type: string
     amount: number
     payment?: Payment
-    tanda_request?: TandaRequest
+    tanda_requests?: TandaRequest[]
     savings_transaction?: SavingsTransaction
     account: Account
 }

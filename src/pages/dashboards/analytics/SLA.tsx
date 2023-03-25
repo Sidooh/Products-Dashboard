@@ -18,7 +18,7 @@ const Sla = () => {
         <Col xs={12} className={'mb-3'}>
             <h5 className="text-primary text-center position-relative">
                     <span className="bg-200 dark__bg-1100 px-3">
-                        SLA - SUCCESS RATE
+                        SLA - TRANSACTION SUCCESS RATE
                         <Tooltip title="Refresh SLAs" placement="left">
                             <LoadingButton loading={false} className="btn btn-sm border-0 py-2"
                                            spinner-position="replace" onClick={() => refetch()}>

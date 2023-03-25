@@ -28,7 +28,7 @@ import {
     LineElement,
     PointElement,
     Title,
-    Tooltip as ChartTooltip
+    Tooltip as ChartTooltip, TooltipItem
 } from "chart.js";
 import CardBgCorner from "../../../components/CardBgCorner";
 
@@ -48,7 +48,7 @@ const DashboardChart = () => {
     const [dataset, setDataset] = useState<number[]>([])
 
     const drawChart = (data: RawAnalytics[]) => {
-        const aid = new ChartAid(chartPeriodOpt, chartFreqOpt, true)
+        const aid = new ChartAid(chartPeriodOpt, chartFreqOpt)
         let { labels, dataset } = aid.getDataset(data)
 
         setLabels(labels)
@@ -103,7 +103,7 @@ const DashboardChart = () => {
                 beginAtZero: true,
                 grid: {
                     display: false
-                }
+                },
             },
             x: {
                 border: {
@@ -131,6 +131,9 @@ const DashboardChart = () => {
             },
             tooltip: {
                 displayColors: false,
+                callbacks: {
+                    label: (item: TooltipItem<'line'>) => `KES ${item.formattedValue}`
+                }
             }
         },
     };
@@ -138,7 +141,7 @@ const DashboardChart = () => {
     const chartData: ChartData<'line'> = {
         labels,
         datasets: [{
-            label: 'Notifications',
+            label: 'Transactions',
             data: dataset,
             borderColor: ['rgba(255, 255, 255, 1)'],
             backgroundColor: '#0F1B4C',

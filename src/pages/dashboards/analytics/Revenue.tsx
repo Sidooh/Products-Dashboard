@@ -70,9 +70,6 @@ const Revenue = () => {
                     color: '#191',
                     display: true,
                     text: '(KSH)'
-                },
-                ticks: {
-                    callback: (val) => Number(val).toFixed(2)
                 }
             }
         },

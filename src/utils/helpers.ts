@@ -75,7 +75,8 @@ export const defaultLineChartOptions = (options?: ChartOptions<'line'>): ChartOp
                 color: rgbaColor('#648381', 1),
                 font: {
                     weight: 600
-                }
+                },
+                callback: (val: number | string) => Intl.NumberFormat('en', { notation: 'compact' }).format(Number(val))
             }
         },
     },

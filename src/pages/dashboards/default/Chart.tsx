@@ -9,7 +9,7 @@ import {
     chartSelectOptions,
     ComponentLoader,
     Frequency,
-    groupBy,
+    groupBy, LoadingButton,
     Period,
     RawAnalytics,
     SectionError,
@@ -38,7 +38,7 @@ Chart.defaults.font.weight = '700'
 Chart.defaults.font.family = "'Avenir', sans-serif"
 
 const DashboardChart = () => {
-    const { data, isError, error, isLoading, isSuccess } = useGetDashboardChartDataQuery();
+    const { data, isError, error, isLoading, isSuccess, refetch } = useGetDashboardChartDataQuery();
 
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
@@ -46,6 +46,8 @@ const DashboardChart = () => {
     const [chartPeriodOpt, setChartPeriodOpt] = useState(Period.LAST_24_HOURS)
     const [labels, setLabels] = useState<string[]>([])
     const [dataset, setDataset] = useState<number[]>([])
+    const [totalToday, setTotalToday] = useState(0)
+    const [totalYesterday, setTotalYesterday] = useState(0)
 
     const drawChart = (data: RawAnalytics[]) => {
         const aid = new ChartAid(chartPeriodOpt, chartFreqOpt)
@@ -76,21 +78,27 @@ const DashboardChart = () => {
             } else {
                 drawChart(groupedData[txStatus].map(x => ({ ...x, count: x.amount })))
             }
+
+            const totalToday = data.filter(d => {
+                const isToday = moment(d.date, 'YYYYMMDDHH').isAfter(moment().startOf('d'))
+
+                return isToday && [d.status, 'ALL'].includes(txStatus)
+            }).reduce((p, c) => p += Number(c.amount), 0)
+            const totalYesterday = data.filter(d => {
+                const startOfYesterday = moment().subtract(1, 'd').startOf('d')
+                const endOfYesterday = moment().subtract(1, 'd').endOf('d')
+                const isYesterday = moment(d.date, 'YYYYMMDDHH').isBetween(startOfYesterday, endOfYesterday)
+
+                return isYesterday && [d.status, 'ALL'].includes(txStatus)
+            }).reduce((p, c) => p += Number(c.amount), 0)
+
+            setTotalToday(totalToday)
+            setTotalYesterday(totalYesterday)
         }
     }, [data, chartPeriodOpt, chartFreqOpt, chartTypeOpt, txStatus])
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
-
-    const total_today = data.filter(d => {
-        return moment(d.date, 'YYYYMMDDHH').isAfter(moment().startOf('d')) && d.status === txStatus
-    }).reduce((prev, curr) => prev += curr.amount, 0)
-    const total_yesterday = data.filter(d => {
-        const startOfYesterday = moment().subtract(1, 'd').startOf('d')
-        const endOfYesterday = moment().subtract(1, 'd').endOf('d')
-
-        return moment(d.date, 'YYYYMMDDHH').isBetween(startOfYesterday, endOfYesterday) && d.status === txStatus
-    }).reduce((prev, curr) => prev += curr.amount, 0)
 
     const options: ChartOptions<'line'> = {
         responsive: true,
@@ -100,10 +108,17 @@ const DashboardChart = () => {
         },
         scales: {
             y: {
+                title: {
+                    display: true,
+                    text: '(KSH)'
+                },
                 beginAtZero: true,
                 grid: {
                     display: false
                 },
+                ticks:{
+                    callback: val => Intl.NumberFormat('en', { notation: 'compact' }).format(Number(val))
+                }
             },
             x: {
                 border: {
@@ -150,6 +165,8 @@ const DashboardChart = () => {
         }],
     };
 
+    console.log(totalToday)
+
     return (
         <Card className="rounded-3 overflow-hidden h-100 shadow-none">
             <CardBgCorner/>
@@ -160,19 +177,19 @@ const DashboardChart = () => {
                 <div className="position-absolute light border-top border-bottom" style={{ top: 50 }}>
                     <h6 className="text-white mb-0">
                         Today {' '}
-                        <CountUp end={total_today} prefix={'KES '} decimals={2} separator={','} className={'fw-bold'}/>
+                        <CountUp end={totalToday} prefix={'KES '} decimals={2} separator={','} className={'fw-bold'}/>
                     </h6>
                     <h6 className="text-light fs-8 opacity-50 mb-0">
                         Yesterday {' '}
-                        <CountUp end={total_yesterday} prefix={'KES '} decimals={2} separator={','}
+                        <CountUp end={totalYesterday} prefix={'KES '} decimals={2} separator={','}
                                  className={'fw-bold'}/>
                     </h6>
                 </div>
                 <div className="position-absolute d-flex right-0 me-3">
-                    <button className="btn btn-sm btn-outline-light me-2 refresh-chart" type="button"
-                            title="Update LineChart">
+                    <LoadingButton className="btn btn-sm btn-light me-2 refresh-chart" type="button"
+                            title="Update LineChart" onClick={() => refetch()}>
                         <FontAwesomeIcon icon={faSync}/>
-                    </button>
+                    </LoadingButton>
                     <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
                         setChartTypeOpt(e.target.value as 'time-series' | 'cumulative')
                     }}>

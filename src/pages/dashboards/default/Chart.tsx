@@ -65,10 +65,10 @@ const DashboardChart = () => {
 
     useEffect(() => {
         if (data) {
+            console.log(data)
             const aggregate = (data: any) => {
-                let groupedData: { [key: string]: AnalyticsChartData[] } = groupBy(data, txStatus === 'ALL'
-                                                                                         ? 'date'
-                                                                                         : 'status')
+                const property = txStatus === 'ALL' ? 'date' : 'status'
+                let groupedData: { [key: string]: AnalyticsChartData[] } = groupBy(data, property)
 
                 let rawAnalytics: RawAnalytics[];
                 if (txStatus === 'ALL') {

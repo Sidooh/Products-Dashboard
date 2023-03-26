@@ -11,7 +11,7 @@ type DashboardSummariesData = {
     total_revenue_today: number
 }
 
-type DashboardChartData = {
+type DashboardChartData = string[] | {
     [key in 'TODAY' | 'YESTERDAY']: AnalyticsChartData[]
 }
 
@@ -37,15 +37,18 @@ export const productsAPI = createApi({
     endpoints: (builder) => ({
         getDashboardSummaries: builder.query<DashboardSummariesData, void>({
             query: () => '/dashboard',
-            transformResponse: (response: ApiResponse<DashboardSummariesData>) => response.data
+            transformResponse: (res: ApiResponse<DashboardSummariesData>) => res.data
         }),
         getDashboardChartData: builder.query<DashboardChartData, void>({
             query: () => '/dashboard/chart',
-            transformResponse: (response: ApiResponse<DashboardChartData>) => response.data
+            transformResponse: (res: ApiResponse<DashboardChartData>) => !Array.isArray(res.data) ? res.data : {
+                TODAY: [],
+                YESTERDAY: []
+            }
         }),
         getProvidersBalances: builder.query<ProvidersBalancesData, void>({
             query: () => '/dashboard/providers/balances',
-            transformResponse: (response: ApiResponse<ProvidersBalancesData>) => response.data
+            transformResponse: (res: ApiResponse<ProvidersBalancesData>) => res.data
         })
     })
 });

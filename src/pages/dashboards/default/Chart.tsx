@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Card, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +14,8 @@ import {
     RawAnalytics,
     SectionError,
     Status,
-    Str
+    Str,
+    Telco
 } from '@nabcellent/sui-react';
 import { Line } from "react-chartjs-2";
 import {
@@ -65,7 +66,9 @@ const DashboardChart = () => {
     useEffect(() => {
         if (data) {
             const aggregate = (data: any) => {
-                let groupedData: { [key: string]: AnalyticsChartData[] } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status')
+                let groupedData: { [key: string]: AnalyticsChartData[] } = groupBy(data, txStatus === 'ALL'
+                                                                                         ? 'date'
+                                                                                         : 'status')
 
                 let rawAnalytics: RawAnalytics[];
                 if (txStatus === 'ALL') {
@@ -91,7 +94,7 @@ const DashboardChart = () => {
                     dataset,
                     hidden: !checkedPeriods.includes(d),
                     label: d,
-                    color: d === 'TODAY' ? '#fff' : '#648381'
+                    color: d === 'TODAY' ? '#fff' : '#911'
                 })
             })
 
@@ -104,7 +107,7 @@ const DashboardChart = () => {
             setTotalToday(totalToday)
             setTotalYesterday(totalYesterday)
         }
-    }, [data, chartTypeOpt, txStatus])
+    }, [data, chartTypeOpt, txStatus, checkedPeriods])
 
     useEffect(() => {
         if (data) setCheckedPeriods(Object.keys(data))
@@ -167,6 +170,7 @@ const DashboardChart = () => {
         datasets: datasets.map(d => ({
             label: d.label,
             data: d.dataset,
+            hidden: d.hidden,
             borderColor: d.color,
             backgroundColor: '#0F1B4C',
             borderWidth: 2,
@@ -175,6 +179,18 @@ const DashboardChart = () => {
             pointStyle: 'star'
         })),
     };
+
+    const handleCheckedPeriods = (e: ChangeEvent<HTMLInputElement>) => {
+        let updatedList = [...checkedPeriods];
+
+        if (e.target.checked) {
+            updatedList = [...checkedPeriods, e.target.value as Telco];
+        } else {
+            updatedList.splice(checkedPeriods.indexOf(e.target.value), 1);
+        }
+
+        setCheckedPeriods(updatedList);
+    }
 
     return (
         <Card className="rounded-3 overflow-hidden h-100 shadow-none">
@@ -194,24 +210,36 @@ const DashboardChart = () => {
                                  className={'fw-bold'}/>
                     </h6>
                 </div>
-                <div className="position-absolute d-flex right-0 me-3">
-                    <LoadingButton className="btn btn-sm btn-light me-2 refresh-chart" type="button"
-                                   title="Update LineChart" onClick={() => refetch()}>
-                        <FontAwesomeIcon icon={faSync}/>
-                    </LoadingButton>
-                    <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
-                        setChartTypeOpt(e.target.value as 'time-series' | 'cumulative')
-                    }}>
-                        <option value="time-series">Time Series</option>
-                        <option value="cumulative">Cumulative</option>
-                    </Form.Select>
-                    <Form.Select className="px-2" size="sm" value={txStatus}
-                                 onChange={e => setTxStatus(e.target.value as Status)}>
-                        <option value="ALL">All</option>
-                        {[Status.COMPLETED, Status.FAILED, Status.PENDING, Status.REFUNDED].map((status, i) => (
-                            <option key={`status-${i}`} value={status}>{status}</option>
+                <div className="position-absolute right-0 me-3">
+                    <div className="d-flex">
+                        <LoadingButton className="btn btn-sm btn-light me-2 refresh-chart" type="button"
+                                       title="Update LineChart" onClick={() => refetch()}>
+                            <FontAwesomeIcon icon={faSync}/>
+                        </LoadingButton>
+                        <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
+                            setChartTypeOpt(e.target.value as 'time-series' | 'cumulative')
+                        }}>
+                            <option value="time-series">Time Series</option>
+                            <option value="cumulative">Cumulative</option>
+                        </Form.Select>
+                        <Form.Select className="px-2" size="sm" value={txStatus}
+                                     onChange={e => setTxStatus(e.target.value as Status)}>
+                            <option value="ALL">All</option>
+                            {[Status.COMPLETED, Status.FAILED, Status.PENDING, Status.REFUNDED].map((status, i) => (
+                                <option key={`status-${i}`} value={status}>{status}</option>
+                            ))}
+                        </Form.Select>
+                    </div>
+
+                    <div className={'d-flex justify-content-end mt-2'}>
+                        {Object.keys(data).sort().map((d, i) => (
+                            <Form.Check key={`period-${i}`} className={`px-2 me-2 ms-3 fw-bold`} id={`period-rev-${i}`}
+                                        value={d} type={'checkbox'} label={<b>{d}</b>}
+                                        checked={checkedPeriods.includes(d)}
+                                        style={{ color: d === 'TODAY' ? '#fff' : '#911' }}
+                                        onChange={handleCheckedPeriods}/>
                         ))}
-                    </Form.Select>
+                    </div>
                 </div>
 
                 <Line options={options} data={chartData}/>

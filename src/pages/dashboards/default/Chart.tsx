@@ -101,8 +101,8 @@ const DashboardChart = () => {
             setLabels(l)
             setDatasets(datasets)
 
-            const totalToday = data.TODAY.filter(d => [d.status, 'ALL'].includes(txStatus)).reduce((p, c) => p += Number(c.amount), 0)
-            const totalYesterday = data.YESTERDAY.filter(d => [d.status, 'ALL'].includes(txStatus)).reduce((p, c) => p += Number(c.amount), 0)
+            const totalToday = data.TODAY?.filter(d => [d.status, 'ALL'].includes(txStatus)).reduce((p, c) => p += Number(c.amount), 0)
+            const totalYesterday = data.YESTERDAY?.filter(d => [d.status, 'ALL'].includes(txStatus)).reduce((p, c) => p += Number(c.amount), 0)
 
             setTotalToday(totalToday)
             setTotalYesterday(totalYesterday)

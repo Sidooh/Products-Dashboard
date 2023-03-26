@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Col } from 'react-bootstrap';
-import { DashboardChartData } from 'features/products/productsAPI';
 import {
     ChartAid,
     chartGradient,
@@ -16,6 +15,7 @@ import { ChartData, ChartOptions, TooltipItem } from "chart.js";
 import { useGetRevenueQuery } from 'features/analytics/analyticsApi';
 import { defaultLineChartOptions } from "../../../utils/helpers";
 import LineChart from "../../../components/charts/LineChart";
+import { AnalyticsChartData } from "../../../utils/types";
 
 const Revenue = () => {
     const { data, isError, error, isLoading, isSuccess, refetch } = useGetRevenueQuery();
@@ -42,7 +42,7 @@ const Revenue = () => {
 
     useEffect(() => {
         if (data?.length) {
-            let groupedData: { [key: string]: DashboardChartData[] } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status')
+            let groupedData: { [key: string]: AnalyticsChartData[] } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status')
 
             if (txStatus === 'ALL') {
                 const set = Object.keys(groupedData).map(date => {

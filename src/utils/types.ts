@@ -100,3 +100,10 @@ export type Subscription = Model & {
     status: Status
     subscription_type: SubscriptionType
 }
+
+export type AnalyticsChartData = {
+    status: Status,
+    date: number
+    amount: number
+    count: number
+}

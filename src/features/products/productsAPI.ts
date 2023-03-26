@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
-import { ApiResponse, Status } from '@nabcellent/sui-react';
+import { ApiResponse } from '@nabcellent/sui-react';
+import { AnalyticsChartData } from "../../utils/types";
 
 type DashboardSummariesData = {
     total_transactions: number
@@ -10,11 +11,8 @@ type DashboardSummariesData = {
     total_revenue_today: number
 }
 
-export type DashboardChartData = {
-    status: Status,
-    date: number
-    amount: number
-    count: number
+type DashboardChartData = {
+    [key in 'TODAY' | 'YESTERDAY']: AnalyticsChartData[]
 }
 
 type ProvidersBalancesData = {
@@ -41,9 +39,9 @@ export const productsAPI = createApi({
             query: () => '/dashboard',
             transformResponse: (response: ApiResponse<DashboardSummariesData>) => response.data
         }),
-        getDashboardChartData: builder.query<DashboardChartData[], void>({
+        getDashboardChartData: builder.query<DashboardChartData, void>({
             query: () => '/dashboard/chart',
-            transformResponse: (response: ApiResponse<DashboardChartData[]>) => response.data
+            transformResponse: (response: ApiResponse<DashboardChartData>) => response.data
         }),
         getProvidersBalances: builder.query<ProvidersBalancesData, void>({
             query: () => '/dashboard/providers/balances',

@@ -2,21 +2,20 @@ import { useEffect, useState } from 'react';
 import { Card, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
-import { DashboardChartData, useGetDashboardChartDataQuery } from 'features/products/productsAPI';
+import { useGetDashboardChartDataQuery } from 'features/products/productsAPI';
 import CountUp from 'react-countup';
 import {
     ChartAid,
-    chartSelectOptions,
     ComponentLoader,
     Frequency,
-    groupBy, LoadingButton,
+    groupBy,
+    LoadingButton,
     Period,
     RawAnalytics,
     SectionError,
     Status,
     Str
 } from '@nabcellent/sui-react';
-import moment from "moment";
 import { Line } from "react-chartjs-2";
 import {
     CategoryScale,
@@ -28,9 +27,13 @@ import {
     LineElement,
     PointElement,
     Title,
-    Tooltip as ChartTooltip, TooltipItem
+    Tooltip as ChartTooltip,
+    TooltipItem
 } from "chart.js";
 import CardBgCorner from "../../../components/CardBgCorner";
+import { AnalyticsChartData } from "../../../utils/types";
+
+type Dataset = { label: string, dataset: number[], color: string, hidden: boolean }
 
 Chart.register(Title, ChartTooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement)
 Chart.defaults.color = '#fff'
@@ -42,60 +45,70 @@ const DashboardChart = () => {
 
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
-    const [chartFreqOpt, setChartFreqOpt] = useState(Frequency.HOURLY)
-    const [chartPeriodOpt, setChartPeriodOpt] = useState(Period.LAST_24_HOURS)
     const [labels, setLabels] = useState<string[]>([])
-    const [dataset, setDataset] = useState<number[]>([])
+    const [datasets, setDatasets] = useState<Dataset[]>([])
     const [totalToday, setTotalToday] = useState(0)
     const [totalYesterday, setTotalYesterday] = useState(0)
+    const [checkedPeriods, setCheckedPeriods] = useState<(string)[]>([])
 
     const drawChart = (data: RawAnalytics[]) => {
-        const aid = new ChartAid(chartPeriodOpt, chartFreqOpt)
+        const aid = new ChartAid(Period.LAST_24_HOURS, Frequency.HOURLY, 'amount')
         let { labels, dataset } = aid.getDataset(data)
-
-        setLabels(labels)
 
         if (chartTypeOpt === 'cumulative') {
             dataset = dataset.reduce((a: number[], b, i) => i === 0 ? [b] : [...a, b + a[i - 1]], [])
         }
-        setDataset(dataset)
+
+        return { labels, dataset }
     }
 
     useEffect(() => {
-        if (data?.length) {
-            let groupedData: { [key: string]: DashboardChartData[] } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status')
+        if (data) {
+            const aggregate = (data: any) => {
+                let groupedData: { [key: string]: AnalyticsChartData[] } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status')
 
-            if (txStatus === 'ALL') {
-                const set = Object.keys(groupedData).map(date => {
-                    return groupedData[date].reduce((prev, curr) => ({
-                        date,
-                        amount: prev.amount,
-                        count: prev.amount + Number(curr.amount)
-                    }), { date: '', amount: 0, count: 0 })
-                })
+                let rawAnalytics: RawAnalytics[];
+                if (txStatus === 'ALL') {
+                    rawAnalytics = Object.keys(groupedData).map(date => {
+                        return groupedData[date].reduce((prev, curr) => ({
+                            date,
+                            amount: prev.amount + Number(curr.amount),
+                        }), { date: '', amount: 0 })
+                    }) as RawAnalytics[]
+                } else {
+                    rawAnalytics = groupedData[txStatus] ?? []
+                }
 
-                drawChart(set as unknown as RawAnalytics[])
-            } else {
-                drawChart(groupedData[txStatus].map(x => ({ ...x, count: x.amount })))
+                return drawChart(rawAnalytics)
             }
 
-            const totalToday = data.filter(d => {
-                const isToday = moment(d.date, 'YYYYMMDDHH').isAfter(moment().startOf('d'))
+            let l: string[] = [], datasets: Dataset[] = []
+            Object.keys(data).forEach((d, i) => {
+                const { labels, dataset } = aggregate(data[d as 'TODAY' | 'YESTERDAY'])
 
-                return isToday && [d.status, 'ALL'].includes(txStatus)
-            }).reduce((p, c) => p += Number(c.amount), 0)
-            const totalYesterday = data.filter(d => {
-                const startOfYesterday = moment().subtract(1, 'd').startOf('d')
-                const endOfYesterday = moment().subtract(1, 'd').endOf('d')
-                const isYesterday = moment(d.date, 'YYYYMMDDHH').isBetween(startOfYesterday, endOfYesterday)
+                if (i === 0) l = labels
+                datasets.push({
+                    dataset,
+                    hidden: !checkedPeriods.includes(d),
+                    label: d,
+                    color: d === 'TODAY' ? '#fff' : '#648381'
+                })
+            })
 
-                return isYesterday && [d.status, 'ALL'].includes(txStatus)
-            }).reduce((p, c) => p += Number(c.amount), 0)
+            setLabels(l)
+            setDatasets(datasets)
+
+            const totalToday = data.TODAY.filter(d => [d.status, 'ALL'].includes(txStatus)).reduce((p, c) => p += Number(c.amount), 0)
+            const totalYesterday = data.YESTERDAY.filter(d => [d.status, 'ALL'].includes(txStatus)).reduce((p, c) => p += Number(c.amount), 0)
 
             setTotalToday(totalToday)
             setTotalYesterday(totalYesterday)
         }
-    }, [data, chartPeriodOpt, chartFreqOpt, chartTypeOpt, txStatus])
+    }, [data, chartTypeOpt, txStatus])
+
+    useEffect(() => {
+        if (data) setCheckedPeriods(Object.keys(data))
+    }, [data])
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
@@ -108,16 +121,12 @@ const DashboardChart = () => {
         },
         scales: {
             y: {
-                title: {
-                    display: true,
-                    text: '(KSH)'
-                },
                 beginAtZero: true,
                 grid: {
                     display: false
                 },
-                ticks:{
-                    callback: val => Intl.NumberFormat('en', { notation: 'compact' }).format(Number(val))
+                ticks: {
+                    display: false
                 }
             },
             x: {
@@ -147,7 +156,7 @@ const DashboardChart = () => {
             tooltip: {
                 displayColors: false,
                 callbacks: {
-                    label: (item: TooltipItem<'line'>) => `KES ${item.formattedValue}`
+                    label: (item: TooltipItem<'line'>) => `${Str.headline(String(item.dataset.label))}: KES ${item.formattedValue}`
                 }
             }
         },
@@ -155,17 +164,17 @@ const DashboardChart = () => {
 
     const chartData: ChartData<'line'> = {
         labels,
-        datasets: [{
-            label: 'Transactions',
-            data: dataset,
-            borderColor: ['rgba(255, 255, 255, 1)'],
+        datasets: datasets.map(d => ({
+            label: d.label,
+            data: d.dataset,
+            borderColor: d.color,
             backgroundColor: '#0F1B4C',
             borderWidth: 2,
             tension: 0.3,
-        }],
+            pointRadius: 2,
+            pointStyle: 'star'
+        })),
     };
-
-    console.log(totalToday)
 
     return (
         <Card className="rounded-3 overflow-hidden h-100 shadow-none">
@@ -187,7 +196,7 @@ const DashboardChart = () => {
                 </div>
                 <div className="position-absolute d-flex right-0 me-3">
                     <LoadingButton className="btn btn-sm btn-light me-2 refresh-chart" type="button"
-                            title="Update LineChart" onClick={() => refetch()}>
+                                   title="Update LineChart" onClick={() => refetch()}>
                         <FontAwesomeIcon icon={faSync}/>
                     </LoadingButton>
                     <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
@@ -195,20 +204,6 @@ const DashboardChart = () => {
                     }}>
                         <option value="time-series">Time Series</option>
                         <option value="cumulative">Cumulative</option>
-                    </Form.Select>
-                    <Form.Select className="px-2 me-2" size={'sm'} value={chartPeriodOpt}
-                                 onChange={e => {
-                                     setChartPeriodOpt(e.target.value as Period)
-                                     setChartFreqOpt(chartSelectOptions[e.target.value as Period][0])
-                                 }}>
-                        {Object.values(Period).map(p => <option key={p} value={p}>{Str.headline(p)}</option>)}
-                    </Form.Select>
-                    <Form.Select className="px-2 me-2" value={chartFreqOpt} size={'sm'} onChange={e => {
-                        setChartFreqOpt(e.target.value as Frequency)
-                    }} disabled={chartSelectOptions[chartPeriodOpt].length < 2}>
-                        {chartSelectOptions[chartPeriodOpt].map(f => (
-                            <option key={f} value={f}>{Str.headline(f)}</option>
-                        ))}
                     </Form.Select>
                     <Form.Select className="px-2" size="sm" value={txStatus}
                                  onChange={e => setTxStatus(e.target.value as Status)}>

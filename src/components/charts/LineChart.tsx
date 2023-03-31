@@ -12,6 +12,7 @@ type LineChartProps = {
     options: ChartOptions<'line'>
     data: ChartData<'line'>
     refetch: () => QueryActionCreatorResult<any>,
+    isFetching: boolean,
     chartTypeOpt: 'time-series' | 'cumulative'
     setChartTypeOpt: Dispatch<LineChartProps['chartTypeOpt']>
     chartPeriodOpt: Period
@@ -28,6 +29,7 @@ const LineChart = ({
     options,
     data,
     refetch,
+    isFetching,
     chartTypeOpt,
     setChartTypeOpt,
     chartPeriodOpt,
@@ -44,7 +46,7 @@ const LineChart = ({
             <Card.Body className={'position-relative pb-2'} style={{ height: 350, }}>
                 <div className="position-absolute right-0 me-3">
                     <div className={'d-flex'}>
-                        <LoadingButton loading={false} className="btn btn-sm btn-light border-0 me-2"
+                        <LoadingButton loading={isFetching} className="btn btn-sm btn-light border-0 me-2"
                                        spinner-position="replace" onClick={() => refetch()}>
                             <FontAwesomeIcon icon={faSync}/>
                         </LoadingButton>

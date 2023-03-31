@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
 import { ApiResponse, Status, Telco } from '@nabcellent/sui-react';
-import { DashboardChartData } from "../products/productsAPI";
 import { Product } from "../../utils/enums";
 
 export type SLAResponse = {
@@ -11,12 +10,20 @@ export type SLAResponse = {
     status: Status
 }
 
+type ChartData = {
+    count: number
+    amount: number
+    date: string
+    destination: string
+    status: Status
+}
+
 export type TelcoChartResponse = {
-    [key in Telco]: DashboardChartData[]
+    [key in Telco]: ChartData[]
 }
 
 export type ProductChartResponse = {
-    [key in Product]: DashboardChartData[]
+    [key in Product]: ChartData[]
 }
 
 export const analyticsApi = createApi({
@@ -24,8 +31,10 @@ export const analyticsApi = createApi({
     keepUnusedDataFor: 60 * 5, // Five minutes
     baseQuery: fetchBaseQuery({
         baseUrl: `${CONFIG.sidooh.services.products.api.url}/analytics`,
-        prepareHeaders: (headers, { getState }) => {
+        prepareHeaders: async (headers, { getState }) => {
             const token = (getState() as RootState).auth.auth?.token;
+
+            // await new Promise(resolve => setTimeout(resolve, 3000));
 
             if (token) headers.set('authorization', `Bearer ${token}`);
 
@@ -37,13 +46,13 @@ export const analyticsApi = createApi({
             query: () => '/sla',
             transformResponse: (res: ApiResponse<SLAResponse[]>) => res.data
         }),
-        getTransactions: builder.query<DashboardChartData[], void>({
+        getTransactions: builder.query<ChartData[], void>({
             query: () => '/transactions',
-            transformResponse: (res: ApiResponse<DashboardChartData[]>) => res.data
+            transformResponse: (res: ApiResponse<ChartData[]>) => res.data
         }),
-        getRevenue: builder.query<DashboardChartData[], void>({
+        getRevenue: builder.query<ChartData[], void>({
             query: () => '/revenue',
-            transformResponse: (res: ApiResponse<DashboardChartData[]>) => res.data
+            transformResponse: (res: ApiResponse<ChartData[]>) => res.data
         }),
         getTelcoTransactions: builder.query<TelcoChartResponse, void>({
             query: () => '/telco-transactions',

@@ -14,8 +14,6 @@ interface ImportMetaEnv {
     readonly VITE_NOTIFY_DASHBOARD_URL: string
     readonly VITE_SAVINGS_DASHBOARD_URL: string
     readonly VITE_USSD_DASHBOARD_URL: string
-
-    readonly VITE_LEGACY_URL: string
     // more env variables...
 }
 

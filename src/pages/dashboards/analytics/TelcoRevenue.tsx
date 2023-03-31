@@ -22,7 +22,7 @@ import { TooltipItem } from "chart.js/dist/types";
 type Dataset = { telco: Telco, dataset: number[], color: string | number[], hidden: boolean }
 
 const TelcoRevenue = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch } = useGetTelcoRevenueQuery();
+    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTelcoRevenueQuery();
 
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
@@ -140,6 +140,7 @@ const TelcoRevenue = () => {
                 data={chartData}
                 options={options}
                 refetch={refetch}
+                isFetching={isFetching}
                 txStatus={txStatus} setTxStatus={setTxStatus}
                 chartTypeOpt={chartTypeOpt} setChartTypeOpt={setChartTypeOpt}
                 chartPeriodOpt={chartPeriodOpt} setChartPeriodOpt={setChartPeriodOpt}

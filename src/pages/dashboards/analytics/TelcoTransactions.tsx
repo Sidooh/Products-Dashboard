@@ -21,7 +21,7 @@ import LineChart from "../../../components/charts/LineChart";
 type Dataset = { telco: Telco, dataset: number[], color: string | number[], hidden: boolean }
 
 const TelcoTransactions = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch } = useGetTelcoTransactionsQuery();
+    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTelcoTransactionsQuery();
 
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
@@ -46,7 +46,9 @@ const TelcoTransactions = () => {
     useEffect(() => {
         if (data) {
             const someFn = (data: any) => {
-                let groupedData: { [key: string]: RawAnalytics[] } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status'),
+                let groupedData: {
+                        [key: string]: RawAnalytics[]
+                    } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status'),
                     rawData: RawAnalytics[]
 
                 if (txStatus === 'ALL') {
@@ -125,6 +127,7 @@ const TelcoTransactions = () => {
                 data={chartData}
                 options={options}
                 refetch={refetch}
+                isFetching={isFetching}
                 txStatus={txStatus} setTxStatus={setTxStatus}
                 chartTypeOpt={chartTypeOpt} setChartTypeOpt={setChartTypeOpt}
                 chartPeriodOpt={chartPeriodOpt} setChartPeriodOpt={setChartPeriodOpt}

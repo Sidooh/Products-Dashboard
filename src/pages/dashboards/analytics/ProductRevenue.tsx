@@ -20,7 +20,7 @@ import { Product } from "../../../utils/enums";
 type Dataset = { product: string, dataset: number[], color: string | number[], hidden: boolean }
 
 const ProductRevenue = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch } = useGetProductRevenueQuery();
+    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetProductRevenueQuery();
 
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
@@ -138,6 +138,7 @@ const ProductRevenue = () => {
                 data={chartData}
                 options={options}
                 refetch={refetch}
+                isFetching={isFetching}
                 txStatus={txStatus} setTxStatus={setTxStatus}
                 chartTypeOpt={chartTypeOpt} setChartTypeOpt={setChartTypeOpt}
                 chartPeriodOpt={chartPeriodOpt} setChartPeriodOpt={setChartPeriodOpt}

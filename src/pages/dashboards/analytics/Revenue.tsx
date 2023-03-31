@@ -18,7 +18,7 @@ import LineChart from "../../../components/charts/LineChart";
 import { AnalyticsChartData } from "../../../utils/types";
 
 const Revenue = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch } = useGetRevenueQuery();
+    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetRevenueQuery();
 
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
@@ -99,6 +99,7 @@ const Revenue = () => {
                 data={chartData}
                 options={options}
                 refetch={refetch}
+                isFetching={isFetching}
                 txStatus={txStatus} setTxStatus={setTxStatus}
                 chartTypeOpt={chartTypeOpt} setChartTypeOpt={setChartTypeOpt}
                 chartPeriodOpt={chartPeriodOpt} setChartPeriodOpt={setChartPeriodOpt}

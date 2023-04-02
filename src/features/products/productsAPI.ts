@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
 import { ApiResponse } from '@nabcellent/sui-react';
+import { AnalyticsChartData } from "../../utils/types";
 
 type DashboardSummariesData = {
     total_transactions: number
@@ -10,18 +11,8 @@ type DashboardSummariesData = {
     total_revenue_today: number
 }
 
-type ChartData = {
-    labels: string[],
-    datasets: number[]
-}
-
-interface RevenueDayData {
-    [key: string]: ChartData
-}
-
-type RevenueData = {
-    today: RevenueDayData
-    yesterday: RevenueDayData
+type DashboardChartData = {
+    [key in 'TODAY' | 'YESTERDAY']: AnalyticsChartData[]
 }
 
 type ProvidersBalancesData = {
@@ -46,21 +37,26 @@ export const productsAPI = createApi({
     endpoints: (builder) => ({
         getDashboardSummaries: builder.query<DashboardSummariesData, void>({
             query: () => '/dashboard',
-            transformResponse: (response: ApiResponse<DashboardSummariesData>) => response.data
+            transformResponse: (res: ApiResponse<DashboardSummariesData>) => res.data
         }),
-        getDashboardRevenueData: builder.query<RevenueData, void>({
-            query: () => '/dashboard/revenue-chart',
-            transformResponse: (response: ApiResponse<RevenueData>) => response.data
+        getDashboardChartData: builder.query<DashboardChartData, void>({
+            query: () => '/dashboard/chart',
+            transformResponse: (res: ApiResponse<DashboardChartData>) => {
+                if(!res.data.TODAY) res.data.TODAY = []
+                if(!res.data.YESTERDAY) res.data.YESTERDAY = []
+
+                return res.data
+            }
         }),
         getProvidersBalances: builder.query<ProvidersBalancesData, void>({
             query: () => '/dashboard/providers/balances',
-            transformResponse: (response: ApiResponse<ProvidersBalancesData>) => response.data
+            transformResponse: (res: ApiResponse<ProvidersBalancesData>) => res.data
         })
     })
 });
 
 export const {
     useGetDashboardSummariesQuery,
-    useGetDashboardRevenueDataQuery,
+    useGetDashboardChartDataQuery,
     useGetProvidersBalancesQuery
 } = productsAPI;

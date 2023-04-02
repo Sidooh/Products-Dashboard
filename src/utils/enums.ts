@@ -1,0 +1,9 @@
+export enum Product {
+    AIRTIME = 'AIRTIME',
+    SUBSCRIPTION = 'SUBSCRIPTION',
+    VOUCHER = 'VOUCHER',
+    WITHDRAWAL = 'WITHDRAWAL',
+    UTILITY = 'UTILITY',
+    MERCHANT = 'MERCHANT',
+    FLOAT = 'FLOAT',
+}

@@ -2,7 +2,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { EarningAccount } from 'utils/types';
 import { RootState } from 'app/store';
-import { ApiResponse } from "@nabcellent/sui-react";
+import { Account, ApiResponse } from "@nabcellent/sui-react";
+
+type EarningAccountResponse = {
+    earning_accounts: EarningAccount[]
+    account: Account
+}
 
 export const earningAccountsApi = createApi({
     reducerPath: 'earningAccountsApi',
@@ -25,10 +30,10 @@ export const earningAccountsApi = createApi({
             providesTags: ['EarningAccount'],
             transformResponse: (response: ApiResponse<EarningAccount[]>) => response.data
         }),
-        getEarningAccount: builder.query<EarningAccount, number>({
+        getEarningAccount: builder.query<EarningAccountResponse, number>({
             query: (id) => `/${id}?with=account`,
             providesTags: ['EarningAccount'],
-            transformResponse: (response: ApiResponse<EarningAccount>) => response.data
+            transformResponse: (response: ApiResponse<EarningAccountResponse>) => response.data
         })
     })
 });

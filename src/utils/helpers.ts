@@ -1,3 +1,8 @@
+import { hexToRgb, rgbaColor } from "@nabcellent/sui-react";
+import { ChartOptions } from "chart.js";
+import { merge } from "chart.js/helpers";
+import { Product } from "./enums";
+
 export const camelize = (str: string) => {
     return str.replace(/^\w|[A-Z]|\b\w|\s+/g, function (match, index) {
         if (+match === 0) return ''; // or if (/\s+/.test(match)) for white spaces
@@ -36,20 +41,100 @@ export const getFlattenedRoutes = (children: any) => children.reduce(
             };
         }
     },
-    {unTitled: []}
+    { unTitled: [] }
 );
 
-// Accepts the array and key
-export const groupBy = (array:any[], key:string, asArray = false) => {
-    // Return the end result
-    const groupedData = array.reduce((result, currentValue) => {
-        // If an array already present for key, push it to the array. Else create an array and push the object
-        (result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue);
-        // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
-        return result;
-    }, {}); // empty object is the initial value for result object
+export const defaultLineChartOptions = (options?: ChartOptions<'line'>): ChartOptions<'line'> => merge({
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: {
+        intersect: false,
+    },
+    scales: {
+        x: {
+            border: {
+                display: false
+            },
+            grid: {
+                color: 'rgba(250, 250, 250, .1)',
+            },
+            ticks: {
+                color: rgbaColor('#0F1B4C', 0.7),
+            }
+        },
+        y: {
+            grace: '5%',
+            border: {
+                display: false
+            },
+            beginAtZero: true,
+            grid: {
+                lineWidth: .3
+            },
+            ticks: {
+                color: rgbaColor('#648381', 1),
+                font: {
+                    weight: 600
+                },
+                callback: (val: number | string) => Intl.NumberFormat('en', { notation: 'compact' }).format(Number(val))
+            }
+        },
+    },
+    elements: {
+        line: {
+            borderWidth: 0,
+            tension: .3,
+            fill: true
+        },
+        point: {
+            pointStyle: 'star',
+            radius: 5,
+            hoverRadius: 10
+        }
+    },
+    plugins: {
+        title: {
+            padding: {
+                bottom: 20
+            },
+            display: true,
+            align: 'start',
+            font: {
+                size: 17
+            },
+            color: rgbaColor('#0F1B4C', 0.7),
+        },
+        legend: {
+            display: false,
+            labels: {
+                usePointStyle: true
+            }
+        },
+        tooltip: {
+            padding: {
+                x: 10,
+                y: 5
+            },
+            displayColors: false,
+        }
+    }
+}, options)
 
-    if(asArray) return Object.values(groupedData);
+export const getProductColor = (product: Product, asRGB = false) => {
+    let color = '#000'
+    if (product === Product.AIRTIME) {
+        color = '#1978a2'
+    } else if (product === Product.SUBSCRIPTION) {
+        color = '#648381'
+    } else if (product === Product.MERCHANT) {
+        color = '#F42E00'
+    } else if (product === Product.VOUCHER) {
+        color = '#F5B700'
+    } else if (product === Product.UTILITY) {
+        color = '#00a862'
+    } else if (product === Product.WITHDRAWAL) {
+        color = '#000'
+    }
 
-    return groupedData;
-};
+    return asRGB ? hexToRgb(color) : color
+}

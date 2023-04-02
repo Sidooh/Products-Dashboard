@@ -10,9 +10,9 @@ import MainLayout from "./layouts/MainLayout";
 import SettingsToggle from "./components/settings-panel/SettingsToggle";
 import SettingsPanel from "./components/settings-panel/SettingsPanel";
 import Login from "./pages/auth/Login";
+import Analytics from "./pages/dashboards/analytics";
 
 const Dashboard = lazy(() => import('pages/dashboards/default'));
-const Analytics = lazy(() => import('pages/dashboards/analytics'));
 
 const ShowAccountDetails = lazy(() => import('pages/AccountDetails'));
 

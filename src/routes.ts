@@ -26,6 +26,12 @@ const routes:RouteType[] = [
                         exact : true,
                         active: true
                     },
+                    {
+                        name  : 'Analytics',
+                        to    : '/dashboard/analytics',
+                        exact : true,
+                        active: true
+                    },
                 ]
             }
         ]

@@ -28,7 +28,7 @@ export type Transaction = Model & {
     type: string
     amount: number
     payment?: Payment
-    tanda_request?: TandaRequest
+    tanda_requests?: TandaRequest[]
     savings_transaction?: SavingsTransaction
     account: Account
 }
@@ -99,4 +99,11 @@ export type Subscription = Model & {
     account: Account
     status: Status
     subscription_type: SubscriptionType
+}
+
+export type AnalyticsChartData = {
+    status: Status,
+    date: number
+    amount: number
+    count: number
 }

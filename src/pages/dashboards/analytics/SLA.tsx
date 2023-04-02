@@ -41,7 +41,7 @@ const Sla = () => {
                         return (
                             <Fragment key={`year-${year}`}>
                                 <h5 className={'text-center text-light text-decoration-underline'}>{year}</h5>
-                                <Row className={'g-2 justify-content-evenly'}>
+                                <Row className={'g-2 justify-content-evenly mb-3'}>
                                     {data.map((sla, i) => (
                                         <Col key={`sla-${year + i}`} lg={3}
                                              className={classNames(`text-center py-3 border-bottom shadow`)}>

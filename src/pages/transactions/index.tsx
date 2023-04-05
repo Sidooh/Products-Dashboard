@@ -1,7 +1,7 @@
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
 import { SectionError, SectionLoader } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
-import Transactions from 'pages/dashboards/default/transactions/Transactions';
+import TransactionsTable from 'components/tables/TransactionsTable';
 
 const Index = () => {
     let { data: transactions, isLoading, isSuccess, isError, error } = useTransactionsQuery();
@@ -11,7 +11,7 @@ const Index = () => {
 
     logger.log(transactions);
 
-    return <Transactions tableTitle={'Transactions'} transactions={transactions}/>;
+    return <TransactionsTable tableTitle={'Transactions'} transactions={transactions}/>;
 };
 
 export default Index;

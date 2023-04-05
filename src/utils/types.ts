@@ -3,6 +3,7 @@ import { Account, Status, Model } from '@nabcellent/sui-react';
 export type Payment = Model & {
     payment_id: number
     amount: number
+    charge: number
     type: string
     subtype: string
     status: Status
@@ -27,6 +28,7 @@ export type Transaction = Model & {
     product_id: 1 | 2 | 3 | 4 | 5 | 6
     type: string
     amount: number
+    charge: number
     payment?: Payment
     tanda_requests?: TandaRequest[]
     savings_transaction?: SavingsTransaction

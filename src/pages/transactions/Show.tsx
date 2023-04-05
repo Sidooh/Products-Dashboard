@@ -201,8 +201,13 @@ const Show = () => {
                                                 });
                                             }}/>
                             </Col>
-                            {transactionDropdownItems.length > 0 && (
-                                <Col sm={'auto'} className="d-flex align-items-end justify-content-end">
+                            <Col sm={'auto'} className="d-flex text-end flex-column align-items-stretch justify-content-between">
+                                <small className={'text-secondary text-decoration-underline'}>
+                                    <b>Latency</b>
+                                    ({moment(transaction.updated_at).diff(transaction.created_at, 's')}s)
+                                </small>
+
+                                {transactionDropdownItems.length > 0 && (
                                     <Dropdown>
                                         <Dropdown.Toggle size={'sm'} as={'a'} className={'cursor-pointer'}>
                                             <FontAwesomeIcon icon={faBars}/>
@@ -211,8 +216,8 @@ const Show = () => {
                                             {transactionDropdownItems.map((item, i) => <Fragment key={i}>{item}</Fragment>)}
                                         </Dropdown.Menu>
                                     </Dropdown>
-                                </Col>
-                            )}
+                                )}
+                            </Col>
                         </Row>
                     </Card.Body>
                 </Card>
@@ -235,9 +240,18 @@ const Show = () => {
                             </Col>
                             <Col lg={6} className="mb-4 mb-lg-0">
                                 <h5 className="mb-3 fs-0">Details</h5>
-                                <h6 className="mb-2">{transaction.description} - {transaction.destination}</h6>
-                                <p className="mb-0 fs--1"><strong>Type: </strong>{transaction.type}</p>
-                                <div className="fs--1"><strong>Amount: </strong>({currencyFormat(transaction.amount)})</div>
+                                <Row>
+                                    <h6 className="col-3 mb-0"><b>Description</b></h6>
+                                    <h6 className="col-9 mb-0">: {transaction.description} for {transaction.destination}</h6>
+                                    <hr className={'my-1'}/>
+
+                                    <h6 className="col-3 mb-1"><b>Type</b></h6>
+                                    <h6 className="col-9 mb-1">: {transaction.type}</h6>
+                                    <h6 className="col-3 mb-1"><b>Amount</b></h6>
+                                    <h6 className="col-9 mb-1">: {currencyFormat(transaction.amount)}</h6>
+                                    <h6 className="col-3 mb-1"><b>Charge</b></h6>
+                                    <h6 className="col-9 mb-1">: {currencyFormat(transaction.charge)}</h6>
+                                </Row>
                             </Col>
                         </Row>
                     </Card.Body>

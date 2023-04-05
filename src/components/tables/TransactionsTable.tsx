@@ -61,9 +61,10 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                         accessorFn: (r: Transaction) => moment(r.updated_at).diff(r.created_at, 's'),
                         header: 'Latency',
                         cell: ({ row: { original: tx } }: any) => {
-                            let unit = 's', color = '', latency = moment(tx.updated_at).diff(tx.created_at, 's');
+                            let unit = 's', color = 'danger', latency = moment(tx.updated_at).diff(tx.created_at, 's');
 
-                            if (latency > 29) color = 'text-danger'
+                            if (latency <= 5) color = 'success'
+                            else if(latency <= 30) color = 'warning'
 
                             if (latency > 3600) {
                                 unit = 'hrs'

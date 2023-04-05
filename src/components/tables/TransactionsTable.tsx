@@ -30,7 +30,7 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                         cell: ({ row }: any) => (
                             <span className={'d-flex flex-column'}>
                                 {row.original.description}<br/>
-                                <small><b><PhoneChip phone={row.original.destination}/></b></small>
+                                <small><PhoneChip phone={row.original.destination}/></small>
                             </span>
                         )
                     },
@@ -40,7 +40,7 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                         cell: ({ row: { original: tx } }: any) => (
                             <span className={'d-flex flex-column'}>
                                 {currencyFormat(tx.amount)}<br/>
-                                {tx.charge > 0 && <small className={'text-warning'}><b>{currencyFormat(tx.charge)}</b></small>}
+                                {tx.charge > 0 && <small className={'text-danger'}>{currencyFormat(tx.charge)}</small>}
                             </span>
                         )
                     },

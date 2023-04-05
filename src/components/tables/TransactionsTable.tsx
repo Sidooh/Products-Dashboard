@@ -27,10 +27,10 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                         accessorKey: 'description',
                         header: 'Description',
                         accessorFn: (row: Transaction) => `${row.description}: ${row.destination}`,
-                        cell: ({ row }: any) => (
+                        cell: ({ row:{original:tx} }: any) => (
                             <span className={'d-flex flex-column'}>
-                                {row.original.description}<br/>
-                                <small><PhoneChip phone={row.original.destination}/></small>
+                                {tx.description}<br/>
+                                {tx.destination!== tx.account.phone && <small><PhoneChip phone={tx.destination}/></small>}
                             </span>
                         )
                     },
@@ -40,7 +40,7 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                         cell: ({ row: { original: tx } }: any) => (
                             <span className={'d-flex flex-column'}>
                                 {currencyFormat(tx.amount)}<br/>
-                                {tx.charge > 0 && <small className={'text-danger'}>{currencyFormat(tx.charge)}</small>}
+                                {tx.charge > 0 && <small className={'text-info'}>{currencyFormat(tx.charge)}</small>}
                             </span>
                         )
                     },

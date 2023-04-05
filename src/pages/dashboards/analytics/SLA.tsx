@@ -42,7 +42,7 @@ const Sla = () => {
             <Card>
                 <CardBgCorner corner={5}/>
                 <Card.Body style={{ backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, 1), #4a2613)' }}>
-                    {[...Object.keys(groupedSLAs), ...Object.keys(groupedSLAs)].map(year => {
+                    {Object.keys(groupedSLAs).map(year => {
                         const total = groupedSLAs[year].reduce((p, c) => p += c.count, 0)
                         const data = groupedSLAs[year].sort((a, b) => b.count - a.count)
                             .filter(s => [Status.COMPLETED, Status.FAILED, Status.REFUNDED].includes(s.status))
@@ -50,7 +50,7 @@ const Sla = () => {
                         return (
                             <Fragment key={`year-${year}`}>
                                 <h5 className={'text-light text-decoration-underline'}>{year}</h5>
-                                <Row className={'g-2 mb-5'}>
+                                <Row className={`g-2 mb-5`}>
                                     {data.map((sla, i) => (
                                         <Col key={`sla-${year + i}`} lg={4}
                                              className={classNames(`text-center border-bottom`)}>

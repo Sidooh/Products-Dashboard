@@ -225,7 +225,7 @@ const Show = () => {
                 <Card className="mb-3">
                     <Card.Body>
                         <Row>
-                            <Col lg={6} className="mb-4 mb-lg-0">
+                            <Col lg={5} className="mb-4 mb-lg-0">
                                 <h5 className="mb-3 fs-0">Account</h5>
                                 <h6 className="mb-2">
                                     <a href={`${CONFIG.sidooh.services.accounts.dashboard.url}/users/${transaction.account?.user_id}`}
@@ -238,13 +238,11 @@ const Show = () => {
                                     </a>
                                 </p>
                             </Col>
-                            <Col lg={6} className="mb-4 mb-lg-0">
+                            <Col lg={7} className="mb-4 mb-lg-0">
                                 <h5 className="mb-3 fs-0">Details</h5>
                                 <Row>
-                                    <h6 className="col-3 mb-0"><b>Description</b></h6>
-                                    <h6 className="col-9 mb-0">: {transaction.description} for {transaction.destination}</h6>
-                                    <hr className={'my-1'}/>
-
+                                    <h6 className="col-3 mb-1"><b>Description</b></h6>
+                                    <h6 className="col-9 mb-1">: {transaction.description} for {transaction.destination}</h6>
                                     <h6 className="col-3 mb-1"><b>Type</b></h6>
                                     <h6 className="col-9 mb-1">: {transaction.type}</h6>
                                     <h6 className="col-3 mb-1"><b>Amount</b></h6>

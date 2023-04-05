@@ -1,7 +1,7 @@
 import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
 import { Card } from 'react-bootstrap';
-import Transactions from './Transactions';
+import TransactionsTable from '../../../../components/tables/TransactionsTable';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { logger } from 'utils/logger';
@@ -14,7 +14,7 @@ const PendingTransactions = () => {
 
     logger.log('Pending Transactions', transactions);
 
-    return transactions.length ? <Transactions tableTitle={'Pending Transactions'} transactions={transactions}/> : (
+    return transactions.length ? <TransactionsTable tableTitle={'Pending Transactions'} transactions={transactions}/> : (
         <Card className={'mb-3 bg-soft-primary'}>
             <Card.Header className={'fw-bolder'}>
                 <FontAwesomeIcon icon={faInfoCircle}/> No Pending Transactions.

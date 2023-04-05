@@ -10,8 +10,9 @@ import {
     StatusChip,
     TableDate
 } from '@nabcellent/sui-react';
+import moment from "moment";
 
-const Transactions = ({ tableTitle, transactions }: { tableTitle: string, transactions: Transaction[] }) => {
+const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, transactions: Transaction[] }) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -27,7 +28,7 @@ const Transactions = ({ tableTitle, transactions }: { tableTitle: string, transa
                         header: 'Description',
                         accessorFn: (row: Transaction) => `${row.description}: ${row.destination}`,
                         cell: ({ row }: any) => (
-                            <span>
+                            <span className={'d-flex flex-column'}>
                                 {row.original.description}<br/>
                                 <small><b><PhoneChip phone={row.original.destination}/></b></small>
                             </span>
@@ -36,7 +37,12 @@ const Transactions = ({ tableTitle, transactions }: { tableTitle: string, transa
                     {
                         accessorKey: 'amount',
                         header: 'Amount',
-                        cell: ({ row }: any) => currencyFormat(row.original.amount)
+                        cell: ({ row: { original: tx } }: any) => (
+                            <span className={'d-flex flex-column'}>
+                                {currencyFormat(tx.amount)}<br/>
+                                {tx.charge > 0 && <small><b>{currencyFormat(tx.charge)}</b></small>}
+                            </span>
+                        )
                     },
                     {
                         accessorKey: 'status',
@@ -50,6 +56,12 @@ const Transactions = ({ tableTitle, transactions }: { tableTitle: string, transa
                         cell: ({ row }: any) => <TableDate date={row.original.created_at}/>
                     },
                     {
+                        accessorKey: 'latency',
+                        accessorFn: (r: Transaction) => moment(r.updated_at).diff(r.created_at, 's'),
+                        header: 'Latency(s)',
+                        cell: ({ row: { original: tx } }: any) => moment(tx.updated_at).diff(tx.created_at, 's')
+                    },
+                    {
                         id: 'actions',
                         cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
                     }
@@ -59,4 +71,4 @@ const Transactions = ({ tableTitle, transactions }: { tableTitle: string, transa
     );
 };
 
-export default Transactions;
+export default TransactionsTable;

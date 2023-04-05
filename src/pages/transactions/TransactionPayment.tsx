@@ -26,6 +26,7 @@ const TransactionPayment = ({payment}: { payment?: Payment }) => {
                     <tr>
                         <th className="border-0">Sub-Type</th>
                         <th className="border-0">Amount</th>
+                        <th className="border-0">Charge</th>
                         <th className="border-0">Date</th>
                         <th className="border-0">Status</th>
                         <th className="border-0"></th>
@@ -36,6 +37,7 @@ const TransactionPayment = ({payment}: { payment?: Payment }) => {
                     <tr className="border-200">
                         <td className="align-middle">{payment.subtype}</td>
                         <td className="align-middle">{currencyFormat(payment.amount)}</td>
+                        <td className="align-middle">{currencyFormat(payment.charge)}</td>
                         <td className="">
                             {moment(payment.updated_at).format('MMM D, Y')}<br/>
                             <small>{moment(payment.updated_at).format('hh:mm A')}</small>

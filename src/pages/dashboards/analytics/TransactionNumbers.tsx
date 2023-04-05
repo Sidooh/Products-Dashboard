@@ -23,8 +23,6 @@ const TelcoChart = () => {
             }))
 
             setTelcoData(telco)
-
-            console.log(telco)
         }
     }, [data])
 

@@ -1,6 +1,14 @@
 import { SLAResponse, useGetSLAQuery } from "../../../features/analytics/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
-import { getStatusColor, groupBy, LoadingButton, SectionError, ComponentLoader, Tooltip } from "@nabcellent/sui-react";
+import {
+    ComponentLoader,
+    getStatusColor,
+    groupBy,
+    LoadingButton,
+    SectionError,
+    Status,
+    Tooltip
+} from "@nabcellent/sui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPercent, faSync } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
@@ -37,6 +45,7 @@ const Sla = () => {
                     {[...Object.keys(groupedSLAs), ...Object.keys(groupedSLAs)].map(year => {
                         const total = groupedSLAs[year].reduce((p, c) => p += c.count, 0)
                         const data = groupedSLAs[year].sort((a, b) => b.count - a.count)
+                            .filter(s => [Status.COMPLETED, Status.FAILED, Status.REFUNDED].includes(s.status))
 
                         return (
                             <Fragment key={`year-${year}`}>

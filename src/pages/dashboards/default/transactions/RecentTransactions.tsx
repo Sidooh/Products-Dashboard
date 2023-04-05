@@ -1,5 +1,5 @@
 import { useTransactionsQuery } from 'features/transactions/transactionsAPI';
-import Transactions from './Transactions';
+import TransactionsTable from '../../../../components/tables/TransactionsTable';
 import { Transaction } from 'utils/types';
 import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
@@ -13,6 +13,6 @@ const RecentTransactions = () => {
     transactions = transactions.filter((t: Transaction) => t.status !== Status.PENDING);
     logger.log('Recent Transactions', transactions);
 
-    return <Transactions tableTitle={'Recent Transactions'} transactions={transactions}/>;};
+    return <TransactionsTable tableTitle={'Recent Transactions'} transactions={transactions}/>;};
 
 export default RecentTransactions;

@@ -27,10 +27,11 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                         accessorKey: 'description',
                         header: 'Description',
                         accessorFn: (row: Transaction) => `${row.description}: ${row.destination}`,
-                        cell: ({ row:{original:tx} }: any) => (
+                        cell: ({ row: { original: tx } }: any) => (
                             <span className={'d-flex flex-column'}>
                                 {tx.description}<br/>
-                                {tx.destination!== tx.account.phone && <small><PhoneChip phone={tx.destination}/></small>}
+                                {tx.destination !== tx.account.phone &&
+                                    <small><PhoneChip phone={tx.destination}/></small>}
                             </span>
                         )
                     },
@@ -58,8 +59,20 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                     {
                         accessorKey: 'latency',
                         accessorFn: (r: Transaction) => moment(r.updated_at).diff(r.created_at, 's'),
-                        header: 'Latency(s)',
-                        cell: ({ row: { original: tx } }: any) => moment(tx.updated_at).diff(tx.created_at, 's')
+                        header: 'Latency',
+                        cell: ({ row: { original: tx } }: any) => {
+                            let unit = 's', latency = moment(tx.updated_at).diff(tx.created_at, 's');
+
+                            if (latency > 3600) {
+                                unit = 'hrs'
+                                latency = latency / 3600
+                            } else if (latency > 120) {
+                                unit = 'min'
+                                latency = latency / 60
+                            }
+
+                            return <span className={'text-danger fw-bold'}>{Math.round(latency)} {unit}</span>
+                        }
                     },
                     {
                         id: 'actions',

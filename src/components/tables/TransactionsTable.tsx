@@ -40,7 +40,7 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                         cell: ({ row: { original: tx } }: any) => (
                             <span className={'d-flex flex-column'}>
                                 {currencyFormat(tx.amount)}<br/>
-                                {tx.charge > 0 && <small className={'text-danger'}>{currencyFormat(tx.charge)}</small>}
+                                {tx.charge > 0 && <small className={'text-info'}>{currencyFormat(tx.charge)}</small>}
                             </span>
                         )
                     },

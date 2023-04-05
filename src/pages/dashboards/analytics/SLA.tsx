@@ -50,7 +50,7 @@ const Sla = () => {
                         return (
                             <Fragment key={`year-${year}`}>
                                 <h5 className={'text-light text-decoration-underline'}>{year}</h5>
-                                <Row className={'g-2 mb-5'}>
+                                <Row className={`g-2 mb-5`}>
                                     {data.map((sla, i) => (
                                         <Col key={`sla-${year + i}`} lg={4}
                                              className={classNames(`text-center border-bottom`)}>

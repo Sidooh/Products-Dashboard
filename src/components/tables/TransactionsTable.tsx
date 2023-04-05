@@ -66,7 +66,7 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                             if (latency > 3600) {
                                 unit = 'hrs'
                                 latency = latency / 3600
-                            } else if (latency > 60) {
+                            } else if (latency > 120) {
                                 unit = 'min'
                                 latency = latency / 60
                             }

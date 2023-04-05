@@ -74,7 +74,7 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                                 latency = latency / 60
                             }
 
-                            return <span className={`fw-bold ${color}`}>{Math.round(latency)} {unit}</span>
+                            return <span className={`fw-bold text-${color}`}>{Math.round(latency)} {unit}</span>
                         }
                     },
                     {

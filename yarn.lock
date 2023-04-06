@@ -2663,6 +2663,7 @@ __metadata:
     react-chartjs-2: ^5.2.0
     react-countup: ^6.4.2
     react-dom: ^18.2.0
+    react-icons: ^4.8.0
     react-redux: ^8.0.5
     react-router-dom: ^6.9.0
     size-sensor: ^1.0.1
@@ -2785,6 +2786,15 @@ __metadata:
   version: 2.0.4
   resolution: "react-fast-compare@npm:2.0.4"
   checksum: 06046595f90a4e3e3a56f40a8078c00aa71bdb064ddb98343f577f546aa22e888831fd45f009c93b34707cc842b4c637737e956fd13d6f80607ee92fb9cf9a1c
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^4.8.0":
+  version: 4.8.0
+  resolution: "react-icons@npm:4.8.0"
+  peerDependencies:
+    react: "*"
+  checksum: 4dbba7ad989c295b410e19b2a702722dae44368cb04b6515f9471353552f31ac80bd350f121d5bff79f81504b84039ede44d09e9f035f48bb1032e6eace126c4
   languageName: node
   linkType: hard
 

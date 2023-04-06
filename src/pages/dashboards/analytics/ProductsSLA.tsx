@@ -2,10 +2,11 @@ import { useGetProductsSLAQuery } from "../../../features/analytics/analyticsApi
 import { Card, Col, Row } from "react-bootstrap";
 import { ComponentLoader, LoadingButton, SectionError, Str, Tooltip } from "@nabcellent/sui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPercent, faSync } from "@fortawesome/free-solid-svg-icons";
+import { faSync } from "@fortawesome/free-solid-svg-icons";
 import CardBgCorner from "../../../components/CardBgCorner";
 import CountUp from "react-countup";
 import moment from "moment";
+import { FaPercentage } from "react-icons/all";
 
 const ProductsSLA = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetProductsSLAQuery()
@@ -31,7 +32,7 @@ const ProductsSLA = () => {
 
             <Card>
                 <CardBgCorner corner={5}/>
-                <Card.Body style={{ backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, 1), rgb(245, 183, 0))' }}>
+                <Card.Body style={{ backgroundImage: 'linear-gradient(-45deg, rgba(0, 0, 0, 1), rgb(245, 183, 0))' }}>
                     <h5 className={'text-primary text-decoration-underline'}>{moment().year()}</h5>
                     <Row className={'g-2'}>
                         {Object.keys(data).map((product) => {
@@ -45,7 +46,7 @@ const ProductsSLA = () => {
                                     <div className="bg-dark py-3">
                                         <div className={`icon-circle icon-circle-${color} fw-bold`}>
                                             <CountUp end={data[product as keyof typeof data]} className="me-1 fs-2"/>
-                                            <FontAwesomeIcon icon={faPercent}/>
+                                            <FaPercentage/>
                                         </div>
                                         <h6 className={`mb-1 fw-bold text-${color}`}>{Str.headline(product)}</h6>
                                     </div>

@@ -1,4 +1,4 @@
-import { SLAResponse, useGetSLAQuery } from "../../../features/analytics/analyticsApi";
+import { TransactionsSLAResponse, useGetTransactionsSLAQuery } from "../../../features/analytics/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
 import {
     ComponentLoader,
@@ -11,23 +11,24 @@ import {
 } from "@nabcellent/sui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPercent, faSync } from "@fortawesome/free-solid-svg-icons";
-import classNames from "classnames";
 import CardBgCorner from "../../../components/CardBgCorner";
 import { Fragment } from "react";
+import CountUp from "react-countup";
 
-const Sla = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetSLAQuery()
+const TransactionsSLA = () => {
+    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTransactionsSLAQuery()
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
 
-    const groupedSLAs: { [key: string]: SLAResponse[] } = groupBy(data, 'year')
+    const groupedSLAs: { [key: string]: TransactionsSLAResponse[] } = groupBy(data, 'year')
+    const years = Object.keys(groupedSLAs)
 
     return (
         <Col xs={12} className={'mb-3'}>
             <h5 className="text-primary text-center position-relative">
-                    <span className="bg-200 dark__bg-1100 px-3">
-                        SLA - TRANSACTION SUCCESS RATE
+                    <span className="bg-200 px-3">
+                        TRANSACTION SUCCESS RATE - SLA
                         <Tooltip title="Refresh SLAs" placement="left">
                             <LoadingButton loading={isFetching} className="btn btn-sm border-0 py-2"
                                            spinner-position="replace" onClick={() => refetch()}>
@@ -42,7 +43,7 @@ const Sla = () => {
             <Card>
                 <CardBgCorner corner={5}/>
                 <Card.Body style={{ backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, 1), #4a2613)' }}>
-                    {Object.keys(groupedSLAs).map(year => {
+                    {years.map((year, i) => {
                         const total = groupedSLAs[year].reduce((p, c) => p += c.count, 0)
                         const data = groupedSLAs[year].sort((a, b) => b.count - a.count)
                             .filter(s => [Status.COMPLETED, Status.FAILED, Status.REFUNDED].includes(s.status))
@@ -50,15 +51,14 @@ const Sla = () => {
                         return (
                             <Fragment key={`year-${year}`}>
                                 <h5 className={'text-light text-decoration-underline'}>{year}</h5>
-                                <Row className={`g-2 mb-5`}>
+                                <Row className={`g-2 ${i + 1 < years.length && 'mb-5'}`}>
                                     {data.map((sla, i) => (
-                                        <Col key={`sla-${year + i}`} lg={4}
-                                             className={classNames(`text-center border-bottom`)}>
+                                        <Col key={`sla-${year + i}`} lg={4} className={`text-center border-bottom`}>
                                             <div className="bg-dark py-3">
                                                 <div
                                                     className={`icon-circle icon-circle-${getStatusColor(sla.status)} text-${getStatusColor(sla.status)} fw-bold`}>
-                                                <span
-                                                    className="me-1 fs-2">{Math.round((sla.count / total) * 100)}</span>
+                                                    <CountUp end={Math.round((sla.count / total) * 100)}
+                                                             className="me-1 fs-2"/>
                                                     <FontAwesomeIcon icon={faPercent}/>
                                                 </div>
                                                 <h6 className={`mb-1 fw-bold text-${getStatusColor(sla.status)}`}>{sla.status}</h6>
@@ -75,4 +75,4 @@ const Sla = () => {
     );
 };
 
-export default Sla;
+export default TransactionsSLA;

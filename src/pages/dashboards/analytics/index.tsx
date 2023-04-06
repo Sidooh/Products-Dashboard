@@ -1,4 +1,4 @@
-import SLA from "./SLA";
+import TransactionsSLA from "./TransactionsSLA";
 import Revenue from "./Revenue";
 import Transactions from "./Transactions";
 import { Row } from "react-bootstrap";
@@ -18,6 +18,7 @@ import TelcoTransactions from "./TelcoTransactions";
 import TelcoRevenue from "./TelcoRevenue";
 import ProductTransactions from "./ProductTransactions";
 import ProductRevenue from "./ProductRevenue";
+import ProductsSLA from "./ProductsSLA";
 
 Chart.register(Title, SubTitle, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, Filler)
 Chart.defaults.color = '#fff'
@@ -48,7 +49,8 @@ const Analytics = () => {
             <Transactions/>
             <Revenue/>
 
-            <SLA/>
+            <TransactionsSLA/>
+            <ProductsSLA/>
 
             {/*<TransactionNumbers/>*/}
         </Row>

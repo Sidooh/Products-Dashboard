@@ -204,11 +204,12 @@ const ShowAccountDetails = () => {
                                         <CountUp end={e.self_amount} prefix={'KES '} separator=","/>
                                     </h4>
                                 </Col>
-                                <Col className={'d-flex align-items-start justify-content-end'}>
-                                    <Badge bg={'light'} className={'text-secondary'} pill>
-                                        <CountUp end={e.invite_amount} prefix={' KES '} separator=","/>
-                                    </Badge>
-                                </Col>
+                                {e.type !== 'MERCHANT' &&
+                                    <Col className={'d-flex align-items-start justify-content-end'}>
+                                        <Badge bg={'light'} className={'text-secondary'} pill>
+                                            <CountUp end={e.invite_amount} prefix={' KES '} separator=","/>
+                                        </Badge>
+                                    </Col>}
                             </Card.Header>
                         </Card>
                     </Col>

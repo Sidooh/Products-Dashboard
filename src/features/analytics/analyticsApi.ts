@@ -4,10 +4,16 @@ import { RootState } from 'app/store';
 import { ApiResponse, Status, Telco } from '@nabcellent/sui-react';
 import { Product } from "../../utils/enums";
 
-export type SLAResponse = {
+export type TransactionsSLAResponse = {
     year: number,
     count: number,
     status: Status
+}
+
+export type ProductsSLAResponse = {
+    tanda: number,
+    payments: number,
+    savings: number
 }
 
 type ChartData = {
@@ -42,9 +48,13 @@ export const analyticsApi = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getSLA: builder.query<SLAResponse[], void>({
-            query: () => '/sla',
-            transformResponse: (res: ApiResponse<SLAResponse[]>) => res.data
+        getTransactionsSLA: builder.query<TransactionsSLAResponse[], void>({
+            query: () => '/sla/transactions',
+            transformResponse: (res: ApiResponse<TransactionsSLAResponse[]>) => res.data
+        }),
+        getProductsSLA: builder.query<ProductsSLAResponse, void>({
+            query: () => '/sla/products',
+            transformResponse: (res: ApiResponse<ProductsSLAResponse>) => res.data
         }),
         getTransactions: builder.query<ChartData[], void>({
             query: () => '/transactions',
@@ -74,7 +84,8 @@ export const analyticsApi = createApi({
 });
 
 export const {
-    useGetSLAQuery,
+    useGetTransactionsSLAQuery,
+    useGetProductsSLAQuery,
     useGetTransactionsQuery,
     useGetRevenueQuery,
     useGetTelcoTransactionsQuery,

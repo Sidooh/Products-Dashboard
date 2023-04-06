@@ -7,8 +7,7 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { LoadingButton, TextField, toast } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
+import { FaUnlockAlt } from "react-icons/all";
 
 const validationSchema = yup.object({
     email: yup.string().email('Must be a valid email').max(100).required('Email is required.'),
@@ -58,7 +57,7 @@ const Login = () => {
                 <div className="mb-3">
                     <LoadingButton size="sm" color="primary" loading={isLoading} type={'submit'}
                                    loadingPosition="end" className="w-100 mt-3" onClick={() => formik.submitForm()}
-                                   endIcon={<FontAwesomeIcon icon={faUnlockKeyhole}/>}>
+                                   endIcon={<FaUnlockAlt/>}>
                         Sign In
                     </LoadingButton>
                 </div>

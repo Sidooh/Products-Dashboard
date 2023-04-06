@@ -1,12 +1,11 @@
 import CardBgCorner from "../CardBgCorner";
 import { Card, Form } from "react-bootstrap";
 import { chartSelectOptions, Frequency, LoadingButton, Period, Status, Str } from "@nabcellent/sui-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSync } from "@fortawesome/free-solid-svg-icons";
 import { Line } from "react-chartjs-2";
 import { ChartData, ChartOptions } from "chart.js";
 import { QueryActionCreatorResult } from "@reduxjs/toolkit/dist/query/core/buildInitiate";
 import { Dispatch, ReactNode } from "react";
+import { FaSync } from "react-icons/all";
 
 type LineChartProps = {
     options: ChartOptions<'line'>
@@ -48,7 +47,7 @@ const LineChart = ({
                     <div className={'d-flex'}>
                         <LoadingButton loading={isFetching} className="btn btn-sm btn-light border-0 me-2"
                                        spinner-position="replace" onClick={() => refetch()}>
-                            <FontAwesomeIcon icon={faSync}/>
+                            <FaSync size={12}/>
                         </LoadingButton>
                         <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
                             setChartTypeOpt(e.target.value as 'time-series' | 'cumulative')

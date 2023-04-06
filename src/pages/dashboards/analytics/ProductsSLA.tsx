@@ -19,7 +19,7 @@ const ProductsSLA = () => {
             <h5 className="text-primary text-center position-relative">
                     <span className="bg-200 px-3">
                         PRODUCT SUCCESS RATE - SLA
-                        <Tooltip title="Refresh SLAs" placement="left">
+                        <Tooltip title="Refresh SLA" placement="left">
                             <LoadingButton loading={isFetching} className="btn btn-sm border-0 py-2"
                                            spinner-position="replace" onClick={() => refetch()}>
                                 <FontAwesomeIcon icon={faSync}/>

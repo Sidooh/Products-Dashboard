@@ -1,7 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Card, Form } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { useGetDashboardChartDataQuery } from 'features/products/productsAPI';
 import CountUp from 'react-countup';
 import {
@@ -33,6 +31,7 @@ import {
 } from "chart.js";
 import CardBgCorner from "../../../components/CardBgCorner";
 import { AnalyticsChartData } from "../../../utils/types";
+import { FaSync } from "react-icons/all";
 
 type Dataset = { label: string, dataset: number[], color: string, hidden: boolean }
 
@@ -213,7 +212,7 @@ const DashboardChart = () => {
                     <div className="d-flex">
                         <LoadingButton className="btn btn-sm btn-light me-2 refresh-chart" type="button"
                                        title="Update LineChart" onClick={() => refetch()}>
-                            <FontAwesomeIcon icon={faSync}/>
+                            <FaSync size={12}/>
                         </LoadingButton>
                         <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
                             setChartTypeOpt(e.target.value as 'time-series' | 'cumulative')

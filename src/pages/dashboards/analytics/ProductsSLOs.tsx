@@ -1,4 +1,4 @@
-import { useGetProductsSLAQuery } from "../../../features/analytics/analyticsApi";
+import { useGetProductsSLOsQuery } from "../../../features/analytics/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
 import { ComponentLoader, LoadingButton, SectionError, Str, Tooltip } from "@nabcellent/sui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,8 +8,8 @@ import CountUp from "react-countup";
 import moment from "moment";
 import { FaPercentage } from "react-icons/all";
 
-const ProductsSLA = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetProductsSLAQuery()
+const ProductsSLOs = () => {
+    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetProductsSLOsQuery()
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
@@ -18,8 +18,8 @@ const ProductsSLA = () => {
         <Col xs={12} className={'mb-3'}>
             <h5 className="text-primary text-center position-relative">
                     <span className="bg-200 px-3">
-                        PRODUCT SUCCESS RATE - SLA
-                        <Tooltip title="Refresh SLA" placement="left">
+                        PRODUCT SUCCESS RATE - SLOs
+                        <Tooltip title="Refresh SLOs" placement="left">
                             <LoadingButton loading={isFetching} className="btn btn-sm border-0 py-2"
                                            spinner-position="replace" onClick={() => refetch()}>
                                 <FontAwesomeIcon icon={faSync}/>
@@ -36,10 +36,10 @@ const ProductsSLA = () => {
                     <h5 className={'text-primary text-decoration-underline'}>{moment().year()}</h5>
                     <Row className={'g-2'}>
                         {Object.keys(data).map((product) => {
-                            let color = 'success', sla = data[product as keyof typeof data]
+                            let color = 'success', slo = data[product as keyof typeof data]
 
-                            if(sla < 70) color = 'danger'
-                            else if(sla < 90) color = 'warning'
+                            if(slo < 70) color = 'danger'
+                            else if(slo < 90) color = 'warning'
 
                             return (
                                 <Col key={product} lg={4} className={`text-center border-bottom`}>
@@ -60,4 +60,4 @@ const ProductsSLA = () => {
     );
 };
 
-export default ProductsSLA;
+export default ProductsSLOs;

@@ -4,13 +4,13 @@ import { RootState } from 'app/store';
 import { ApiResponse, Status, Telco } from '@nabcellent/sui-react';
 import { Product } from "../../utils/enums";
 
-export type TransactionsSLAResponse = {
+export type TransactionsSLOsResponse = {
     year: number,
     count: number,
     status: Status
 }
 
-export type ProductsSLAResponse = {
+export type ProductsSLOsResponse = {
     tanda: number,
     payments: number,
     savings: number
@@ -48,13 +48,13 @@ export const analyticsApi = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getTransactionsSLA: builder.query<TransactionsSLAResponse[], void>({
-            query: () => '/sla/transactions',
-            transformResponse: (res: ApiResponse<TransactionsSLAResponse[]>) => res.data
+        getTransactionsSLOs: builder.query<TransactionsSLOsResponse[], void>({
+            query: () => '/slo/transactions',
+            transformResponse: (res: ApiResponse<TransactionsSLOsResponse[]>) => res.data
         }),
-        getProductsSLA: builder.query<ProductsSLAResponse, void>({
-            query: () => '/sla/products',
-            transformResponse: (res: ApiResponse<ProductsSLAResponse>) => res.data
+        getProductsSLOs: builder.query<ProductsSLOsResponse, void>({
+            query: () => '/slo/products',
+            transformResponse: (res: ApiResponse<ProductsSLOsResponse>) => res.data
         }),
         getTransactions: builder.query<ChartData[], void>({
             query: () => '/transactions',
@@ -84,8 +84,8 @@ export const analyticsApi = createApi({
 });
 
 export const {
-    useGetTransactionsSLAQuery,
-    useGetProductsSLAQuery,
+    useGetTransactionsSLOsQuery,
+    useGetProductsSLOsQuery,
     useGetTransactionsQuery,
     useGetRevenueQuery,
     useGetTelcoTransactionsQuery,

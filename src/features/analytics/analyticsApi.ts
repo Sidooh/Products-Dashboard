@@ -49,11 +49,11 @@ export const analyticsApi = createApi({
     }),
     endpoints: (builder) => ({
         getTransactionsSLOs: builder.query<TransactionsSLOsResponse[], void>({
-            query: () => '/slo/transactions',
+            query: () => '/slos/transactions',
             transformResponse: (res: ApiResponse<TransactionsSLOsResponse[]>) => res.data
         }),
         getProductsSLOs: builder.query<ProductsSLOsResponse, void>({
-            query: () => '/slo/products',
+            query: () => '/slos/products',
             transformResponse: (res: ApiResponse<ProductsSLOsResponse>) => res.data
         }),
         getTransactions: builder.query<ChartData[], void>({

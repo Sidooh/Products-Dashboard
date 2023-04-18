@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync } from "@fortawesome/free-solid-svg-icons";
 import CardBgCorner from "../../../components/CardBgCorner";
 import CountUp from "react-countup";
-import moment from "moment";
 import { FaPercentage } from "react-icons/all";
 
 const ProductsSLOs = () => {
@@ -33,7 +32,7 @@ const ProductsSLOs = () => {
             <Card>
                 <CardBgCorner corner={5}/>
                 <Card.Body style={{ backgroundImage: 'linear-gradient(-45deg, rgba(0, 0, 0, 1), rgb(245, 183, 0))' }}>
-                    <h5 className={'text-primary text-decoration-underline'}>{moment().year()}</h5>
+                    <h5 className={'text-primary text-decoration-underline'}>YTD</h5>
                     <Row className={'g-2'}>
                         {Object.keys(data).map((product) => {
                             let color = 'success', slo = data[product as keyof typeof data]

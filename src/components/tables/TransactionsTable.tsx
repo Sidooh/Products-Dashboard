@@ -13,7 +13,12 @@ import {
 import moment from "moment";
 import Latency from "../Latency";
 
-const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, transactions: Transaction[] }) => {
+const TransactionsTable = ({ tableTitle, transactions, onRefetch, reFetching }: {
+    tableTitle: string,
+    transactions: Transaction[],
+    onRefetch?: () => void,
+    reFetching?: boolean
+}) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -67,7 +72,7 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                         id: 'actions',
                         cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
                     }
-                ]} data={transactions}/>
+                ]} data={transactions} onRefetch={onRefetch} reFetching={reFetching}/>
             </Card.Body>
         </Card>
     );

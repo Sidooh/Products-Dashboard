@@ -5,7 +5,7 @@ import { ComponentLoader, SectionError, Status } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
 
 const RecentTransactions = () => {
-    let {data: transactions, isLoading, isSuccess, isError, error} = useTransactionsQuery();
+    let { data: transactions, isLoading, isSuccess, isError, error, refetch, isFetching } = useTransactionsQuery();
 
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !transactions) return <ComponentLoader/>;
@@ -13,6 +13,8 @@ const RecentTransactions = () => {
     transactions = transactions.filter((t: Transaction) => t.status !== Status.PENDING);
     logger.log('Recent Transactions', transactions);
 
-    return <TransactionsTable tableTitle={'Recent Transactions'} transactions={transactions}/>;};
+    return <TransactionsTable tableTitle={'Recent Transactions'} transactions={transactions} onRefetch={refetch}
+                              reFetching={isFetching}/>;
+};
 
 export default RecentTransactions;

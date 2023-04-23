@@ -24,22 +24,22 @@ const ProviderBalances = () => {
                 </Card>
             </Col>
             <Col md={4} className={'mb-xxl-2'}>
-                <Card className={'bg-line-chart-gradient'}>
+                <Card style={{ backgroundColor: 'rgba(20, 20, 20, .8)' }}>
                     <CardBgCorner corner={2}/>
                     <Card.Body className={'position-relative'}>
-                        <h6 className="mb-md-0 mb-lg-2 text-light">Kyanda Float Balance</h6>
-                        <h4 className="m-0 fs-2 fw-normal text-white">
+                        <h6 className="mb-md-0 mb-lg-2 text-secondary">Kyanda Float Balance</h6>
+                        <h4 className="m-0 fs-2 fw-normal text-secondary">
                             <CountUp end={data.kyanda_float_balance} separator="," prefix={'KES '} decimals={2}/>
                         </h4>
                     </Card.Body>
                 </Card>
             </Col>
             <Col md={4} className={'mb-xxl-2'}>
-                <Card className={'bg-line-chart-gradient'}>
+                <Card style={{ backgroundColor: 'rgba(20, 20, 20, .8)' }}>
                     <CardBgCorner corner={3}/>
                     <Card.Body className={'position-relative'}>
-                        <h6 className="mb-md-0 mb-lg-2 text-light">AT Airtime Balance</h6>
-                        <h4 className="m-0 fs-2 fw-normal text-white">
+                        <h6 className="mb-md-0 mb-lg-2 text-secondary">AT Airtime Balance</h6>
+                        <h4 className="m-0 fs-2 fw-normal text-secondary">
                             <CountUp end={data.at_airtime_balance} separator="," prefix={'KES '} decimals={2}/>
                         </h4>
                     </Card.Body>

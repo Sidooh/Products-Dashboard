@@ -1,7 +1,7 @@
 import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
+import TableActions from 'components/TableActions';
 import { useEarningAccountsQuery } from 'features/earning-accounts/earningAccountsApi';
-import SidoohAccount from 'components/common/SidoohAccount';
+import SidoohAccount from 'components/SidoohAccount';
 import { EarningAccount } from 'utils/types';
 import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate, groupBy } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';

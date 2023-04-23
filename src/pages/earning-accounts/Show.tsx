@@ -4,7 +4,7 @@ import CardBgCorner from '../../components/CardBgCorner';
 import { Card, Col, Row } from 'react-bootstrap';
 import moment from 'moment/moment';
 import { useParams } from 'react-router-dom';
-import SidoohAccount from '../../components/common/SidoohAccount';
+import SidoohAccount from '../../components/SidoohAccount';
 import CountUp from 'react-countup';
 import { logger } from 'utils/logger';
 

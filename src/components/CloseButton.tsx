@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { CloseButton as Button } from 'react-bootstrap';
 import classNames from 'classnames';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector } from '../app/hooks';
 
 type CloseButtonType = {
     size: 'sm' | 'lg',

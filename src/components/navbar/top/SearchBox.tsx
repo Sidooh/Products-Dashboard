@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CloseButton from 'components/common/CloseButton';
+import CloseButton from 'components/CloseButton';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const SearchBox = () => {

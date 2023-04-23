@@ -1,7 +1,7 @@
 import { Card } from 'react-bootstrap';
 import { DataTable, getRelativeDateAndTime, TableDate } from '@nabcellent/sui-react';
-import SidoohAccount from '../common/SidoohAccount';
-import TableActions from '../common/TableActions';
+import SidoohAccount from '../SidoohAccount';
+import TableActions from '../TableActions';
 import { ProductAccount } from 'utils/types';
 
 const ProductAccountsTable = ({ title, accounts }: { title: string, accounts: ProductAccount[] }) => {

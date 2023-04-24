@@ -31,7 +31,7 @@ const Transactions = () => {
 
     return (
         <div>
-            {transactions.length
+            {pendingTransactions.length
              ? <TransactionsTable tableTitle={'Pending Transactions'} transactions={pendingTransactions}/> : (
                  <Card className={'mb-3 bg-soft-primary'}>
                      <Card.Header className={'fw-bolder'}>

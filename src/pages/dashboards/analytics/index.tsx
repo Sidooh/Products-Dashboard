@@ -18,7 +18,8 @@ import TelcoTransactions from "./TelcoTransactions";
 import TelcoRevenue from "./TelcoRevenue";
 import ProductTransactions from "./ProductTransactions";
 import ProductRevenue from "./ProductRevenue";
-import ProductsSLOs from "./ProductsSLOs";
+import VendorsSLO from "./VendorsSLO";
+import ProductsSLO from "./ProductsSLO";
 
 Chart.register(Title, SubTitle, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, Filler)
 Chart.defaults.color = '#fff'
@@ -50,7 +51,8 @@ const Analytics = () => {
             <Revenue/>
 
             <TransactionsSLOs/>
-            <ProductsSLOs/>
+            <ProductsSLO/>
+            <VendorsSLO/>
 
             {/*<TransactionNumbers/>*/}
         </Row>

@@ -4,13 +4,19 @@ import { RootState } from 'app/store';
 import { ApiResponse, Status, Telco } from '@nabcellent/sui-react';
 import { Product } from "../../utils/enums";
 
-export type TransactionsSLOsResponse = {
+export type TransactionsSLOResponse = {
     year: number,
     count: number,
     status: Status
 }
 
-export type ProductsSLOsResponse = {
+export type ProductsSLOResponse = {
+    product: Product
+    year: number,
+    slo: number,
+}
+
+export type VendorsSLOResponse = {
     tanda: number,
     payments: number,
     savings: number
@@ -48,44 +54,76 @@ export const analyticsApi = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getTransactionsSLOs: builder.query<TransactionsSLOsResponse[], void>({
-            query: () => '/slos/transactions',
-            transformResponse: (res: ApiResponse<TransactionsSLOsResponse[]>) => res.data
+        getTransactionsSLO: builder.query<TransactionsSLOResponse[], boolean>({
+            query: (bypass_cache) => ({
+                url: '/slo/transactions',
+                params: { bypass_cache }
+            }),
+            transformResponse: (res: ApiResponse<TransactionsSLOResponse[]>) => res.data
         }),
-        getProductsSLOs: builder.query<ProductsSLOsResponse, void>({
-            query: () => '/slos/products',
-            transformResponse: (res: ApiResponse<ProductsSLOsResponse>) => res.data
+        getProductsSLO: builder.query<ProductsSLOResponse, boolean>({
+            query: (bypass_cache) => ({
+                url: '/slo/products',
+                params: { bypass_cache }
+            }),
+            transformResponse: (res: ApiResponse<ProductsSLOResponse>) => res.data
+        }),
+        getVendorsSLO: builder.query<VendorsSLOResponse, boolean>({
+            query: (bypass_cache) => ({
+                url: '/slo/vendors',
+                params: { bypass_cache }
+            }),
+            transformResponse: (res: ApiResponse<VendorsSLOResponse>) => res.data
         }),
         getTransactions: builder.query<ChartData[], void>({
-            query: () => '/transactions',
+            query: (bypass_cache) => ({
+                url: '/transactions',
+                params: { bypass_cache }
+            }),
             transformResponse: (res: ApiResponse<ChartData[]>) => res.data
         }),
         getRevenue: builder.query<ChartData[], void>({
-            query: () => '/revenue',
+            query: (bypass_cache) => ({
+                url: '/revenue',
+                params: { bypass_cache }
+            }),
             transformResponse: (res: ApiResponse<ChartData[]>) => res.data
         }),
         getTelcoTransactions: builder.query<TelcoChartResponse, void>({
-            query: () => '/telco-transactions',
+            query: (bypass_cache) => ({
+                url: '/telco-transactions',
+                params: { bypass_cache }
+            }),
             transformResponse: (res: ApiResponse<TelcoChartResponse>) => res.data
         }),
         getTelcoRevenue: builder.query<TelcoChartResponse, void>({
-            query: () => '/telco-revenue',
+            query: (bypass_cache) => ({
+                url: '/telco-revenue',
+                params: { bypass_cache }
+            }),
             transformResponse: (res: ApiResponse<TelcoChartResponse>) => res.data
         }),
         getProductTransactions: builder.query<ProductChartResponse, void>({
-            query: () => '/product-transactions',
+            query: (bypass_cache) => ({
+                url: '/product-transactions',
+                params: { bypass_cache }
+            }),
             transformResponse: (res: ApiResponse<ProductChartResponse>) => res.data
         }),
         getProductRevenue: builder.query<ProductChartResponse, void>({
-            query: () => '/product-revenue',
+            query: (bypass_cache) => ({
+                url: '/product-revenue',
+                params: { bypass_cache }
+            }),
             transformResponse: (res: ApiResponse<ProductChartResponse>) => res.data
         })
     })
 });
 
 export const {
-    useGetTransactionsSLOsQuery,
-    useGetProductsSLOsQuery,
+    useGetTransactionsSLOQuery,
+    useGetProductsSLOQuery,
+    useGetVendorsSLOQuery,
     useGetTransactionsQuery,
     useGetRevenueQuery,
     useGetTelcoTransactionsQuery,

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { Transaction } from 'utils/types';
 import { RootState } from 'app/store';
-import { ApiResponse, Status } from '@nabcellent/sui-react';
+import { ApiResponse } from '@nabcellent/sui-react';
 
 export const transactionsApi = createApi({
     reducerPath: 'transactionsApi',
@@ -20,14 +20,11 @@ export const transactionsApi = createApi({
     }),
     endpoints: (builder) => ({
         //  Transaction Endpoints
-        transactions: builder.query<Transaction[], Status | void>({
-            query: (status?: Status) => {
-                let url = '/transactions?with=account,payment';
-
-                if (status) url += `&status=${status}`;
-
-                return url;
-            },
+        transactions: builder.query<Transaction[], boolean>({
+            query: (bypass_cache) => ({
+                url: '/transactions?with=account,payment',
+                params: { with: 'account,payment', bypass_cache }
+            }),
             transformResponse: (response: ApiResponse<Transaction[]>) => response.data,
             providesTags: ['Transaction']
         }),

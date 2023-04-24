@@ -27,8 +27,8 @@ const ProductsSLOs = () => {
 
             <Card>
                 <CardBgCorner corner={5}/>
-                <Card.Body style={{ backgroundImage: 'linear-gradient(-45deg, rgba(0, 0, 0, 1), rgb(245, 183, 0))' }}>
-                    <h5 className={'text-primary text-decoration-underline'}>YTD</h5>
+                <Card.Body className={'bg-dark'}>
+                    <div className={'d-flex'}><h5 className={'text-light border-bottom pe-lg-5'}>YTD</h5></div>
                     <Row className={'g-2'}>
                         {Object.keys(data).map((product) => {
                             let color = 'success', slo = data[product as keyof typeof data]
@@ -37,10 +37,10 @@ const ProductsSLOs = () => {
                             else if (slo < 90) color = 'warning'
 
                             return (
-                                <Col key={product} lg={4} className={`text-center border-bottom`}>
+                                <Col key={product} lg={4} className={`text-center`}>
                                     <div className="bg-dark py-3">
                                         <div className={`icon-circle icon-circle-${color} fw-bold`}>
-                                            <CountUp end={data[product as keyof typeof data]} className="me-1 fs-2"/>
+                                            <CountUp end={data[product as keyof typeof data]} className="me-1 fs-1"/>
                                             <FaPercentage/>
                                         </div>
                                         <h6 className={`mb-1 fw-bold text-${color}`}>{Str.headline(product)}</h6>

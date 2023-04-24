@@ -41,7 +41,7 @@ const TransactionsSLOs = () => {
 
             <Card>
                 <CardBgCorner corner={5}/>
-                <Card.Body style={{ backgroundImage: 'linear-gradient(-45deg, rgba(0, 0, 0), rgb(245, 183, 0))' }}>
+                <Card.Body className={'bg-dark'}>
                     {years.map((year, i) => {
                         const total = groupedSLOs[year].reduce((p, c) => p += c.count, 0)
                         const data = groupedSLOs[year].sort((a, b) => b.count - a.count)
@@ -49,15 +49,17 @@ const TransactionsSLOs = () => {
 
                         return (
                             <Fragment key={`year-${year}`}>
-                                <h5 className={'text-dark text-decoration-underline'}>{year}</h5>
+                                <div className={'d-flex'}>
+                                    <h5 className={'text-light border-bottom pe-lg-5'}>{year}</h5>
+                                </div>
                                 <Row className={`g-2 ${i + 1 < years.length && 'mb-5'}`}>
                                     {data.map((slo, i) => (
-                                        <Col key={`slo-${year + i}`} lg={4} className={`text-center border-bottom`}>
+                                        <Col key={`slo-${year + i}`} lg={4} className={`text-center`}>
                                             <div className="bg-dark py-3">
                                                 <div
                                                     className={`icon-circle icon-circle-${getStatusColor(slo.status)} text-${getStatusColor(slo.status)} fw-bold`}>
                                                     <CountUp end={Math.round((slo.count / total) * 100)}
-                                                             className="me-1 fs-2"/>
+                                                             className="me-1 fs-1"/>
                                                     <FontAwesomeIcon icon={faPercent}/>
                                                 </div>
                                                 <h6 className={`mb-1 fw-bold text-${getStatusColor(slo.status)}`}>{slo.status}</h6>

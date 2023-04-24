@@ -36,8 +36,7 @@ const TransactionsSLOs = () => {
                             </IconButton>
                         </Tooltip>
                     </span>
-                <span
-                    className="border position-absolute top-50 translate-middle-y w-100 start-0 z-index--1"></span>
+                <span className="border position-absolute top-50 translate-middle-y w-100 start-0 z-index--1"/>
             </h5>
 
             <Card>

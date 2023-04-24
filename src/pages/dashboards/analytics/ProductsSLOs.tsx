@@ -1,11 +1,9 @@
 import { useGetProductsSLOsQuery } from "../../../features/analytics/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
-import { ComponentLoader, LoadingButton, SectionError, Str, Tooltip } from "@nabcellent/sui-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSync } from "@fortawesome/free-solid-svg-icons";
+import { ComponentLoader, IconButton, SectionError, Str, Tooltip } from "@nabcellent/sui-react";
 import CardBgCorner from "../../../components/CardBgCorner";
 import CountUp from "react-countup";
-import { FaPercentage } from "react-icons/all";
+import { FaPercentage, FaSync } from "react-icons/all";
 
 const ProductsSLOs = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetProductsSLOsQuery()
@@ -17,12 +15,11 @@ const ProductsSLOs = () => {
         <Col xs={12} className={'mb-3'}>
             <h5 className="text-primary text-center position-relative">
                     <span className="bg-200 px-3">
-                        PRODUCT SUCCESS RATE - SLOs
-                        <Tooltip title="Refresh SLOs" placement="left">
-                            <LoadingButton loading={isFetching} className="btn btn-sm border-0 py-2"
-                                           spinner-position="replace" onClick={() => refetch()}>
-                                <FontAwesomeIcon icon={faSync}/>
-                            </LoadingButton>
+                        Vendors Success Rate
+                        <Tooltip title="Refresh SLOs" placement="start">
+                            <IconButton loading={isFetching} className="btn ms-2" onClick={() => refetch()}>
+                                <FaSync size={12}/>
+                            </IconButton>
                         </Tooltip>
                     </span>
                 <span
@@ -37,8 +34,8 @@ const ProductsSLOs = () => {
                         {Object.keys(data).map((product) => {
                             let color = 'success', slo = data[product as keyof typeof data]
 
-                            if(slo < 70) color = 'danger'
-                            else if(slo < 90) color = 'warning'
+                            if (slo < 70) color = 'danger'
+                            else if (slo < 90) color = 'warning'
 
                             return (
                                 <Col key={product} lg={4} className={`text-center border-bottom`}>

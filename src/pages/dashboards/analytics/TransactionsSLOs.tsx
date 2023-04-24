@@ -4,16 +4,17 @@ import {
     ComponentLoader,
     getStatusColor,
     groupBy,
-    LoadingButton,
+    IconButton,
     SectionError,
     Status,
     Tooltip
 } from "@nabcellent/sui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPercent, faSync } from "@fortawesome/free-solid-svg-icons";
+import { faPercent } from "@fortawesome/free-solid-svg-icons";
 import CardBgCorner from "../../../components/CardBgCorner";
 import { Fragment } from "react";
 import CountUp from "react-countup";
+import { FaSync } from "react-icons/all";
 
 const TransactionsSLOs = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTransactionsSLOsQuery()
@@ -28,12 +29,11 @@ const TransactionsSLOs = () => {
         <Col xs={12} className={'mb-3'}>
             <h5 className="text-primary text-center position-relative">
                     <span className="bg-200 px-3">
-                        TRANSACTION SUCCESS RATE - SLO
-                        <Tooltip title="Refresh SLO" placement="left">
-                            <LoadingButton loading={isFetching} className="btn btn-sm border-0 py-2"
-                                           spinner-position="replace" onClick={() => refetch()}>
-                                <FontAwesomeIcon icon={faSync}/>
-                            </LoadingButton>
+                        Transaction Success Rate
+                        <Tooltip title="Refresh SLO" placement="start">
+                            <IconButton loading={isFetching} className="btn ms-2" onClick={() => refetch()}>
+                                <FaSync size={12}/>
+                            </IconButton>
                         </Tooltip>
                     </span>
                 <span

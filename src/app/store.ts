@@ -2,7 +2,7 @@ import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import authReducer from 'features/auth/authSlice';
 import themeReducer from 'features/theme/themeSlice';
 import { transactionsApi } from 'features/transactions/transactionsAPI';
-import { productsAPI } from 'features/products/productsAPI';
+import { dashboardApi } from 'features/dashboard/dashboardApi';
 import { earningAccountsApi } from 'features/earning-accounts/earningAccountsApi';
 import { subscriptionsAPI } from 'features/subscriptions/subscriptionsAPI';
 import { accountsAPI } from 'features/accounts/accountsAPI';
@@ -16,7 +16,7 @@ export const store = configureStore({
         theme: themeReducer,
 
         [transactionsApi.reducerPath]: transactionsApi.reducer,
-        [productsAPI.reducerPath]: productsAPI.reducer,
+        [dashboardApi.reducerPath]: dashboardApi.reducer,
         [earningAccountsApi.reducerPath]: earningAccountsApi.reducer,
         [subscriptionTypesApi.reducerPath]: subscriptionTypesApi.reducer,
         [subscriptionsAPI.reducerPath]: subscriptionsAPI.reducer,
@@ -27,7 +27,7 @@ export const store = configureStore({
     middleware: getDefaultMiddleware => getDefaultMiddleware()
         .concat(
             transactionsApi.middleware,
-            productsAPI.middleware,
+            dashboardApi.middleware,
             earningAccountsApi.middleware,
             subscriptionTypesApi.middleware,
             subscriptionsAPI.middleware,

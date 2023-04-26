@@ -17,7 +17,8 @@ import { defaultLineChartOptions } from "../../../utils/helpers";
 import LineChart from "../../../components/charts/LineChart";
 
 const Transactions = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTransactionsQuery();
+    const [bypassCache, setBypassCache] = useState(false)
+    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTransactionsQuery(bypassCache);
 
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
@@ -89,7 +90,10 @@ const Transactions = () => {
             <LineChart
                 data={chartData}
                 options={options}
-                refetch={refetch}
+                refetch={() => {
+                    if (!bypassCache) setBypassCache(true)
+                    refetch()
+                }}
                 isFetching={isFetching}
                 txStatus={txStatus} setTxStatus={setTxStatus}
                 chartTypeOpt={chartTypeOpt} setChartTypeOpt={setChartTypeOpt}

@@ -10,7 +10,7 @@ export type TransactionsSLOResponse = {
     status: Status
 }
 
-export type ProductsSLOResponse = {
+export type ProductsSLOData = {
     product: Product
     year: number,
     slo: number,
@@ -61,12 +61,12 @@ export const analyticsApi = createApi({
             }),
             transformResponse: (res: ApiResponse<TransactionsSLOResponse[]>) => res.data
         }),
-        getProductsSLO: builder.query<ProductsSLOResponse, boolean>({
+        getProductsSLO: builder.query<ProductsSLOData[], boolean>({
             query: (bypass_cache) => ({
                 url: '/slo/products',
                 params: { bypass_cache }
             }),
-            transformResponse: (res: ApiResponse<ProductsSLOResponse>) => res.data
+            transformResponse: (res: ApiResponse<ProductsSLOData[]>) => res.data
         }),
         getVendorsSLO: builder.query<VendorsSLOResponse, boolean>({
             query: (bypass_cache) => ({
@@ -75,42 +75,42 @@ export const analyticsApi = createApi({
             }),
             transformResponse: (res: ApiResponse<VendorsSLOResponse>) => res.data
         }),
-        getTransactions: builder.query<ChartData[], void>({
+        getTransactions: builder.query<ChartData[], boolean>({
             query: (bypass_cache) => ({
                 url: '/transactions',
                 params: { bypass_cache }
             }),
             transformResponse: (res: ApiResponse<ChartData[]>) => res.data
         }),
-        getRevenue: builder.query<ChartData[], void>({
+        getRevenue: builder.query<ChartData[], boolean>({
             query: (bypass_cache) => ({
                 url: '/revenue',
                 params: { bypass_cache }
             }),
             transformResponse: (res: ApiResponse<ChartData[]>) => res.data
         }),
-        getTelcoTransactions: builder.query<TelcoChartResponse, void>({
+        getTelcoTransactions: builder.query<TelcoChartResponse, boolean>({
             query: (bypass_cache) => ({
                 url: '/telco-transactions',
                 params: { bypass_cache }
             }),
             transformResponse: (res: ApiResponse<TelcoChartResponse>) => res.data
         }),
-        getTelcoRevenue: builder.query<TelcoChartResponse, void>({
+        getTelcoRevenue: builder.query<TelcoChartResponse, boolean>({
             query: (bypass_cache) => ({
                 url: '/telco-revenue',
                 params: { bypass_cache }
             }),
             transformResponse: (res: ApiResponse<TelcoChartResponse>) => res.data
         }),
-        getProductTransactions: builder.query<ProductChartResponse, void>({
+        getProductTransactions: builder.query<ProductChartResponse, boolean>({
             query: (bypass_cache) => ({
                 url: '/product-transactions',
                 params: { bypass_cache }
             }),
             transformResponse: (res: ApiResponse<ProductChartResponse>) => res.data
         }),
-        getProductRevenue: builder.query<ProductChartResponse, void>({
+        getProductRevenue: builder.query<ProductChartResponse, boolean>({
             query: (bypass_cache) => ({
                 url: '/product-revenue',
                 params: { bypass_cache }

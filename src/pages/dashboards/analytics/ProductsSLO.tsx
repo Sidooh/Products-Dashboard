@@ -1,4 +1,4 @@
-import { ProductsSLOResponse, useGetProductsSLOQuery } from "features/analytics/analyticsApi";
+import { ProductsSLOData, useGetProductsSLOQuery } from "features/analytics/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
 import { ComponentLoader, groupBy, IconButton, SectionError, Tooltip } from "@nabcellent/sui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,7 +7,6 @@ import CardBgCorner from "components/CardBgCorner";
 import { Fragment, useState } from "react";
 import CountUp from "react-countup";
 import { FaSync } from "react-icons/all";
-import { getProductColor } from "../../../utils/helpers";
 
 const ProductsSLO = () => {
     const [bypassCache, setBypassCache] = useState(false)
@@ -16,10 +15,8 @@ const ProductsSLO = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
 
-    const groupedSLOs: { [key: string]: ProductsSLOResponse[] } = groupBy(data, 'year')
+    const groupedSLOs: { [key: string]: ProductsSLOData[] } = groupBy(data, 'year')
     const years = Object.keys(groupedSLOs)
-
-    console.log(years)
 
     return (
         <Col xs={12} className={'mb-3'}>

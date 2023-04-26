@@ -1,4 +1,4 @@
-import { TransactionsSLOsResponse, useGetTransactionsSLOQuery } from "../../../features/analytics/analyticsApi";
+import { TransactionsSLOResponse, useGetTransactionsSLOQuery } from "../../../features/analytics/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
 import {
     ComponentLoader,
@@ -23,7 +23,7 @@ const TransactionsSLOs = () => {
     if (isError) return <SectionError error={error}/>;
     if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
 
-    const groupedSLOs: { [key: string]: TransactionsSLOsResponse[] } = groupBy(data, 'year')
+    const groupedSLOs: { [key: string]: TransactionsSLOResponse[] } = groupBy(data, 'year')
     const years = Object.keys(groupedSLOs)
 
     return (

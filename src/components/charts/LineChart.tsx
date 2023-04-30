@@ -1,6 +1,6 @@
 import CardBgCorner from "../CardBgCorner";
 import { Card, Form } from "react-bootstrap";
-import { chartSelectOptions, Frequency, LoadingButton, Period, Status, Str } from "@nabcellent/sui-react";
+import { chartSelectOptions, Frequency, IconButton, Period, Status, Str } from "@nabcellent/sui-react";
 import { Line } from "react-chartjs-2";
 import { ChartData, ChartOptions } from "chart.js";
 import { QueryActionCreatorResult } from "@reduxjs/toolkit/dist/query/core/buildInitiate";
@@ -10,7 +10,7 @@ import { FaSync } from "react-icons/all";
 type LineChartProps = {
     options: ChartOptions<'line'>
     data: ChartData<'line'>
-    refetch: () => QueryActionCreatorResult<any>,
+    refetch: () => QueryActionCreatorResult<any>|void,
     isFetching: boolean,
     chartTypeOpt: 'time-series' | 'cumulative'
     setChartTypeOpt: Dispatch<LineChartProps['chartTypeOpt']>
@@ -45,10 +45,9 @@ const LineChart = ({
             <Card.Body className={'position-relative pb-2'} style={{ height: 350, }}>
                 <div className="position-absolute right-0 me-3">
                     <div className={'d-flex'}>
-                        <LoadingButton loading={isFetching} className="btn btn-sm btn-light border-0 me-2"
-                                       spinner-position="replace" onClick={() => refetch()}>
+                        <IconButton loading={isFetching} className="btn me-2" color={'secondary'} onClick={() => refetch()}>
                             <FaSync size={12}/>
-                        </LoadingButton>
+                        </IconButton>
                         <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
                             setChartTypeOpt(e.target.value as 'time-series' | 'cumulative')
                         }}>

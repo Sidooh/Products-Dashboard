@@ -22,7 +22,8 @@ import { TooltipItem } from "chart.js/dist/types";
 type Dataset = { telco: Telco, dataset: number[], color: string | number[], hidden: boolean }
 
 const TelcoRevenue = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTelcoRevenueQuery();
+    const [bypassCache, setBypassCache] = useState(false)
+    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTelcoRevenueQuery(bypassCache);
 
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
@@ -139,7 +140,10 @@ const TelcoRevenue = () => {
             <LineChart
                 data={chartData}
                 options={options}
-                refetch={refetch}
+                refetch={() => {
+                    if (!bypassCache) setBypassCache(true)
+                    refetch()
+                }}
                 isFetching={isFetching}
                 txStatus={txStatus} setTxStatus={setTxStatus}
                 chartTypeOpt={chartTypeOpt} setChartTypeOpt={setChartTypeOpt}

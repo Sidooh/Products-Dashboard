@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Account, PhoneChip } from "@nabcellent/sui-react";
-import { CONFIG } from "../../config";
+import { CONFIG } from "../config";
 
 const SidoohAccount = ({ account }: { account: Account }) => {
     if (!account) return null;

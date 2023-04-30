@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Card, Col, Row } from 'react-bootstrap';
 import {
     Badge,
@@ -6,17 +6,20 @@ import {
     DataTable,
     Flex,
     SectionError,
-    SectionLoader, Status,
+    SectionLoader,
+    Status,
     StatusChip,
     TableDate
 } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
-import TableActions from "components/common/TableActions";
+import TableActions from "components/TableActions";
 import { useAccountQuery } from "features/accounts/accountsAPI";
 import CountUp from "react-countup";
 import CardBgCorner from 'components/CardBgCorner';
 import { logger } from 'utils/logger';
-import { Subscription } from "utils/types";
+import { Subscription, Transaction } from "utils/types";
+import moment from "moment/moment";
+import Latency from "../components/Latency";
 
 const ShowAccountDetails = () => {
     const { id } = useParams<{ id: any }>();
@@ -106,12 +109,6 @@ const ShowAccountDetails = () => {
                 <Card.Body>
                     <DataTable title={'Transactions'} columns={[
                         {
-                            accessorKey: 'id',
-                            header: '#',
-                            cell: ({ row }: any) => <Link
-                                to={`/transactions/${row.original.id}`}>{row.original.id}</Link>
-                        },
-                        {
                             accessorKey: 'description',
                             header: 'Description',
                             cell: ({ row }: any) => (
@@ -133,9 +130,15 @@ const ShowAccountDetails = () => {
                             cell: ({ row }: any) => <StatusChip status={row.original.status}/>
                         },
                         {
-                            accessorKey: 'created_at',
-                            header: 'Date',
-                            cell: ({ row }: any) => <TableDate date={row.original.created_at}/>
+                            accessorKey: 'updated_at',
+                            header: 'Updated',
+                            cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
+                        },
+                        {
+                            accessorKey: 'latency',
+                            accessorFn: (r: Transaction) => moment(r.updated_at).diff(r.created_at, 's'),
+                            header: 'Latency',
+                            cell: ({ row: { original: tx } }: any) => <Latency from={tx.created_at} to={tx.updated_at}/>
                         },
                         {
                             id: 'actions',

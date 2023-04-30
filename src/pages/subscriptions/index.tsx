@@ -1,6 +1,6 @@
 import { Card } from 'react-bootstrap';
 import { useSubscriptionsQuery } from 'features/subscriptions/subscriptionsAPI';
-import SidoohAccount from 'components/common/SidoohAccount';
+import SidoohAccount from 'components/SidoohAccount';
 import {
     DataTable,
     getRelativeDateAndTime,

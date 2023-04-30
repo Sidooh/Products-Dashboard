@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
 import { RootState } from 'app/store';
 import { ApiResponse } from '@nabcellent/sui-react';
-import { AnalyticsChartData } from "../../utils/types";
+import { AnalyticsChartData, Transaction } from "../../utils/types";
 
 type DashboardSummariesData = {
     total_transactions: number
@@ -15,17 +15,23 @@ type DashboardChartData = {
     [key in 'TODAY' | 'YESTERDAY']: AnalyticsChartData[]
 }
 
+type DashboardTransactionsData = {
+    recent: Transaction[]
+    pending: Transaction[]
+}
+
 type ProvidersBalancesData = {
     tanda_float_balance: number
     kyanda_float_balance: number
     at_airtime_balance: number
 }
 
-export const productsAPI = createApi({
-    reducerPath: 'productsApi',
+export const dashboardApi = createApi({
+    reducerPath: 'dashboardApi',
     keepUnusedDataFor: 60 * 5, // Five minutes
+    tagTypes: ['Transaction'],
     baseQuery: fetchBaseQuery({
-        baseUrl: `${CONFIG.sidooh.services.products.api.url}`,
+        baseUrl: `${CONFIG.sidooh.services.products.api.url}/dashboard`,
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.auth?.token;
 
@@ -36,20 +42,28 @@ export const productsAPI = createApi({
     }),
     endpoints: (builder) => ({
         getDashboardSummaries: builder.query<DashboardSummariesData, void>({
-            query: () => '/dashboard',
+            query: () => '/summaries',
             transformResponse: (res: ApiResponse<DashboardSummariesData>) => res.data
         }),
         getDashboardChartData: builder.query<DashboardChartData, void>({
-            query: () => '/dashboard/chart',
+            query: () => '/chart',
             transformResponse: (res: ApiResponse<DashboardChartData>) => {
-                if(!res.data.TODAY) res.data.TODAY = []
-                if(!res.data.YESTERDAY) res.data.YESTERDAY = []
+                if (!res.data.TODAY) res.data.TODAY = []
+                if (!res.data.YESTERDAY) res.data.YESTERDAY = []
 
                 return res.data
             }
         }),
+        getDashboardTransactions: builder.query<DashboardTransactionsData, void>({
+            query: () => ({
+                url: '/transactions',
+                params: { with: 'account,payment' }
+            }),
+            transformResponse: (response: ApiResponse<DashboardTransactionsData>) => response.data,
+            providesTags: ['Transaction']
+        }),
         getProvidersBalances: builder.query<ProvidersBalancesData, void>({
-            query: () => '/dashboard/providers/balances',
+            query: () => '/providers/balances',
             transformResponse: (res: ApiResponse<ProvidersBalancesData>) => res.data
         })
     })
@@ -58,5 +72,6 @@ export const productsAPI = createApi({
 export const {
     useGetDashboardSummariesQuery,
     useGetDashboardChartDataQuery,
+    useGetDashboardTransactionsQuery,
     useGetProvidersBalancesQuery
-} = productsAPI;
+} = dashboardApi;

@@ -9,7 +9,7 @@ import {
     TableDate
 } from '@nabcellent/sui-react';
 import { Cashback } from 'utils/types';
-import SidoohAccount from 'components/common/SidoohAccount';
+import SidoohAccount from 'components/SidoohAccount';
 import { logger } from 'utils/logger';
 
 const Cashbacks = () => {

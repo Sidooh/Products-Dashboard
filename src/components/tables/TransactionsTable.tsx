@@ -1,6 +1,6 @@
 import { Card } from 'react-bootstrap';
-import TableActions from 'components/common/TableActions';
-import SidoohAccount from 'components/common/SidoohAccount';
+import TableActions from 'components/TableActions';
+import SidoohAccount from 'components/SidoohAccount';
 import { Transaction } from 'utils/types';
 import {
     currencyFormat,
@@ -11,8 +11,14 @@ import {
     TableDate
 } from '@nabcellent/sui-react';
 import moment from "moment";
+import Latency from "../Latency";
 
-const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, transactions: Transaction[] }) => {
+const TransactionsTable = ({ tableTitle, transactions, onRefetch, reFetching }: {
+    tableTitle: string,
+    transactions: Transaction[],
+    onRefetch?: () => void,
+    reFetching?: boolean
+}) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -60,28 +66,13 @@ const TransactionsTable = ({ tableTitle, transactions }: { tableTitle: string, t
                         accessorKey: 'latency',
                         accessorFn: (r: Transaction) => moment(r.updated_at).diff(r.created_at, 's'),
                         header: 'Latency',
-                        cell: ({ row: { original: tx } }: any) => {
-                            let unit = 's', color = 'danger', latency = moment(tx.updated_at).diff(tx.created_at, 's');
-
-                            if (latency <= 5) color = 'success'
-                            else if(latency <= 30) color = 'warning'
-
-                            if (latency > 3600) {
-                                unit = 'hrs'
-                                latency = latency / 3600
-                            } else if (latency > 120) {
-                                unit = 'min'
-                                latency = latency / 60
-                            }
-
-                            return <span className={`fw-bold text-${color}`}>{Math.round(latency)} {unit}</span>
-                        }
+                        cell: ({ row: { original: tx } }: any) => <Latency from={tx.created_at} to={tx.updated_at}/>
                     },
                     {
                         id: 'actions',
                         cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
                     }
-                ]} data={transactions}/>
+                ]} data={transactions} onRefetch={onRefetch} reFetching={reFetching}/>
             </Card.Body>
         </Card>
     );

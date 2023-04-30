@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Card, Form } from 'react-bootstrap';
-import { useGetDashboardChartDataQuery } from 'features/products/productsAPI';
+import { useGetDashboardChartDataQuery } from 'features/dashboard/dashboardApi';
 import CountUp from 'react-countup';
 import {
     ChartAid,
@@ -197,7 +197,7 @@ const DashboardChart = () => {
                 height: 300,
                 backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, .5), #4a2613)'
             }}>
-                <div className="position-absolute light border-top border-bottom" style={{ top: 50 }}>
+                <div className="position-absolute light border-top border-bottom py-1" style={{ top: 50 }}>
                     <h6 className="text-white mb-0">
                         Today {' '}
                         <CountUp end={totalToday} prefix={'KES '} decimals={2} separator={','} className={'fw-bold'}/>

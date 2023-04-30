@@ -20,7 +20,8 @@ import { Product } from "../../../utils/enums";
 type Dataset = { product: string, dataset: number[], color: string | number[], hidden: boolean }
 
 const ProductTransactions = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetProductTransactionsQuery();
+    const [bypassCache, setBypassCache] = useState(false)
+    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetProductTransactionsQuery(bypassCache);
 
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
@@ -123,7 +124,10 @@ const ProductTransactions = () => {
             <LineChart
                 data={chartData}
                 options={options}
-                refetch={refetch}
+                refetch={() => {
+                    if (!bypassCache) setBypassCache(true)
+                    refetch()
+                }}
                 isFetching={isFetching}
                 txStatus={txStatus} setTxStatus={setTxStatus}
                 chartTypeOpt={chartTypeOpt} setChartTypeOpt={setChartTypeOpt}

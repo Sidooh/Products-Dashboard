@@ -24,7 +24,7 @@ const ProductsSLO = () => {
                     <span className="bg-200 px-3">
                         Products Success Rate
                         <Tooltip title="Refresh SLO" placement="start">
-                            <IconButton loading={isFetching} className="btn ms-2" onClick={() => {
+                            <IconButton loading={isFetching} color={'secondary'} className="btn ms-2 mb-1" onClick={() => {
                                 if (!bypassCache) setBypassCache(true)
                                 refetch()
                             }}>

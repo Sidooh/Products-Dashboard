@@ -19,8 +19,8 @@ const VendorsSLO = () => {
                     <span className="bg-200 px-3">
                         Vendors Success Rate
                         <Tooltip title="Refresh SLOs" placement="start">
-                            <IconButton loading={isFetching} className="btn ms-2" onClick={() => {
-                                if(!bypassCache) setBypassCache(true)
+                            <IconButton loading={isFetching} color={'secondary'} className="btn ms-2 mb-1" onClick={() => {
+                                if (!bypassCache) setBypassCache(true)
                                 refetch()
                             }}>
                                 <FaSync size={12}/>

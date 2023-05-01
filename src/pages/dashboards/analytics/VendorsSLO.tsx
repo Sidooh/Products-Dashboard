@@ -45,8 +45,8 @@ const VendorsSLO = () => {
                                 <Col key={product} lg={4} className={`text-center`}>
                                     <div className="bg-dark py-3">
                                         <div className={`icon-circle icon-circle-${color} fw-bold`}>
-                                            <CountUp end={slo} decimals={Math.round(slo) === slo ? 0 : 1} className="me-1 fs-1"/>
-                                            <FaPercentage/>
+                                            <CountUp end={slo} decimals={Math.round(slo) === slo ? 0 : 1} className="me-1 fs-12"/>
+                                            <FaPercentage size={12}/>
                                         </div>
                                         <h6 className={`mb-1 fw-bold text-${color}`}>{Str.headline(product)}</h6>
                                     </div>

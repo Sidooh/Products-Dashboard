@@ -41,10 +41,6 @@ export const dashboardApi = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getDashboardSummaries: builder.query<DashboardSummariesData, void>({
-            query: () => '/summaries',
-            transformResponse: (res: ApiResponse<DashboardSummariesData>) => res.data
-        }),
         getDashboardChartData: builder.query<DashboardChartData, boolean>({
             query: (bypass_cache) => ({
                 url: '/chart',
@@ -56,6 +52,13 @@ export const dashboardApi = createApi({
 
                 return res.data
             }
+        }),
+        getDashboardSummaries: builder.query<DashboardSummariesData, string>({
+            query: (bypass_cache) => ({
+                url: '/summaries',
+                params: { bypass_cache }
+            }),
+            transformResponse: (res: ApiResponse<DashboardSummariesData>) => res.data
         }),
         getDashboardTransactions: builder.query<DashboardTransactionsData, void>({
             query: () => ({

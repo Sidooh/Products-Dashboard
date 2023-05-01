@@ -9,12 +9,10 @@ import {
     Status,
     Tooltip
 } from "@nabcellent/sui-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPercent } from "@fortawesome/free-solid-svg-icons";
 import CardBgCorner from "../../../components/CardBgCorner";
 import { Fragment, useState } from "react";
 import CountUp from "react-countup";
-import { FaSync } from "react-icons/all";
+import { FaPercentage, FaSync } from "react-icons/all";
 
 const TransactionsSLOs = () => {
     const [bypassCache, setBypassCache] = useState(false)
@@ -32,10 +30,11 @@ const TransactionsSLOs = () => {
                     <span className="bg-200 px-3">
                         Transaction Success Rate
                         <Tooltip title="Refresh SLO" placement="start">
-                            <IconButton loading={isFetching} color={'secondary'} className="btn ms-2 mb-1" onClick={() => {
-                                if (!bypassCache) setBypassCache(true)
-                                refetch()
-                            }}>
+                            <IconButton loading={isFetching} color={'secondary'} className="btn ms-2 mb-1"
+                                        onClick={() => {
+                                            if (!bypassCache) setBypassCache(true)
+                                            refetch()
+                                        }}>
                                 <FaSync size={12}/>
                             </IconButton>
                         </Tooltip>
@@ -66,8 +65,8 @@ const TransactionsSLOs = () => {
                                                     <div
                                                         className={`icon-circle icon-circle-${getStatusColor(d.status)} text-${getStatusColor(d.status)} fw-bold`}>
                                                         <CountUp end={slo} decimals={Math.round(slo) === slo ? 0 : 1}
-                                                                 className="me-1 fs-14"/>
-                                                        <FontAwesomeIcon icon={faPercent}/>
+                                                                 className="me-1 fs-12"/>
+                                                        <FaPercentage size={12}/>
                                                     </div>
                                                     <h6 className={`mb-1 fw-bold text-${getStatusColor(d.status)}`}>{d.status}</h6>
                                                 </div>

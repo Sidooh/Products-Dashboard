@@ -7,7 +7,7 @@ import {
     ComponentLoader,
     Frequency,
     groupBy,
-    LoadingButton,
+    IconButton,
     Period,
     RawAnalytics,
     SectionError,
@@ -41,7 +41,16 @@ Chart.defaults.font.weight = '700'
 Chart.defaults.font.family = "'Avenir', sans-serif"
 
 const DashboardChart = () => {
-    const { data, isError, error, isLoading, isSuccess, refetch } = useGetDashboardChartDataQuery();
+    const [bypassCache, setBypassCache] = useState(false)
+    const {
+        data,
+        isError,
+        error,
+        isLoading,
+        isSuccess,
+        refetch,
+        isFetching
+    } = useGetDashboardChartDataQuery(bypassCache);
 
     const [txStatus, setTxStatus] = useState<Status | 'ALL'>(Status.COMPLETED);
     const [chartTypeOpt, setChartTypeOpt] = useState<'time-series' | 'cumulative'>('time-series')
@@ -210,10 +219,14 @@ const DashboardChart = () => {
                 </div>
                 <div className="position-absolute right-0 me-3">
                     <div className="d-flex">
-                        <LoadingButton className="btn btn-sm btn-light me-2 refresh-chart" type="button"
-                                       title="Update LineChart" onClick={() => refetch()}>
+                        <IconButton className="shadow-sm me-2" type="button" loading={isFetching}
+                                    onClick={() => {
+                                        if(!bypassCache) setBypassCache(true)
+
+                                        refetch()
+                                    }}>
                             <FaSync size={12}/>
-                        </LoadingButton>
+                        </IconButton>
                         <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {
                             setChartTypeOpt(e.target.value as 'time-series' | 'cumulative')
                         }}>

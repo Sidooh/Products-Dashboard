@@ -45,8 +45,11 @@ export const dashboardApi = createApi({
             query: () => '/summaries',
             transformResponse: (res: ApiResponse<DashboardSummariesData>) => res.data
         }),
-        getDashboardChartData: builder.query<DashboardChartData, void>({
-            query: () => '/chart',
+        getDashboardChartData: builder.query<DashboardChartData, boolean>({
+            query: (bypass_cache) => ({
+                url: '/chart',
+                params: { bypass_cache }
+            }),
             transformResponse: (res: ApiResponse<DashboardChartData>) => {
                 if (!res.data.TODAY) res.data.TODAY = []
                 if (!res.data.YESTERDAY) res.data.YESTERDAY = []
@@ -62,8 +65,11 @@ export const dashboardApi = createApi({
             transformResponse: (response: ApiResponse<DashboardTransactionsData>) => response.data,
             providesTags: ['Transaction']
         }),
-        getProvidersBalances: builder.query<ProvidersBalancesData, void>({
-            query: () => '/providers/balances',
+        getProvidersBalances: builder.query<ProvidersBalancesData, string>({
+            query: (bypass_cache) => ({
+                url: '/providers/balances',
+                params: { bypass_cache }
+            }),
             transformResponse: (res: ApiResponse<ProvidersBalancesData>) => res.data
         })
     })

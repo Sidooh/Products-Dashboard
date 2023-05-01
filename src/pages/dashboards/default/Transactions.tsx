@@ -34,8 +34,7 @@ const Transactions = () => {
              )}
 
             <TransactionsTable tableTitle={'Recent Transactions'} transactions={transactions.recent}
-                               reFetching={isFetching}
-                               onRefetch={refetch}/>
+                               reFetching={isFetching} onRefetch={refetch}/>
         </div>
     );
 };

@@ -2,17 +2,22 @@ import { Card } from 'react-bootstrap';
 import TableActions from 'components/TableActions';
 import { useEarningAccountsQuery } from 'features/apis/earningAccountsApi';
 import SidoohAccount from 'components/SidoohAccount';
-import { EarningAccount } from 'utils/types';
-import { currencyFormat, DataTable, SectionError, SectionLoader, TableDate, groupBy } from '@nabcellent/sui-react';
+import { EarningAccount, PaginationState } from 'utils/types';
+import { currencyFormat, DataTable, groupBy, SectionError, SectionLoader, TableDate } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
+import { useState } from "react";
 
 const Index = () => {
-    let { data: accounts, isLoading, isSuccess, isError, error } = useEarningAccountsQuery();
+    const [pagination, setPagination] = useState<PaginationState>({
+        page: 1,
+        page_size: 100,
+    })
+    let { data: res, isLoading, isSuccess, isFetching, isError, error } = useEarningAccountsQuery(pagination);
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !accounts) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !res) return <SectionLoader/>;
 
-    logger.log(accounts);
+    logger.log(res);
 
     return (
         <Card className={'mb-3'}>
@@ -61,7 +66,24 @@ const Index = () => {
                         cell: ({ row }: any) => <TableActions entityId={row.original[0].account_id}
                                                               entity={'earning-accounts'}/>
                     }
-                ]} data={groupBy(accounts, 'account_id', true)}/>
+                ]} data={groupBy(res.data, 'account_id', true)}
+                           reFetching={isFetching}
+                           serverTotal={res.total}
+                           serverPageSize={res.per_page}
+                           serverPageCount={res.last_page}
+                           currentServerPage={res.current_page}
+                           onNextServerPage={() => {
+                               setPagination(pagination => ({ ...pagination, page: pagination.page + 1 }))
+                           }}
+                           onPreviousServerPage={() => {
+                               setPagination(pagination => ({ ...pagination, page: pagination.page - 1 }))
+                           }}
+                           onGoToServerPage={page => {
+                               setPagination(pagination => ({ ...pagination, page }))
+                           }}
+                           onSetServerPageSize={page_size => {
+                               setPagination(pagination => ({ ...pagination, page_size }))
+                           }}/>
             </Card.Body>
         </Card>
     );

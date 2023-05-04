@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { EarningAccount } from 'utils/types';
+import { EarningAccount, PaginatedResponse, PaginationState } from 'utils/types';
 import { RootState } from 'app/store';
 import { Account, ApiResponse } from "@nabcellent/sui-react";
 
@@ -25,10 +25,13 @@ export const earningAccountsApi = createApi({
     }),
     endpoints: (builder) => ({
         //  Earning Endpoints
-        earningAccounts: builder.query<EarningAccount[], void>({
-            query: () => '?with=account',
+        earningAccounts: builder.query<PaginatedResponse<EarningAccount[]>, PaginationState>({
+            query: ({ page = 1, page_size = 100 }) => ({
+                url: '/',
+                params: { with: 'account', page, page_size }
+            }),
             providesTags: ['EarningAccount'],
-            transformResponse: (response: ApiResponse<EarningAccount[]>) => response.data
+            transformResponse: (response: ApiResponse<PaginatedResponse<EarningAccount[]>>) => response.data
         }),
         getEarningAccount: builder.query<EarningAccountResponse, number>({
             query: (id) => `/${id}?with=account`,

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { Subscription } from 'utils/types';
+import { PaginatedResponse, PaginationState, Subscription } from 'utils/types';
 import { RootState } from 'app/store';
 import { ApiResponse } from "@nabcellent/sui-react";
 
@@ -20,10 +20,13 @@ export const subscriptionsAPI = createApi({
     }),
     endpoints: (builder) => ({
         //  Earning Endpoints
-        subscriptions: builder.query<Subscription[], void>({
-            query: () => '?with=account',
+        subscriptions: builder.query<PaginatedResponse<Subscription[]>, PaginationState>({
+            query: ({ page = 1, page_size = 100 }) => ({
+                url: '/',
+                params: { with: 'account', page, page_size }
+            }),
             providesTags: ['Subscription'],
-            transformResponse: (response:ApiResponse<Subscription[]>) => response.data
+            transformResponse: (response:ApiResponse<PaginatedResponse<Subscription[]>>) => response.data
         })
     })
 });

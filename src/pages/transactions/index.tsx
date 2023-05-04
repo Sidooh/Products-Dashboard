@@ -8,7 +8,7 @@ import { PaginationState } from "../../utils/types";
 const Index = () => {
     const [pagination, setPagination] = useState<PaginationState>({
         page: 1,
-        page_size: 50,
+        page_size: 100,
     })
     let { data: res, isLoading, isSuccess, isError, error, isFetching } = useTransactionsQuery(pagination);
 
@@ -17,8 +17,11 @@ const Index = () => {
 
     logger.log(res, res.current_page);
 
-    return <TransactionsTable tableTitle={'Transactions'} transactions={res.data} reFetching={isFetching}
+    return <TransactionsTable tableTitle={'Transactions'}
+                              transactions={res.data}
+                              reFetching={isFetching}
                               serverTotal={res.total}
+                              pageSize={res.per_page}
                               serverPageCount={res.last_page}
                               currentServerPage={res.current_page}
                               onNextServerPage={() => {

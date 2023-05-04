@@ -1,5 +1,5 @@
 import { Card, Col, Row } from "react-bootstrap";
-import { useGetDashboardSummariesQuery } from "features/dashboard/dashboardApi";
+import { useGetDashboardSummariesQuery } from "features/apis/dashboardApi";
 import CountUp from 'react-countup';
 import { Badge, ComponentLoader, IconButton, SectionError } from "@nabcellent/sui-react";
 import CardBgCorner from 'components/CardBgCorner';

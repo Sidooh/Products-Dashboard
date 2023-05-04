@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button, ButtonGroup, Col, Form, Offcanvas, Row } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
-import { resetTheme, setTheme } from 'features/theme/themeSlice';
+import { resetTheme, setTheme } from 'features/slices/themeSlice';
 import { CONFIG } from 'config';
 import { faPalette, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import { Badge, Flex } from '@nabcellent/sui-react';

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { login, reset } from 'features/auth/authSlice';
+import { login, reset } from 'features/slices/authSlice';
 import { useAuth } from 'hooks/useAuth';
 import { useAppDispatch } from 'app/hooks';
 import * as yup from 'yup';

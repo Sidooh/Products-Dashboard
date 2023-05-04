@@ -4,7 +4,7 @@ import { Collapse, Nav } from 'react-bootstrap';
 import NavbarVerticalMenuItem from './NavbarVerticalMenuItem';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { setTheme } from 'features/theme/themeSlice';
+import { setTheme } from 'features/slices/themeSlice';
 import { RouteChildType } from 'utils/types';
 
 type CollapseItemsType = {

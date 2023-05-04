@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-import { useSubscriptionsQuery } from 'features/subscriptions/subscriptionsAPI';
+import { useSubscriptionsQuery } from 'features/apis/subscriptionsAPI';
 import SidoohAccount from 'components/SidoohAccount';
 import {
     DataTable,

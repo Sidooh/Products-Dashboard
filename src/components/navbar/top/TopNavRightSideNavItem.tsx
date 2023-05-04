@@ -2,7 +2,7 @@ import { Nav } from 'react-bootstrap';
 import ProfileDropdown from 'components/navbar/top/ProfileDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { setTheme } from 'features/theme/themeSlice';
+import { setTheme } from 'features/slices/themeSlice';
 import { RootState } from 'app/store';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { Waffle, Tooltip } from '@nabcellent/sui-react';

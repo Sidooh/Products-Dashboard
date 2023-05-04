@@ -687,13 +687,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nabcellent/sui-react@npm:^3.6.12":
-  version: 3.6.12
-  resolution: "@nabcellent/sui-react@npm:3.6.12"
+"@nabcellent/sui-react@npm:^3.7.14":
+  version: 3.7.14
+  resolution: "@nabcellent/sui-react@npm:3.7.14"
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 4fd1978b7d207ea5490349d04e5521bb6ee82521df236665c5bedc58701438ea0b8cc0e6fd1ef6812619e2bcc4af8ada1465838eee453ed004e177aec8d8dc32
+  checksum: 99c64e2d79d0329b0e033322794041b12a35ff9f58f1633189890f9ef9a272b3d3d71c4a2092e8198c707e260067d9c17bebef9f3a1d7ab211ec2d9b5a4b4247
   languageName: node
   linkType: hard
 
@@ -2660,7 +2660,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": ^6.3.0
     "@fortawesome/free-solid-svg-icons": ^6.3.0
     "@fortawesome/react-fontawesome": ^0.2.0
-    "@nabcellent/sui-react": ^3.6.12
+    "@nabcellent/sui-react": ^3.7.14
     "@reduxjs/toolkit": ^1.9.5
     "@types/d3": ^7
     "@types/react": ^18.0.38

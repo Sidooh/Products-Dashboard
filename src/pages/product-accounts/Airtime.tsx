@@ -1,5 +1,5 @@
 import { SectionError, SectionLoader } from '@nabcellent/sui-react';
-import { useAccountsQuery } from 'features/accounts/accountsAPI';
+import { useAccountsQuery } from 'features/apis/accountsAPI';
 import { logger } from 'utils/logger';
 import ProductAccountsTable from '../../components/tables/ProductAccountsTable';
 

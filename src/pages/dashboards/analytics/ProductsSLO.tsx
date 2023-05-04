@@ -1,4 +1,4 @@
-import { ProductsSLOData, useGetProductsSLOQuery } from "features/analytics/analyticsApi";
+import { ProductsSLOData, useGetProductsSLOQuery } from "features/apis/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
 import { ComponentLoader, groupBy, IconButton, SectionError, Tooltip } from "@nabcellent/sui-react";
 import CardBgCorner from "components/CardBgCorner";

@@ -8,7 +8,7 @@ import {
     useTransactionQuery,
     useTransactionRefundMutation,
     useTransactionRetryMutation
-} from 'features/transactions/transactionsAPI';
+} from 'features/apis/transactionsApi';
 import moment from 'moment';
 import { Fragment, lazy } from 'react';
 import { CONFIG } from 'config';

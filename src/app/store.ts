@@ -1,14 +1,14 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
-import authReducer from 'features/auth/authSlice';
-import themeReducer from 'features/theme/themeSlice';
-import { transactionsApi } from 'features/transactions/transactionsAPI';
-import { dashboardApi } from 'features/dashboard/dashboardApi';
-import { earningAccountsApi } from 'features/earning-accounts/earningAccountsApi';
-import { subscriptionsAPI } from 'features/subscriptions/subscriptionsAPI';
-import { accountsAPI } from 'features/accounts/accountsAPI';
-import { cashbacksApi } from 'features/cashbacks/cashbacksApi';
-import { subscriptionTypesApi } from 'features/subscription-types/subscriptionTypesApi';
-import { analyticsApi } from "../features/analytics/analyticsApi";
+import authReducer from 'features/slices/authSlice';
+import themeReducer from 'features/slices/themeSlice';
+import { transactionsApi } from 'features/apis/transactionsApi';
+import { dashboardApi } from 'features/apis/dashboardApi';
+import { earningAccountsApi } from 'features/apis/earningAccountsApi';
+import { subscriptionsAPI } from 'features/apis/subscriptionsAPI';
+import { accountsAPI } from 'features/apis/accountsAPI';
+import { cashbacksApi } from 'features/apis/cashbacksApi';
+import { subscriptionTypesApi } from 'features/apis/subscriptionTypesApi';
+import { analyticsApi } from "../features/apis/analyticsApi";
 
 export const store = configureStore({
     reducer: {

@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Card, Form } from 'react-bootstrap';
-import { useGetDashboardChartDataQuery } from 'features/dashboard/dashboardApi';
+import { useGetDashboardChartDataQuery } from 'features/apis/dashboardApi';
 import CountUp from 'react-countup';
 import {
     ChartAid,

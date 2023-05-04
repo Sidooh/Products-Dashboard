@@ -1,5 +1,5 @@
 import { Card, Col, Row } from "react-bootstrap";
-import { useGetProvidersBalancesQuery } from "features/dashboard/dashboardApi";
+import { useGetProvidersBalancesQuery } from "features/apis/dashboardApi";
 import CountUp from 'react-countup';
 import { ComponentLoader, IconButton, SectionError } from "@nabcellent/sui-react";
 import CardBgCorner from 'components/CardBgCorner';

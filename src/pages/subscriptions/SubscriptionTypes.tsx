@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-import { useSubscriptionTypesQuery } from 'features/subscription-types/subscriptionTypesApi';
+import { useSubscriptionTypesQuery } from 'features/apis/subscriptionTypesApi';
 import { currencyFormat, DataTable, SectionError, SectionLoader, toPlural } from '@nabcellent/sui-react';
 import { SubscriptionType } from 'utils/types';
 import { logger } from 'utils/logger';

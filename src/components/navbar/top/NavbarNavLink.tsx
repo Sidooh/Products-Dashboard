@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
-import { setTheme } from 'features/theme/themeSlice';
+import { setTheme } from 'features/slices/themeSlice';
 import { RouteChildType } from 'utils/types';
 
 type NavbarNavLinkType = {

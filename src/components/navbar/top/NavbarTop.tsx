@@ -5,7 +5,7 @@ import TopNavRightSideNavItem from './TopNavRightSideNavItem';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
-import { setTheme } from 'features/theme/themeSlice';
+import { setTheme } from 'features/slices/themeSlice';
 import { navbarBreakPoint, topNavbarBreakpoint } from 'constants/breakpoints';
 import { Logo } from '@nabcellent/sui-react';
 import { IMAGES } from 'constants/images';

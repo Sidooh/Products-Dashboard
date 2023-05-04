@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-import { useCashbacksQuery } from 'features/cashbacks/cashbacksApi';
+import { useCashbacksQuery } from 'features/apis/cashbacksApi';
 import {
     currencyFormat,
     DataTable,

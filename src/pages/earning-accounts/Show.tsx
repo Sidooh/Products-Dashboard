@@ -1,4 +1,4 @@
-import { useGetEarningAccountQuery } from '../../features/earning-accounts/earningAccountsApi';
+import { useGetEarningAccountQuery } from '../../features/apis/earningAccountsApi';
 import { Badge, SectionError, SectionLoader } from '@nabcellent/sui-react';
 import CardBgCorner from '../../components/CardBgCorner';
 import { Card, Col, Row } from 'react-bootstrap';

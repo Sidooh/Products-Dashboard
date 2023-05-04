@@ -1,4 +1,4 @@
-import { TransactionsSLOResponse, useGetTransactionsSLOQuery } from "../../../features/analytics/analyticsApi";
+import { TransactionsSLOResponse, useGetTransactionsSLOQuery } from "../../../features/apis/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
 import {
     ComponentLoader,

@@ -2,7 +2,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAppDispatch } from 'app/hooks';
 import moment from 'moment';
 import { useAuth } from 'hooks/useAuth';
-import { logout } from 'features/auth/authSlice';
+import { logout } from 'features/slices/authSlice';
 import { JWT } from '@nabcellent/sui-react';
 import { logger } from 'utils/logger';
 

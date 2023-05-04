@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { Transaction } from 'utils/types';
+import { PaginatedResponse, PaginationState, Transaction } from 'utils/types';
 import { RootState } from 'app/store';
 import { ApiResponse } from '@nabcellent/sui-react';
 
@@ -20,12 +20,12 @@ export const transactionsApi = createApi({
     }),
     endpoints: (builder) => ({
         //  Transaction Endpoints
-        transactions: builder.query<Transaction[], boolean>({
-            query: (bypass_cache) => ({
-                url: '/transactions?with=account,payment',
-                params: { with: 'account,payment', bypass_cache }
+        transactions: builder.query<PaginatedResponse<Transaction[]>, PaginationState>({
+            query: ({ page = 1, page_size = 100 }) => ({
+                url: '/transactions',
+                params: { with: 'account,payment', page, page_size }
             }),
-            transformResponse: (response: ApiResponse<Transaction[]>) => response.data,
+            transformResponse: (response: ApiResponse<PaginatedResponse<Transaction[]>>) => response.data,
             providesTags: ['Transaction']
         }),
         transaction: builder.query<Transaction, number>({

@@ -4,7 +4,7 @@ import TransactionsTable from "../../../components/tables/TransactionsTable";
 import { Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { useGetDashboardTransactionsQuery } from "../../../features/dashboard/dashboardApi";
+import { useGetDashboardTransactionsQuery } from "../../../features/apis/dashboardApi";
 
 const Transactions = () => {
     let {

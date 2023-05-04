@@ -12,7 +12,7 @@ import {
     Status
 } from '@nabcellent/sui-react';
 import { ChartData, ChartOptions, TooltipItem } from "chart.js";
-import { useGetTransactionsQuery } from 'features/analytics/analyticsApi';
+import { useGetTransactionsQuery } from 'features/apis/analyticsApi';
 import { defaultLineChartOptions } from "../../../utils/helpers";
 import LineChart from "../../../components/charts/LineChart";
 

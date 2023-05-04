@@ -13,7 +13,7 @@ import {
 } from '@nabcellent/sui-react';
 import { CONFIG } from 'config';
 import TableActions from "components/TableActions";
-import { useAccountQuery } from "features/accounts/accountsAPI";
+import { useAccountQuery } from "features/apis/accountsAPI";
 import CountUp from "react-countup";
 import CardBgCorner from 'components/CardBgCorner';
 import { logger } from 'utils/logger';

@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import { navbarBreakPoint } from 'constants/breakpoints';
 import { capitalize, Flex, Logo } from '@nabcellent/sui-react';
-import { setTheme } from "../../../features/theme/themeSlice";
+import { setTheme } from "../../../features/slices/themeSlice";
 
 const ToggleButton = () => {
     const dispatch = useAppDispatch();

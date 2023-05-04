@@ -13,12 +13,33 @@ import {
 import moment from "moment";
 import Latency from "../Latency";
 
-const TransactionsTable = ({ tableTitle, transactions, onRefetch, reFetching }: {
+type TransactionsTableProps = {
     tableTitle: string,
     transactions: Transaction[],
     onRefetch?: () => void,
-    reFetching?: boolean
-}) => {
+    reFetching?: boolean,
+    serverTotal?: number
+    serverPageCount?: number
+    currentServerPage?: number
+    onNextServerPage?: () => void,
+    onPreviousServerPage?: () => void,
+    onGoToServerPage?: (page: number) => void,
+    onSetServerPageSize?: (page: number) => void,
+}
+
+const TransactionsTable = ({
+    tableTitle,
+    transactions,
+    onRefetch,
+    reFetching,
+    serverTotal,
+    serverPageCount,
+    currentServerPage,
+    onNextServerPage,
+    onPreviousServerPage,
+    onGoToServerPage,
+    onSetServerPageSize
+}: TransactionsTableProps) => {
     return (
         <Card className={'mb-3'}>
             <Card.Body>
@@ -72,7 +93,17 @@ const TransactionsTable = ({ tableTitle, transactions, onRefetch, reFetching }: 
                         id: 'actions',
                         cell: ({ row }: any) => <TableActions entityId={row.original.id} entity={'transaction'}/>
                     }
-                ]} data={transactions} onRefetch={onRefetch} reFetching={reFetching}/>
+                ]}
+                           data={transactions}
+                           onRefetch={onRefetch}
+                           reFetching={reFetching}
+                           serverTotal={serverTotal}
+                           serverPageCount={serverPageCount}
+                           currentServerPage={currentServerPage}
+                           onNextServerPage={onNextServerPage}
+                           onPreviousServerPage={onPreviousServerPage}
+                           onGoToServerPage={onGoToServerPage}
+                           onSetServerPageSize={onSetServerPageSize}/>
             </Card.Body>
         </Card>
     );

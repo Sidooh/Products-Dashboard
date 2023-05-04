@@ -1,4 +1,4 @@
-import { useGetVendorsSLOQuery } from "../../../features/analytics/analyticsApi";
+import { useGetVendorsSLOQuery } from "../../../features/apis/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
 import { ComponentLoader, IconButton, SectionError, Str, Tooltip } from "@nabcellent/sui-react";
 import CardBgCorner from "../../../components/CardBgCorner";

@@ -63,8 +63,9 @@ const Index = () => {
                     {
                         id: 'actions',
                         header: '',
-                        cell: ({ row }: any) => <TableActions entityId={row.original[0].account_id}
-                                                              entity={'earning-accounts'}/>
+                        cell: ({ row }: any) => (
+                            <TableActions entityId={row.original[0].account_id} entity={'earning-accounts'}/>
+                        )
                     }
                 ]} data={groupBy(res.data, 'account_id', true)}
                            reFetching={isFetching}

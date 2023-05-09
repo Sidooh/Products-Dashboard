@@ -48,17 +48,14 @@ const Revenue = () => {
             } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status')
 
             if (txStatus === 'ALL') {
-                const set = Object.keys(groupedData).map(date => {
+                drawChart(Object.keys(groupedData).map(date => {
                     return groupedData[date].reduce((prev, curr) => ({
                         date,
-                        amount: prev.amount,
-                        count: prev.amount + Number(curr.amount)
-                    }), { date: '', amount: 0, count: 0 })
-                })
-
-                drawChart(set as unknown as RawAnalytics[])
+                        amount: Number(prev.amount) + Number(curr.amount),
+                    }), { date: '', amount: 0 })
+                }) as unknown as RawAnalytics[])
             } else {
-                drawChart(groupedData[txStatus].map(x => ({ ...x, count: x.amount })))
+                drawChart(groupedData[txStatus] ?? [])
             }
         }
     }, [data, chartPeriodOpt, chartFreqOpt, chartTypeOpt, txStatus])

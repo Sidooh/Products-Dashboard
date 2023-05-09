@@ -1,24 +1,30 @@
 import { Card } from 'react-bootstrap';
-import { useCashbacksQuery } from 'features/cashbacks/cashbacksApi';
+import { useCashbacksQuery } from 'features/apis/cashbacksApi';
 import {
     currencyFormat,
     DataTable,
     getRelativeDateAndTime,
     SectionError,
-    SectionLoader, StatusChip,
+    SectionLoader,
+    StatusChip,
     TableDate
 } from '@nabcellent/sui-react';
-import { Cashback } from 'utils/types';
+import { Cashback, PaginationState } from 'utils/types';
 import SidoohAccount from 'components/SidoohAccount';
 import { logger } from 'utils/logger';
+import { useState } from "react";
 
 const Cashbacks = () => {
-    let { data: cashbacks, isLoading, isSuccess, isError, error } = useCashbacksQuery();
+    const [pagination, setPagination] = useState<PaginationState>({
+        page: 1,
+        page_size: 100,
+    })
+    let { data: res, isLoading, isSuccess, isFetching, isError, error } = useCashbacksQuery(pagination);
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !cashbacks) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !res) return <SectionLoader/>;
 
-    logger.log(cashbacks);
+    logger.log(res);
 
     return (
         <Card className={'mb-3'}>
@@ -60,7 +66,24 @@ const Cashbacks = () => {
                         header: 'Created',
                         cell: ({ row }: any) => <TableDate date={row.original.updated_at}/>
                     }
-                ]} data={cashbacks}/>
+                ]} data={res.data}
+                           reFetching={isFetching}
+                           serverTotal={res.total}
+                           serverPageSize={res.per_page}
+                           serverPageCount={res.last_page}
+                           currentServerPage={res.current_page}
+                           onNextServerPage={() => {
+                               setPagination(pagination => ({ ...pagination, page: pagination.page + 1 }))
+                           }}
+                           onPreviousServerPage={() => {
+                               setPagination(pagination => ({ ...pagination, page: pagination.page - 1 }))
+                           }}
+                           onGoToServerPage={page => {
+                               setPagination(pagination => ({ ...pagination, page }))
+                           }}
+                           onSetServerPageSize={page_size => {
+                               setPagination(pagination => ({ ...pagination, page_size }))
+                           }}/>
             </Card.Body>
         </Card>
     );

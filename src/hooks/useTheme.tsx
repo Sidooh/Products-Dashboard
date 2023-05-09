@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { refreshTheme } from '../features/theme/themeSlice';
+import { refreshTheme } from '../features/slices/themeSlice';
 import { useAppDispatch } from '../app/hooks';
 
 const useTheme = (isDark: boolean) => {

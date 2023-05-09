@@ -4,7 +4,7 @@ import TransactionsTable from "../../../components/tables/TransactionsTable";
 import { Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { useGetDashboardTransactionsQuery } from "../../../features/dashboard/dashboardApi";
+import { useGetDashboardTransactionsQuery } from "../../../features/apis/dashboardApi";
 
 const Transactions = () => {
     let {
@@ -34,8 +34,7 @@ const Transactions = () => {
              )}
 
             <TransactionsTable tableTitle={'Recent Transactions'} transactions={transactions.recent}
-                               reFetching={isFetching}
-                               onRefetch={refetch}/>
+                               reFetching={isFetching} onRefetch={refetch}/>
         </div>
     );
 };

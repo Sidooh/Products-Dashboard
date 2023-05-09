@@ -53,8 +53,6 @@ const Analytics = () => {
             <TransactionsSLOs/>
             <ProductsSLO/>
             <VendorsSLO/>
-
-            {/*<TransactionNumbers/>*/}
         </Row>
     );
 };

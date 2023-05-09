@@ -7,3 +7,12 @@ export enum Product {
     MERCHANT = 'MERCHANT',
     FLOAT = 'FLOAT',
 }
+
+export enum CacheKey {
+    TOTAL_TRANSACTIONS_COUNT = 'total_transactions_count,total_transactions_count_today',
+    TOTAL_REVENUE = 'total_revenue,total_revenue_today',
+
+    TANDA_FLOAT_BALANCE = 'tanda_float_balance',
+    KYANDA_FLOAT_BALANCE = 'kyanda_float_balance',
+    AT_AIRTIME_BALANCE = 'at_airtime_balance'
+}

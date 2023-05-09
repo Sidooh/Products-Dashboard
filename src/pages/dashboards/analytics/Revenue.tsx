@@ -12,7 +12,7 @@ import {
     Status
 } from '@nabcellent/sui-react';
 import { ChartData, ChartOptions, TooltipItem } from "chart.js";
-import { useGetRevenueQuery } from 'features/analytics/analyticsApi';
+import { useGetRevenueQuery } from 'features/apis/analyticsApi';
 import { defaultLineChartOptions } from "../../../utils/helpers";
 import LineChart from "../../../components/charts/LineChart";
 import { AnalyticsChartData } from "../../../utils/types";
@@ -48,17 +48,14 @@ const Revenue = () => {
             } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status')
 
             if (txStatus === 'ALL') {
-                const set = Object.keys(groupedData).map(date => {
+                drawChart(Object.keys(groupedData).map(date => {
                     return groupedData[date].reduce((prev, curr) => ({
                         date,
-                        amount: prev.amount,
-                        count: prev.amount + Number(curr.amount)
-                    }), { date: '', amount: 0, count: 0 })
-                })
-
-                drawChart(set as unknown as RawAnalytics[])
+                        amount: Number(prev.amount) + Number(curr.amount),
+                    }), { date: '', amount: 0 })
+                }))
             } else {
-                drawChart(groupedData[txStatus].map(x => ({ ...x, count: x.amount })))
+                drawChart(groupedData[txStatus] ?? [])
             }
         }
     }, [data, chartPeriodOpt, chartFreqOpt, chartTypeOpt, txStatus])

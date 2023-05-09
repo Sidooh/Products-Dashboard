@@ -1,14 +1,35 @@
 import { Fragment, useEffect } from 'react';
 import classNames from 'classnames';
-import { Col, Nav, Navbar, Row } from 'react-bootstrap';
+import { Button, Col, Nav, Navbar, Row } from 'react-bootstrap';
 import NavbarVerticalMenu from './NavbarVerticalMenu';
-import ToggleButton from './ToggleButton';
 import routes from 'routes';
 import { IMAGES } from 'constants/images';
-import { useAppSelector } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { RootState } from 'app/store';
 import { navbarBreakPoint } from 'constants/breakpoints';
 import { capitalize, Flex, Logo } from '@nabcellent/sui-react';
+import { setTheme } from "../../../features/slices/themeSlice";
+
+const ToggleButton = () => {
+    const dispatch = useAppDispatch();
+    const { isNavbarVerticalCollapsed } = useAppSelector((state) => state.theme);
+
+    const handleClick = () => {
+        document
+            .getElementsByTagName('html')[0]
+            .classList.toggle('navbar-vertical-collapsed');
+        dispatch(setTheme({ key: 'isNavbarVerticalCollapsed', value: !isNavbarVerticalCollapsed }));
+    };
+
+    return (
+        <div className="toggle-icon-wrapper">
+            <Button variant="link" className="navbar-toggler-humburger-icon navbar-vertical-toggle"
+                    id="toggleNavigationTooltip" onClick={handleClick}>
+                <span className="navbar-toggle-icon"><span className="toggle-line"/></span>
+            </Button>
+        </div>
+    );
+};
 
 const NavbarVertical = () => {
     const {

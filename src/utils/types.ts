@@ -1,4 +1,4 @@
-import { Account, Status, Model } from '@nabcellent/sui-react';
+import { Account, Model, Status } from '@nabcellent/sui-react';
 
 export type Payment = Model & {
     payment_id: number
@@ -108,4 +108,19 @@ export type AnalyticsChartData = {
     date: number
     amount: number
     count: number
+}
+
+export interface PaginationState {
+    page: number;
+    page_size: number;
+}
+
+export interface PaginatedResponse<T> {
+    data: T,
+    current_page: number
+    last_page:number
+    per_page: number
+    total: number
+    from: number
+    to: number
 }

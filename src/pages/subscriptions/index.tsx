@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-import { useSubscriptionsQuery } from 'features/subscriptions/subscriptionsAPI';
+import { useSubscriptionsQuery } from 'features/apis/subscriptionsAPI';
 import SidoohAccount from 'components/SidoohAccount';
 import {
     DataTable,
@@ -9,16 +9,21 @@ import {
     StatusChip,
     TableDate
 } from '@nabcellent/sui-react';
-import { Subscription } from 'utils/types';
+import { PaginationState, Subscription } from 'utils/types';
 import { logger } from 'utils/logger';
+import { useState } from "react";
 
 const Subscriptions = () => {
-    let { data: subscriptions, isLoading, isSuccess, isError, error } = useSubscriptionsQuery();
+    const [pagination, setPagination] = useState<PaginationState>({
+        page: 1,
+        page_size: 100,
+    })
+    let { data: res, isLoading, isSuccess, isFetching, isError, error } = useSubscriptionsQuery(pagination);
 
     if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !subscriptions) return <SectionLoader/>;
+    if (isLoading || !isSuccess || !res) return <SectionLoader/>;
 
-    logger.log(subscriptions);
+    logger.log(res);
 
     return (
         <Card className={'mb-3'}>
@@ -58,7 +63,24 @@ const Subscriptions = () => {
                         header: 'Created',
                         cell: ({ row }: any) => <TableDate date={row.original.created_at} dateOverTime/>
                     }
-                ]} data={subscriptions}/>
+                ]} data={res.data}
+                           reFetching={isFetching}
+                           serverTotal={res.total}
+                           serverPageSize={res.per_page}
+                           serverPageCount={res.last_page}
+                           currentServerPage={res.current_page}
+                           onNextServerPage={() => {
+                               setPagination(pagination => ({ ...pagination, page: pagination.page + 1 }))
+                           }}
+                           onPreviousServerPage={() => {
+                               setPagination(pagination => ({ ...pagination, page: pagination.page - 1 }))
+                           }}
+                           onGoToServerPage={page => {
+                               setPagination(pagination => ({ ...pagination, page }))
+                           }}
+                           onSetServerPageSize={page_size => {
+                               setPagination(pagination => ({ ...pagination, page_size }))
+                           }}/>
             </Card.Body>
         </Card>
     );

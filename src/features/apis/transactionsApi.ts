@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { CONFIG } from 'config';
-import { Transaction } from 'utils/types';
+import { PaginatedResponse, PaginationState, Transaction } from 'utils/types';
 import { RootState } from 'app/store';
 import { ApiResponse } from '@nabcellent/sui-react';
 
@@ -9,7 +9,7 @@ export const transactionsApi = createApi({
     keepUnusedDataFor: 60 * 5, // Five minutes
     tagTypes: ['Transaction'],
     baseQuery: fetchBaseQuery({
-        baseUrl: `${CONFIG.sidooh.services.products.api.url}`,
+        baseUrl: `${CONFIG.sidooh.services.products.api.url}/transactions`,
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.auth?.token;
 
@@ -20,22 +20,22 @@ export const transactionsApi = createApi({
     }),
     endpoints: (builder) => ({
         //  Transaction Endpoints
-        transactions: builder.query<Transaction[], boolean>({
-            query: (bypass_cache) => ({
-                url: '/transactions?with=account,payment',
-                params: { with: 'account,payment', bypass_cache }
+        transactions: builder.query<PaginatedResponse<Transaction[]>, PaginationState>({
+            query: ({ page = 1, page_size = 100 }) => ({
+                url: '/',
+                params: { with: 'account,payment', page, page_size }
             }),
-            transformResponse: (response: ApiResponse<Transaction[]>) => response.data,
+            transformResponse: (response: ApiResponse<PaginatedResponse<Transaction[]>>) => response.data,
             providesTags: ['Transaction']
         }),
         transaction: builder.query<Transaction, number>({
-            query: id => `/transactions/${id}?with=account,payment,tanda_request`,
+            query: id => `/${id}?with=account,payment,tanda_request`,
             transformResponse: (response: ApiResponse<Transaction>) => response.data,
             providesTags: ['Transaction']
         }),
         transactionRetry: builder.mutation<Transaction, number>({
             query: (id) => ({
-                url: `/transactions/${id}/retry`,
+                url: `/${id}/retry`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Transaction>) => response.data,
@@ -43,7 +43,7 @@ export const transactionsApi = createApi({
         }),
         transactionRefund: builder.mutation<Transaction, number>({
             query: (id) => ({
-                url: `/transactions/${id}/refund`,
+                url: `/${id}/refund`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Transaction>) => response.data,
@@ -51,7 +51,7 @@ export const transactionsApi = createApi({
         }),
         transactionProcess: builder.mutation<Transaction, { id: number, request_id: string }>({
             query: ({ id, ...patch }) => ({
-                url: `/transactions/${id}/check-request`,
+                url: `/${id}/check-request`,
                 method: 'POST',
                 body: patch
             }),
@@ -60,7 +60,7 @@ export const transactionsApi = createApi({
         }),
         checkPayment: builder.mutation<Transaction, { id: number, payment_id?: number }>({
             query: ({ id, payment_id }) => ({
-                url: `/transactions/${id}/check-payment?payment_id=${payment_id}`,
+                url: `/${id}/check-payment?payment_id=${payment_id}`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Transaction>) => response.data,
@@ -68,7 +68,7 @@ export const transactionsApi = createApi({
         }),
         completePayment: builder.mutation<Transaction, number>({
             query: id => ({
-                url: `/transactions/${id}/complete`,
+                url: `/${id}/complete`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Transaction>) => response.data,
@@ -76,7 +76,7 @@ export const transactionsApi = createApi({
         }),
         failPayment: builder.mutation<Transaction, number>({
             query: id => ({
-                url: `/transactions/${id}/fail`,
+                url: `/${id}/fail`,
                 method: 'POST',
             }),
             transformResponse: (response: ApiResponse<Transaction>) => response.data,

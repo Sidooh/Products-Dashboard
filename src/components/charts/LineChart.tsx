@@ -10,7 +10,7 @@ import { FaSync } from "react-icons/all";
 type LineChartProps = {
     options: ChartOptions<'line'>
     data: ChartData<'line'>
-    refetch: () => QueryActionCreatorResult<any>|void,
+    refetch: () => QueryActionCreatorResult<any> | void,
     isFetching: boolean,
     chartTypeOpt: 'time-series' | 'cumulative'
     setChartTypeOpt: Dispatch<LineChartProps['chartTypeOpt']>
@@ -45,7 +45,8 @@ const LineChart = ({
             <Card.Body className={'position-relative pb-2'} style={{ height: 350, }}>
                 <div className="position-absolute right-0 me-3">
                     <div className={'d-flex'}>
-                        <IconButton loading={isFetching} className="btn me-2" color={'secondary'} onClick={() => refetch()}>
+                        <IconButton loading={isFetching} className="btn me-2" color={'secondary'}
+                                    onClick={() => refetch()}>
                             <FaSync size={12}/>
                         </IconButton>
                         <Form.Select className="px-2 me-2" value={chartTypeOpt} size={'sm'} onChange={e => {

@@ -14,7 +14,7 @@ import {
     Telco
 } from '@nabcellent/sui-react';
 import { ChartData, ChartOptions } from "chart.js";
-import { useGetTelcoRevenueQuery } from 'features/analytics/analyticsApi';
+import { useGetTelcoRevenueQuery } from 'features/apis/analyticsApi';
 import { defaultLineChartOptions } from "utils/helpers";
 import LineChart from "../../../components/charts/LineChart";
 import { TooltipItem } from "chart.js/dist/types";

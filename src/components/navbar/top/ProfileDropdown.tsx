@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useNavigate } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import { useAppDispatch } from 'app/hooks';
-import { logout, reset } from 'features/auth/authSlice';
+import { logout, reset } from 'features/slices/authSlice';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import { Avatar } from '@nabcellent/sui-react';
 

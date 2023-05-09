@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-import { setTheme } from 'features/theme/themeSlice';
+import { setTheme } from 'features/slices/themeSlice';
 import { useAppDispatch } from 'app/hooks';
 
 const SettingsToggle = () => {

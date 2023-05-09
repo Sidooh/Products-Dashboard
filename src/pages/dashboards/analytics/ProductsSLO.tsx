@@ -1,12 +1,10 @@
-import { ProductsSLOData, useGetProductsSLOQuery } from "features/analytics/analyticsApi";
+import { ProductsSLOData, useGetProductsSLOQuery } from "features/apis/analyticsApi";
 import { Card, Col, Row } from "react-bootstrap";
 import { ComponentLoader, groupBy, IconButton, SectionError, Tooltip } from "@nabcellent/sui-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPercent } from "@fortawesome/free-solid-svg-icons";
 import CardBgCorner from "components/CardBgCorner";
 import { Fragment, useState } from "react";
 import CountUp from "react-countup";
-import { FaSync } from "react-icons/all";
+import { FaPercentage, FaSync } from "react-icons/all";
 
 const ProductsSLO = () => {
     const [bypassCache, setBypassCache] = useState(false)
@@ -24,10 +22,11 @@ const ProductsSLO = () => {
                     <span className="bg-200 px-3">
                         Products Success Rate
                         <Tooltip title="Refresh SLO" placement="start">
-                            <IconButton loading={isFetching} className="btn ms-2" onClick={() => {
-                                if (!bypassCache) setBypassCache(true)
-                                refetch()
-                            }}>
+                            <IconButton loading={isFetching} color={'secondary'} className="btn ms-2 mb-1"
+                                        onClick={() => {
+                                            if (!bypassCache) setBypassCache(true)
+                                            refetch()
+                                        }}>
                                 <FaSync size={12}/>
                             </IconButton>
                         </Tooltip>
@@ -61,8 +60,8 @@ const ProductsSLO = () => {
                                                     <div className={`icon-circle icon-circle-${color} fw-bold`}>
                                                         <CountUp end={d.slo}
                                                                  decimals={Math.round(d.slo) == d.slo ? 0 : 1}
-                                                                 className="me-1 fs-14"/>
-                                                        <FontAwesomeIcon icon={faPercent}/>
+                                                                 className="me-1 fs-12"/>
+                                                        <FaPercentage size={12}/>
                                                     </div>
                                                     <h6 className={`mb-1 fw-bold text-${color}`}>{d.product}</h6>
                                                 </div>

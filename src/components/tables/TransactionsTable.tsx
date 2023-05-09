@@ -58,8 +58,8 @@ const TransactionsTable = ({
                     cell: ({ row: { original: tx } }: any) => (
                         <span className={'d-flex flex-column'}>
                                 {tx.description}<br/>
-                            {tx.destination !== tx.account.phone &&
-                                <small><PhoneChip phone={tx.destination}/></small>}
+                                {tx.destination !== tx.account?.phone &&
+                                    <small><PhoneChip phone={tx.destination}/></small>}
                             </span>
                     )
                 },

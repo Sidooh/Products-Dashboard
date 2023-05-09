@@ -53,7 +53,7 @@ const Revenue = () => {
                         date,
                         amount: Number(prev.amount) + Number(curr.amount),
                     }), { date: '', amount: 0 })
-                }) as unknown as RawAnalytics[])
+                }))
             } else {
                 drawChart(groupedData[txStatus] ?? [])
             }

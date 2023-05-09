@@ -42,21 +42,18 @@ const Transactions = () => {
 
     useEffect(() => {
         if (data?.length) {
-            let groupedData: { [key: string]: RawAnalytics[] } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status'),
-                rawData: RawAnalytics[]
+            let groupedData: { [key: string]: RawAnalytics[] } = groupBy(data, txStatus === 'ALL' ? 'date' : 'status')
 
             if (txStatus === 'ALL') {
-                rawData = Object.keys(groupedData).map(date => {
+                drawChart(Object.keys(groupedData).map(date => {
                     return groupedData[date].reduce((prev, curr) => ({
                         date,
                         count: Number(prev.count) + Number(curr.count)
                     }), { date: 0, count: 0 })
-                })
+                }))
             } else {
-                rawData = groupedData[txStatus]
+                drawChart(groupedData[txStatus] ?? [])
             }
-
-            drawChart(rawData)
         }
     }, [data, chartPeriodOpt, chartFreqOpt, chartTypeOpt, txStatus])
 

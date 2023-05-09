@@ -62,8 +62,8 @@ const TransactionSummaries = () => {
                             </h5>
                             <div className={'position-absolute d-flex align-items-center top-0 end-0 m-2'}>
                                 <IconButton size="sm" color={'secondary'} className={'me-1'}
-                                            loading={isFetching && bypassCache === CacheKey.TOTAL_REVENUE_AMOUNT}
-                                            onClick={() => handleRefetch(CacheKey.TOTAL_REVENUE_AMOUNT)}>
+                                            loading={isFetching && bypassCache === CacheKey.TOTAL_REVENUE}
+                                            onClick={() => handleRefetch(CacheKey.TOTAL_REVENUE)}>
                                     <TbRefresh/>
                                 </IconButton>
                                 <Badge bg={'success'} pill>

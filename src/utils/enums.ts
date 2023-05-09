@@ -10,7 +10,7 @@ export enum Product {
 
 export enum CacheKey {
     TOTAL_TRANSACTIONS_COUNT = 'total_transactions_count,total_transactions_count_today',
-    TOTAL_REVENUE_AMOUNT = 'total_revenue_amount,total_revenue_amount_today',
+    TOTAL_REVENUE = 'total_revenue,total_revenue_today',
 
     TANDA_FLOAT_BALANCE = 'tanda_float_balance',
     KYANDA_FLOAT_BALANCE = 'kyanda_float_balance',

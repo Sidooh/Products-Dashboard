@@ -4,7 +4,7 @@ import {
     Badge,
     currencyFormat,
     DataTable,
-    Flex,
+    Flex, PhoneChip,
     SectionError,
     SectionLoader,
     Status,
@@ -111,12 +111,12 @@ const ShowAccountDetails = () => {
                         {
                             accessorKey: 'description',
                             header: 'Description',
-                            cell: ({ row }: any) => (
-                                <span>
-                                {row.original.description}<br/>
-                                    {row.original.destination !== account.phone &&
-                                        <small><b>{row.original.destination}</b></small>}
-                            </span>
+                            cell: ({ row: { original: tx } }: any) => (
+                                <span className={'d-flex flex-column'}>
+                                    {tx.description}<br/>
+                                    {tx.destination !== tx.account?.phone &&
+                                    <small><PhoneChip phone={tx.destination}/></small>}
+                                </span>
                             )
                         },
                         {

@@ -5,7 +5,7 @@ import { Badge, ComponentLoader, IconButton, SectionError } from "@nabcellent/su
 import CardBgCorner from 'components/CardBgCorner';
 import { CacheKey } from "../../../utils/enums";
 import { useState } from "react";
-import { TbRefresh } from "react-icons/all";
+import { TbRefresh } from "react-icons/tb";
 
 const TransactionSummaries = () => {
     const [bypassCache, setBypassCache] = useState('')

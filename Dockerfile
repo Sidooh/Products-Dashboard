@@ -6,6 +6,7 @@ ARG VITE_ACCOUNTS_API_URL
 ARG VITE_PRODUCTS_API_URL
 ARG VITE_NOTIFY_API_URL
 ARG VITE_ACCOUNTS_DASHBOARD_URL
+ARG VITE_MERCHANTS_DASHBOARD_URL
 ARG VITE_PAYMENTS_DASHBOARD_URL
 ARG VITE_NOTIFY_DASHBOARD_URL
 ARG VITE_SAVINGS_DASHBOARD_URL
@@ -15,7 +16,6 @@ WORKDIR /app
 
 COPY ["package.json", "yarn.lock", ".yarnrc.yml", "./"]
 COPY [".yarn/releases/", "./.yarn/releases/"]
-COPY [".yarn/plugins/", "./.yarn/plugins/"]
 
 RUN ["yarn", "install"]
 

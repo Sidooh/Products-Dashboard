@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { IconButton, Tooltip, toPlural } from "@nabcellent/sui-react";
-import { FaRegEye } from "react-icons/all";
+import { FaRegEye } from "react-icons/fa6";
 
 const TableActions = ({ entity, entityId }: { entity: string, entityId: number }) => {
     const entityPlural = toPlural(entity);

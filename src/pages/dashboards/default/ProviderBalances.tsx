@@ -4,7 +4,7 @@ import CountUp from 'react-countup';
 import { ComponentLoader, IconButton, SectionError } from "@nabcellent/sui-react";
 import CardBgCorner from 'components/CardBgCorner';
 import { useState } from "react";
-import { TbRefresh } from "react-icons/all";
+import { TbRefresh } from "react-icons/tb";
 import { CacheKey } from "../../../utils/enums";
 
 const ProviderBalances = () => {

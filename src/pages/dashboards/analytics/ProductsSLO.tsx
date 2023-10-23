@@ -4,7 +4,7 @@ import { ComponentLoader, groupBy, IconButton, SectionError, Tooltip } from "@na
 import CardBgCorner from "components/CardBgCorner";
 import { Fragment, useState } from "react";
 import CountUp from "react-countup";
-import { FaPercentage, FaSync } from "react-icons/all";
+import { FaPercentage, FaSync } from "react-icons/fa";
 
 const ProductsSLO = () => {
     const [bypassCache, setBypassCache] = useState(false)

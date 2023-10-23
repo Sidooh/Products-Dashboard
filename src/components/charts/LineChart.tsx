@@ -5,7 +5,7 @@ import { Line } from "react-chartjs-2";
 import { ChartData, ChartOptions } from "chart.js";
 import { QueryActionCreatorResult } from "@reduxjs/toolkit/dist/query/core/buildInitiate";
 import { Dispatch, ReactNode } from "react";
-import { FaSync } from "react-icons/all";
+import { FaSync } from "react-icons/fa";
 
 type LineChartProps = {
     options: ChartOptions<'line'>

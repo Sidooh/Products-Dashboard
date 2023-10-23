@@ -3,7 +3,7 @@ import { Card, Col, Row } from "react-bootstrap";
 import { ComponentLoader, IconButton, SectionError, Str, Tooltip } from "@nabcellent/sui-react";
 import CardBgCorner from "../../../components/CardBgCorner";
 import CountUp from "react-countup";
-import { FaPercentage, FaSync } from "react-icons/all";
+import { FaPercentage, FaSync } from "react-icons/fa";
 import { useState } from "react";
 
 const VendorsSLO = () => {

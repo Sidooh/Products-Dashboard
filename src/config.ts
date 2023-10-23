@@ -9,6 +9,11 @@ export const CONFIG = {
                     url: import.meta.env.VITE_ACCOUNTS_DASHBOARD_URL
                 }
             },
+            merchants: {
+                dashboard: {
+                    url: import.meta.env.VITE_MERCHANTS_DASHBOARD_URL
+                }
+            },
             products: {
                 api: {
                     url: import.meta.env.VITE_PRODUCTS_API_URL

@@ -12,7 +12,7 @@ import {
 import CardBgCorner from "../../../components/CardBgCorner";
 import { Fragment, useState } from "react";
 import CountUp from "react-countup";
-import { FaPercentage, FaSync } from "react-icons/all";
+import { FaPercentage, FaSync } from "react-icons/fa";
 
 const TransactionsSLOs = () => {
     const [bypassCache, setBypassCache] = useState(false)

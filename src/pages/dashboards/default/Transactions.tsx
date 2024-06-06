@@ -1,10 +1,8 @@
-import { ComponentLoader, SectionError } from "@nabcellent/sui-react";
-import { logger } from "../../../utils/logger";
-import TransactionsTable from "../../../components/tables/TransactionsTable";
-import { Card } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
-import { useGetDashboardTransactionsQuery } from "../../../features/apis/dashboardApi";
+import TransactionsTable from '@/components/tables/TransactionsTable';
+import { useGetDashboardTransactionsQuery } from '@/services/dashboardApi';
+import AlertError from '@/components/alerts/AlertError';
+import { Skeleton } from '@nabcellent/sui-react';
+import AlertInfo from '@/components/alerts/AlertInfo';
 
 const Transactions = () => {
     let {
@@ -14,27 +12,26 @@ const Transactions = () => {
         isError,
         error,
         refetch,
-        isFetching
+        isFetching,
     } = useGetDashboardTransactionsQuery();
 
-    if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !transactions) return <ComponentLoader/>;
-
-    logger.log('Transactions', transactions);
+    if (isError) return <AlertError error={error} />;
+    if (isLoading || !isSuccess || !transactions) return <Skeleton className={'h-[700px]'} />;
 
     return (
-        <div>
-            {transactions.pending.length
-             ? <TransactionsTable tableTitle={'Pending Transactions'} transactions={transactions.pending}/> : (
-                 <Card className={'mb-3 bg-soft-primary'}>
-                     <Card.Header className={'fw-bolder'}>
-                         <FontAwesomeIcon icon={faInfoCircle}/> No Pending Transactions.
-                     </Card.Header>
-                 </Card>
-             )}
+        <div className={'space-y-3'}>
+            {transactions.pending.length ? (
+                <TransactionsTable tableTitle={'Pending Transactions'} transactions={transactions.pending} />
+            ) : (
+                <AlertInfo title={'No Pending Transactions.'} />
+            )}
 
-            <TransactionsTable tableTitle={'Recent Transactions'} transactions={transactions.recent}
-                               reFetching={isFetching} onRefetch={refetch}/>
+            <TransactionsTable
+                tableTitle={'Recent Transactions'}
+                transactions={transactions.recent}
+                reFetching={isFetching}
+                onRefetch={refetch}
+            />
         </div>
     );
 };

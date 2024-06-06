@@ -1,51 +1,51 @@
-import { useGetEarningAccountQuery } from '../../features/apis/earningAccountsApi';
-import { Badge, SectionError, SectionLoader } from '@nabcellent/sui-react';
+import { useGetEarningAccountQuery } from '@/services/earningAccountsApi';
+import { Badge, Card, CardContent, CardHeader, Skeleton, SidoohAccount } from '@nabcellent/sui-react';
 import CardBgCorner from '../../components/CardBgCorner';
-import { Card, Col, Row } from 'react-bootstrap';
 import moment from 'moment/moment';
 import { useParams } from 'react-router-dom';
-import SidoohAccount from '../../components/SidoohAccount';
 import CountUp from 'react-countup';
-import { logger } from 'utils/logger';
+import AlertError from '@/components/alerts/AlertError';
 
 const Show = () => {
     const id = Number(useParams().id);
     let { data, isLoading, isSuccess, isError, error } = useGetEarningAccountQuery(id);
 
-    if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <SectionLoader/>;
-
-    logger.log(data);
+    if (isError) return <AlertError error={error} />;
+    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[100px]'} />;
 
     return (
-        <>
-            <Card className={'mb-3'}>
-                <CardBgCorner corner={2}/>
-                <Card.Body className="position-relative">
-                    <h5>Earning Account Details: #{data.account.id}</h5>
-                    <SidoohAccount account={data.account}/>
-                    <p className="fs--1 m-0 mt-4">{moment(data.account.created_at).format('MMM D, Y, hh:mm A')}</p>
-                </Card.Body>
+        <div className={'space-y-3'}>
+            <Card className={'relative'}>
+                <CardBgCorner corner={2} />
+                <CardHeader className={'relative justify-between items-start'}>
+                    <h5 className={'font-semibold leading-none tracking-tight'}>
+                        Earning Account Details: #{data.account.id}
+                    </h5>
+                    <p className="text-sm text-muted-foreground">
+                        {moment(data.account.created_at).format('MMM Do, Y | hh:mm A')}
+                    </p>
+                </CardHeader>
+                <CardContent>
+                    <SidoohAccount account={data.account} />
+                </CardContent>
             </Card>
 
-            <Row className="g-3">
-                {data.earning_accounts.map(a => (
-                    <Col>
-                        <Card className={'bg-line-chart-gradient'}>
-                            <Card.Body className={'position-relative'}>
-                                <h6 className="text-white">{a.type}</h6>
-                                <h4 className="text-white m-0">
-                                    <CountUp end={a.self_amount} prefix={'KES '} separator=","/>
-                                </h4>
-                                <Badge bg={'success'} pill className={'position-absolute top-0 end-0 m-3'}>
-                                    <CountUp end={a.invite_amount} prefix={'KES '}/>
-                                </Badge>
-                            </Card.Body>
-                        </Card>
-                    </Col>
+            <div className="flex w-full gap-3">
+                {data.earning_accounts.map((a) => (
+                    <Card className={'relative bg-[linear-gradient(-45deg,#414ba7,#4a2613)] bg-center w-full'}>
+                        <CardHeader className="text-white !pb-0 text-sm text-white/70">{a.type}</CardHeader>
+                        <CardContent>
+                            <h4 className="text-white m-0 lg:text-lg">
+                                <CountUp end={a.self_amount} prefix={'KES '} separator="," />
+                            </h4>
+                            <Badge className={'absolute top-0 end-0 m-3 rounded-full bg-lime-500 text-primary'}>
+                                <CountUp end={a.invite_amount} prefix={'KES '} />
+                            </Badge>
+                        </CardContent>
+                    </Card>
                 ))}
-            </Row>
-        </>
+            </div>
+        </div>
     );
 };
 

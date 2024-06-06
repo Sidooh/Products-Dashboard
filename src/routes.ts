@@ -1,103 +1,100 @@
+import { RouteType } from '@nabcellent/sui-react';
 import {
-    faBolt,
-    faChalkboardUser,
-    faCoins,
-    faGlobe,
-    faPieChart,
-    faSimCard,
-    faSubscript,
-    faSuperscript
-} from '@fortawesome/free-solid-svg-icons';
-import { RouteType } from "@nabcellent/sui-react";
+    FaBolt,
+    FaChalkboardUser,
+    FaChartPie,
+    FaCoins,
+    FaGlobe,
+    FaSimCard,
+    FaSubscript,
+    FaSuperscript,
+} from 'react-icons/fa6';
 
-const routes:RouteType[] = [
+const routes: RouteType[] = [
     {
-        label       : 'Dashboard',
-        labelDisable: true,
-        children    : [
+        label: 'Dashboard',
+        children: [
             {
-                name    : 'Dashboard',
-                active  : true,
-                icon    : faPieChart,
+                name: 'Dashboard',
+                active: true,
+                icon: FaChartPie,
                 children: [
                     {
-                        name  : 'Home',
-                        to    : '/',
-                        exact : true,
-                        active: true
+                        name: 'Home',
+                        to: '/',
+                        active: true,
                     },
                     {
-                        name  : 'Analytics',
-                        to    : '/dashboard/analytics',
-                        exact : true,
-                        active: true
+                        name: 'Analytics',
+                        to: '/dashboard/analytics',
+                        active: true,
                     },
-                ]
-            }
-        ]
+                ],
+            },
+        ],
     },
     {
         label: 'Transactions',
         children: [
             {
                 name: 'All Transactions',
-                icon: faGlobe,
+                icon: FaGlobe,
                 to: '/transactions',
                 active: true,
             },
-        ]
+        ],
     },
     {
         label: 'Earnings',
         children: [
             {
                 name: 'Accounts',
-                icon: faChalkboardUser,
+                icon: FaChalkboardUser,
                 to: '/earning-accounts',
-                active: true
+                active: true,
             },
             {
                 name: 'Cashbacks',
-                icon: faCoins,
+                icon: FaCoins,
                 to: '/cashbacks',
-                active: true
+                active: true,
             },
-        ]
+        ],
     },
     {
         label: 'Subscriptions',
         children: [
             {
                 name: 'Subcription Types',
-                icon: faSuperscript,
+                icon: FaSuperscript,
                 to: '/subscriptions-types',
-                active: true
+                active: true,
             },
             {
                 name: 'Subscriptions',
-                icon: faSubscript,
+                icon: FaSubscript,
                 to: '/subscriptions',
-                active: true
+                active: true,
             },
-        ]
+        ],
     },
     {
         label: 'Accounts',
         children: [
             {
                 name: 'Airtime Accounts',
-                icon: faSimCard,
+                icon: FaSimCard,
                 to: '/airtime-accounts',
-                active: true
+                active: true,
             },
             {
                 name: 'Utility Accounts',
-                icon: faBolt,
+                icon: FaBolt,
                 to: '/utility-accounts',
-                active: true
+                active: true,
             },
-        ]
-    }
+        ],
+    },
 ];
 
-export default routes
+export default routes;

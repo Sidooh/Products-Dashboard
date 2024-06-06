@@ -1,85 +1,85 @@
-import { TransactionsSLOResponse, useGetTransactionsSLOQuery } from "../../../features/apis/analyticsApi";
-import { Card, Col, Row } from "react-bootstrap";
-import {
-    ComponentLoader,
-    getStatusColor,
-    groupBy,
-    IconButton,
-    SectionError,
-    Status,
-    Tooltip
-} from "@nabcellent/sui-react";
-import CardBgCorner from "../../../components/CardBgCorner";
-import { Fragment, useState } from "react";
-import CountUp from "react-countup";
-import { FaPercentage, FaSync } from "react-icons/fa";
+import { TransactionsSLOResponse, useGetTransactionsSLOQuery } from '@/services/analyticsApi';
+import { Card, CardContent, groupBy, IconButton, Skeleton, Status, Tooltip } from '@nabcellent/sui-react';
+import CardBgCorner from '@/components/CardBgCorner';
+import { Fragment, useState } from 'react';
+import CountUp from 'react-countup';
+import { FaPercentage, FaSync } from 'react-icons/fa';
+import AlertError from '@/components/alerts/AlertError';
+import { RxReload } from 'react-icons/rx';
 
 const TransactionsSLOs = () => {
-    const [bypassCache, setBypassCache] = useState(false)
-    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTransactionsSLOQuery(bypassCache)
+    const [bypassCache, setBypassCache] = useState(false);
+    const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTransactionsSLOQuery(bypassCache);
 
-    if (isError) return <SectionError error={error}/>;
-    if (isLoading || !isSuccess || !data) return <ComponentLoader/>;
+    if (isError) return <AlertError error={error} />;
+    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[100px]'} />;
 
-    const groupedSLOs: { [key: string]: TransactionsSLOResponse[] } = groupBy(data, 'year')
-    const years = Object.keys(groupedSLOs)
+    const groupedSLOs: { [key: string]: TransactionsSLOResponse[] } = groupBy(data, 'year');
+    const years = Object.keys(groupedSLOs);
 
     return (
-        <Col xs={12} className={'mb-3'}>
-            <h5 className="text-primary text-center position-relative">
-                    <span className="bg-200 px-3">
-                        Transaction Success Rate
-                        <Tooltip title="Refresh SLO" placement="start">
-                            <IconButton loading={isFetching} color={'secondary'} className="btn ms-2 mb-1"
-                                        onClick={() => {
-                                            if (!bypassCache) setBypassCache(true)
-                                            refetch()
-                                        }}>
-                                <FaSync size={12}/>
-                            </IconButton>
-                        </Tooltip>
-                    </span>
-                <span className="border position-absolute top-50 translate-middle-y w-100 start-0 z-index--1"/>
+        <div className={'mb-3'}>
+            <h5 className="text-primary text-center relative">
+                <span className="bg-200 px-3">
+                    Transaction Success Rate
+                    <Tooltip title="Refresh SLO" placement="left">
+                        <IconButton
+                            className="btn ms-2 mb-1"
+                            onClick={() => {
+                                if (!bypassCache) setBypassCache(true);
+                                refetch();
+                            }}
+                        >
+                            {isFetching ? <RxReload className="animate-spin" /> : <FaSync size={12} />}
+                        </IconButton>
+                    </Tooltip>
+                </span>
+                <span className="border absolute top-50 translate-middle-y w-100 start-0 z-index--1" />
             </h5>
 
             <Card>
-                <CardBgCorner corner={5}/>
-                <Card.Body className={'bg-dark'}>
+                <CardBgCorner corner={5} />
+                <CardContent className={'bg-dark'}>
                     {years.map((year, i) => {
-                        const total = groupedSLOs[year].reduce((p, c) => p += c.count, 0)
-                        const data = groupedSLOs[year].sort((a, b) => b.count - a.count)
-                            .filter(s => [Status.COMPLETED, Status.FAILED, Status.REFUNDED].includes(s.status))
+                        const total = groupedSLOs[year].reduce((p, c) => (p += c.count), 0);
+                        const data = groupedSLOs[year]
+                            .sort((a, b) => b.count - a.count)
+                            .filter((s) => [Status.COMPLETED, Status.FAILED, Status.REFUNDED].includes(s.status));
 
                         return (
                             <Fragment key={`year-${year}`}>
-                                <div className={'d-flex'}>
-                                    <h5 className={'text-light border-bottom pe-lg-5'}>{year}</h5>
+                                <div className={'flex'}>
+                                    <h5 className={'text-light border-b pe-lg-5'}>{year}</h5>
                                 </div>
-                                <Row className={`g-2 ${i + 1 < years.length && 'mb-5'}`}>
+                                <div className={`grid grid-cols-12 gap-2 ${i + 1 < years.length && 'mb-5'}`}>
                                     {data.map((d, i) => {
-                                        const slo = (d.count / total) * 100
+                                        const slo = (d.count / total) * 100;
 
                                         return (
-                                            <Col key={`slo-${year + i}`} lg={4} className={`text-center`}>
+                                            <div key={`slo-${year + i}`} className={`col-span-4 text-center`}>
                                                 <div className="bg-dark py-3">
                                                     <div
-                                                        className={`icon-circle icon-circle-${getStatusColor(d.status)} text-${getStatusColor(d.status)} fw-bold`}>
-                                                        <CountUp end={slo} decimals={Math.round(slo) === slo ? 0 : 1}
-                                                                 className="me-1 fs-12"/>
-                                                        <FaPercentage size={12}/>
+                                                        className={`icon-circle icon-circle-danger text-danger fw-bold`}
+                                                    >
+                                                        <CountUp
+                                                            end={slo}
+                                                            decimals={Math.round(slo) === slo ? 0 : 1}
+                                                            className="me-1 fs-12"
+                                                        />
+                                                        <FaPercentage size={12} />
                                                     </div>
-                                                    <h6 className={`mb-1 fw-bold text-${getStatusColor(d.status)}`}>{d.status}</h6>
+                                                    <h6 className={`mb-1 fw-bold text-danger`}>{d.status}</h6>
                                                 </div>
-                                            </Col>
-                                        )
+                                            </div>
+                                        );
                                     })}
-                                </Row>
+                                </div>
                             </Fragment>
-                        )
+                        );
                     })}
-                </Card.Body>
+                </CardContent>
             </Card>
-        </Col>
+        </div>
     );
 };
 

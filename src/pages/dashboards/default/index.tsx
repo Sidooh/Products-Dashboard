@@ -1,26 +1,24 @@
 import { lazy } from 'react';
-import ProviderBalances from "./ProviderBalances";
-import { Col, Row } from "react-bootstrap";
-import Transactions from "./Transactions";
+import ProviderBalances from './ProviderBalances';
+import Transactions from './Transactions';
 
 const DashboardChart = lazy(() => import('./Chart'));
 const TransactionSummaries = lazy(() => import('./TransactionSummaries'));
 
-// const PendingTransactions = lazy(() => import('./transactions/PendingTransactions'));
-// const RecentTransactions = lazy(() => import('./transactions/RecentTransactions'));
+const Dashboard = () => (
+    <div className={'space-y-3'}>
+        <div className="grid 2xl:grid-cols-12 gap-3">
+            <div className={'2xl:col-span-9'}>
+                <DashboardChart />
+            </div>
+            <div className={'2xl:col-span-3'}>
+                <TransactionSummaries />
+            </div>
+        </div>
 
-const Dashboard = () => {
-    return (
-        <>
-            <Row className="g-3 mb-3">
-                <Col xxl={9}><DashboardChart/></Col>
-                <Col><TransactionSummaries/></Col>
-            </Row>
-
-            <Transactions/>
-            <ProviderBalances/>
-        </>
-    );
-};
+        <Transactions />
+        <ProviderBalances />
+    </div>
+);
 
 export default Dashboard;

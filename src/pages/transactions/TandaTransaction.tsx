@@ -1,54 +1,62 @@
-import { Card, Table } from 'react-bootstrap';
-import { TandaRequest } from 'utils/types';
-import moment from 'moment';
-import { currencyFormat } from '@nabcellent/sui-react';
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    currencyFormat,
+    Table,
+    TableBody,
+    TableCell,
+    TableDate,
+    TableHead,
+    TableHeader,
+    TableRow,
+    TandaRequest,
+} from '@nabcellent/sui-react';
 
-const TandaTransaction = ({requests}: { requests: TandaRequest[] }) => {
-    return (
-        <Card className="mb-3">
-            <Card.Header className="pb-0"><h5 className="fs-0">Transaction - Tanda</h5></Card.Header>
-            <div className="card-body">
-                <Table striped responsive className="border-bottom fs--1">
-                    <thead className="bg-200 text-900">
-                    <tr>
-                        <th className="border-0">Reference (Receipt No.)</th>
-                        <th className="border-0">Amount</th>
-                        <th className="border-0">Provider</th>
-                        <th className="border-0">Destination</th>
-                        <th className="border-0">Message</th>
-                        <th className="border-0 text-center">Status</th>
-                        <th className="border-0">Created</th>
-                        <th className="border-0">Updated</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    {requests.map(r => (
-                        <tr key={r.request_id} className="border-200">
-                            <td className="align-middle">
-                                {r.request_id}<br/>
+const TandaTransaction = ({ requests }: { requests: TandaRequest[] }) => (
+    <Card className="mb-3">
+        <CardHeader className="flex-row gap-1">
+            Transaction - <i className={'text-muted-foreground'}>Tanda</i>
+        </CardHeader>
+        <CardContent>
+            <Table>
+                <TableHeader className="bg-slate-100">
+                    <TableRow className={'border-muted'}>
+                        <TableHead>Reference (Receipt No.)</TableHead>
+                        <TableHead>Amount</TableHead>
+                        <TableHead>Provider</TableHead>
+                        <TableHead>Destination</TableHead>
+                        <TableHead>Message</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead className="text-end">Created</TableHead>
+                        <TableHead className="text-end">Updated</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {requests.map((r) => (
+                        <TableRow key={r.request_id} className={'border-muted'}>
+                            <TableCell>
+                                {r.request_id}
+                                <br />
                                 <span className="text-sm-center">({r.receipt_number})</span>
-                            </td>
-                            <td className="align-middle">{currencyFormat(r.amount)}</td>
-                            <td className="align-middle">{r.provider}</td>
-                            <td className="align-middle">{r.destination}</td>
-                            <td className="align-middle">{r.message}</td>
-                            <td className="align-middle text-center">{r.status}</td>
-                            <td className="align-middle text-end">
-                                {moment(r.last_modified).format('MMM D, Y')}<br/>
-                                <small>{moment(r.last_modified).format('hh:mm A')}</small>
-                            </td>
-                            <td className="align-middle text-end">
-                                {moment(r.updated_at).format('MMM D, Y')}<br/>
-                                <small>{moment(r.updated_at).format('hh:mm A')}</small>
-                            </td>
-                        </tr>
+                            </TableCell>
+                            <TableCell>{currencyFormat(r.amount)}</TableCell>
+                            <TableCell>{r.provider}</TableCell>
+                            <TableCell>{r.destination}</TableCell>
+                            <TableCell>{r.message}</TableCell>
+                            <TableCell>{r.status}</TableCell>
+                            <TableCell className="text-end">
+                                <TableDate date={r.last_modified} />
+                            </TableCell>
+                            <TableCell className="text-end">
+                                <TableDate date={r.updated_at} />
+                            </TableCell>
+                        </TableRow>
                     ))}
-                    </tbody>
-                </Table>
-            </div>
-        </Card>
-    );
-};
+                </TableBody>
+            </Table>
+        </CardContent>
+    </Card>
+);
 
 export default TandaTransaction;

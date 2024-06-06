@@ -35,6 +35,11 @@
         --radius: 0.5rem;
 
         font-family: Avenir, sans-serif;
+
+        --sidooh-success: #64FA32;
+        --sidooh-info: #31C7F9;
+        --sidooh-warning: #F5B700;
+        --sidooh-danger: #F42E00;
     }
 
     .dark {
@@ -120,4 +125,46 @@ ul.leaders span + span {
     float: right;
     padding-left: 0.33em;
     background: white
+}
+
+.icon-circle {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-width: 2px;
+    border-style: solid;
+    margin: 0 auto 1rem
+}
+
+.icon-circle-primary {
+    color: var(--sidooh-primary);
+    border-color: var(--sidooh-primary)
+}
+
+.icon-circle-success {
+    color: var(--sidooh-success);
+    border-color: var(--sidooh-success)
+}
+
+.icon-circle-info {
+    color: var(--sidooh-info);
+    border-color: var(--sidooh-info)
+}
+
+.icon-circle-warning {
+    color: var(--sidooh-warning);
+    border-color: var(--sidooh-warning)
+}
+
+.icon-circle-danger {
+    color: var(--sidooh-danger);
+    border-color: var(--sidooh-danger)
+}
+
+.icon-circle-secondary {
+    color: var(--sidooh-secondary);
+    border-color: var(--sidooh-secondary)
 }

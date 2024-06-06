@@ -102,7 +102,7 @@ const TelcoTransactions = () => {
             title: {
                 text: 'Transactions',
                 padding: {
-                    bottom: 50,
+                    bottom: 70,
                 },
             },
         },
@@ -131,45 +131,43 @@ const TelcoTransactions = () => {
     };
 
     return (
-        <div>
-            <LineChart
-                data={chartData}
-                options={options}
-                refetch={() => {
-                    if (!bypassCache) setBypassCache(true);
-                    refetch();
-                }}
-                isFetching={isFetching}
-                txStatus={txStatus}
-                setTxStatus={setTxStatus}
-                chartTypeOpt={chartTypeOpt}
-                setChartTypeOpt={setChartTypeOpt}
-                chartPeriodOpt={chartPeriodOpt}
-                setChartPeriodOpt={setChartPeriodOpt}
-                chartFreqOpt={chartFreqOpt}
-                setChartFreqOpt={setChartFreqOpt}
-                extraModifiers={Object.keys(data)
-                    .sort()
-                    .map((telco, i) => (
-                        <div key={`telco-${i}`} className="flex items-center space-x-2">
-                            <Checkbox
-                                className={`px-2 me-2 ms-3`}
-                                id={`telco-rev-${i}`}
-                                value={telco}
-                                style={{ color: String(getTelcoColor(telco as Product)) }}
-                                checked={checkedTelcos.includes(telco)}
-                                onCheckedChange={(c) => handleCheckedTelcos(c, telco)}
-                            />
-                            <label
-                                htmlFor="terms"
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                            >
-                                <b>{telco}</b>
-                            </label>
-                        </div>
-                    ))}
-            />
-        </div>
+        <LineChart
+            data={chartData}
+            options={options}
+            refetch={() => {
+                if (!bypassCache) setBypassCache(true);
+                refetch();
+            }}
+            isFetching={isFetching}
+            txStatus={txStatus}
+            setTxStatus={setTxStatus}
+            chartTypeOpt={chartTypeOpt}
+            setChartTypeOpt={setChartTypeOpt}
+            chartPeriodOpt={chartPeriodOpt}
+            setChartPeriodOpt={setChartPeriodOpt}
+            chartFreqOpt={chartFreqOpt}
+            setChartFreqOpt={setChartFreqOpt}
+            extraModifiers={Object.keys(data)
+                .sort()
+                .map((telco, i) => (
+                    <div key={`telco-${i}`} className="flex items-center space-x-2">
+                        <Checkbox
+                            className={`px-2 me-2 ms-3`}
+                            id={`telco-rev-${i}`}
+                            value={telco}
+                            style={{ color: String(getTelcoColor(telco as Product)) }}
+                            checked={checkedTelcos.includes(telco)}
+                            onCheckedChange={(c) => handleCheckedTelcos(c, telco)}
+                        />
+                        <label
+                            htmlFor="terms"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                            <b>{telco}</b>
+                        </label>
+                    </div>
+                ))}
+        />
     );
 };
 

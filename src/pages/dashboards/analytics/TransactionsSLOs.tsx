@@ -22,7 +22,7 @@ const TransactionsSLOs = () => {
             <h5 className="text-primary text-center relative">
                 <span className="bg-200 px-3">
                     Transaction Success Rate
-                    <Tooltip title="Refresh SLO" placement="left">
+                    <Tooltip title="Refresh SLO" placement="left" asChild>
                         <IconButton
                             className="btn ms-2 mb-1"
                             onClick={() => {
@@ -37,9 +37,9 @@ const TransactionsSLOs = () => {
                 <span className="border absolute top-50 translate-middle-y w-100 start-0 z-index--1" />
             </h5>
 
-            <Card>
+            <Card className={'relative'}>
                 <CardBgCorner corner={5} />
-                <CardContent className={'bg-dark'}>
+                <CardContent className={'bg-[rgb(11,23,39)] text-white pt-6'}>
                     {years.map((year, i) => {
                         const total = groupedSLOs[year].reduce((p, c) => (p += c.count), 0);
                         const data = groupedSLOs[year]
@@ -49,7 +49,7 @@ const TransactionsSLOs = () => {
                         return (
                             <Fragment key={`year-${year}`}>
                                 <div className={'flex'}>
-                                    <h5 className={'text-light border-b pe-lg-5'}>{year}</h5>
+                                    <h5 className={'border-b pe-lg-5'}>{year}</h5>
                                 </div>
                                 <div className={`grid grid-cols-12 gap-2 ${i + 1 < years.length && 'mb-5'}`}>
                                     {data.map((d, i) => {
@@ -57,9 +57,9 @@ const TransactionsSLOs = () => {
 
                                         return (
                                             <div key={`slo-${year + i}`} className={`col-span-4 text-center`}>
-                                                <div className="bg-dark py-3">
+                                                <div className="py-3">
                                                     <div
-                                                        className={`icon-circle icon-circle-danger text-danger fw-bold`}
+                                                        className={`icon-circle icon-circle-danger text-danger font-bold`}
                                                     >
                                                         <CountUp
                                                             end={slo}
@@ -68,7 +68,7 @@ const TransactionsSLOs = () => {
                                                         />
                                                         <FaPercentage size={12} />
                                                     </div>
-                                                    <h6 className={`mb-1 fw-bold text-danger`}>{d.status}</h6>
+                                                    <h6 className={`mb-1 font-bold text-danger`}>{d.status}</h6>
                                                 </div>
                                             </div>
                                         );

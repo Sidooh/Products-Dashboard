@@ -19,7 +19,7 @@ const VendorsSLO = () => {
             <h5 className="text-primary text-center relative">
                 <span className="bg-200 px-3">
                     Vendors Success Rate
-                    <Tooltip title="Refresh SLOs" placement="left">
+                    <Tooltip title="Refresh SLOs" placement="left" asChild>
                         <IconButton
                             color={'secondary'}
                             className="btn ms-2 mb-1"
@@ -35,13 +35,13 @@ const VendorsSLO = () => {
                 <span className="border absolute top-50 translate-middle-y w-100 start-0 z-index--1" />
             </h5>
 
-            <Card>
+            <Card className={'relative'}>
                 <CardBgCorner corner={5} />
-                <CardContent className={'bg-dark'}>
+                <CardContent className={'bg-[rgb(11,23,39)] text-white pt-6'}>
                     <div className={'flex'}>
-                        <h5 className={'text-light border-b pe-lg-5'}>YTD</h5>
+                        <h5 className={'text-white/80 border-b pe-lg-5'}>YTD</h5>
                     </div>
-                    <div className={'gap-2'}>
+                    <div className={'flex gap-2'}>
                         {Object.keys(data).map((product) => {
                             let color = 'success',
                                 slo = Number(data[product as keyof typeof data]);
@@ -50,7 +50,7 @@ const VendorsSLO = () => {
                             else if (slo < 90) color = 'warning';
 
                             return (
-                                <div key={product} className={`text-center`}>
+                                <div key={product} className={`text-center w-full`}>
                                     <div className="bg-dark py-3">
                                         <div className={`icon-circle icon-circle-${color} fw-bold`}>
                                             <CountUp

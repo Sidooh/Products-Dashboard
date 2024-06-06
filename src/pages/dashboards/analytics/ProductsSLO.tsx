@@ -5,7 +5,6 @@ import { Fragment, useState } from 'react';
 import CountUp from 'react-countup';
 import { FaPercentage, FaSync } from 'react-icons/fa';
 import AlertError from '@/components/alerts/AlertError';
-import { RxReload } from 'react-icons/rx';
 
 const ProductsSLO = () => {
     const [bypassCache, setBypassCache] = useState(false);
@@ -20,27 +19,26 @@ const ProductsSLO = () => {
     return (
         <div className={'mb-3'}>
             <h5 className="text-primary text-center relative">
-                <span className="bg-200 px-3">
+                <span className="px-3">
                     Products Success Rate
-                    <Tooltip title="Refresh SLO" placement="left">
+                    <Tooltip title="Refresh SLO" placement="left" asChild>
                         <IconButton
-                            className="btn ms-2 mb-1"
+                            icon={FaSync}
+                            isLoading={isFetching}
+                            className="mb-1"
                             onClick={() => {
                                 if (!bypassCache) setBypassCache(true);
                                 refetch();
                             }}
-                        >
-                            {isFetching ? <RxReload className="animate-spin" /> : <FaSync />}
-                            <FaSync size={12} />
-                        </IconButton>
+                        />
                     </Tooltip>
                 </span>
                 <span className="border absolute top-50 translate-middle-y w-100 start-0 z-index--1" />
             </h5>
 
-            <Card>
+            <Card className={'relative'}>
                 <CardBgCorner corner={5} />
-                <CardContent className={'bg-dark'}>
+                <CardContent className={'bg-[rgb(11,23,39)] text-white pt-6'}>
                     {years.map((year, i) => {
                         const data = groupedSLOs[year].sort((a, b) => {
                             return b.slo - a.slo || a.product.localeCompare(b.product);
@@ -49,9 +47,9 @@ const ProductsSLO = () => {
                         return (
                             <Fragment key={`year-${year}`}>
                                 <div className={'flex'}>
-                                    <h5 className={'text-light border-b pe-lg-5'}>{year}</h5>
+                                    <h5 className={'text-white/80 border-b pe-lg-5'}>{year}</h5>
                                 </div>
-                                <div className={`gap-2 ${i + 1 < years.length && 'mb-5'}`}>
+                                <div className={`flex gap-2 ${i + 1 < years.length && 'mb-5'}`}>
                                     {data.map((d, i) => {
                                         let color = 'success';
 
@@ -59,7 +57,7 @@ const ProductsSLO = () => {
                                         else if (d.slo < 90) color = 'warning';
 
                                         return (
-                                            <div key={`slo-${year + i}`} className={`text-center`}>
+                                            <div key={`slo-${year + i}`} className={`w-full text-center`}>
                                                 <div className="py-3">
                                                     <div className={`icon-circle icon-circle-${color} fw-bold`}>
                                                         <CountUp

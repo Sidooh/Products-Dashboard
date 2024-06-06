@@ -100,25 +100,23 @@ const Revenue = () => {
     };
 
     return (
-        <div className={'mb-3'}>
-            <LineChart
-                data={chartData}
-                options={options}
-                refetch={() => {
-                    if (!bypassCache) setBypassCache(true);
-                    refetch();
-                }}
-                isFetching={isFetching}
-                txStatus={txStatus}
-                setTxStatus={setTxStatus}
-                chartTypeOpt={chartTypeOpt}
-                setChartTypeOpt={setChartTypeOpt}
-                chartPeriodOpt={chartPeriodOpt}
-                setChartPeriodOpt={setChartPeriodOpt}
-                chartFreqOpt={chartFreqOpt}
-                setChartFreqOpt={setChartFreqOpt}
-            />
-        </div>
+        <LineChart
+            data={chartData}
+            options={options}
+            refetch={() => {
+                if (!bypassCache) setBypassCache(true);
+                refetch();
+            }}
+            isFetching={isFetching}
+            txStatus={txStatus}
+            setTxStatus={setTxStatus}
+            chartTypeOpt={chartTypeOpt}
+            setChartTypeOpt={setChartTypeOpt}
+            chartPeriodOpt={chartPeriodOpt}
+            setChartPeriodOpt={setChartPeriodOpt}
+            chartFreqOpt={chartFreqOpt}
+            setChartFreqOpt={setChartFreqOpt}
+        />
     );
 };
 

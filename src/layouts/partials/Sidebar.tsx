@@ -13,7 +13,7 @@ const Sidebar = () => {
     return (
         <nav
             className={cn(
-                'pb-12 fixed transition-[width] duration-[0.2s] ease-[ease] overflow-hidden h-full bg-background/90 backdrop-blur',
+                'pb-12 fixed transition-[width] duration-[200ms] ease-[ease] overflow-hidden h-full bg-background/90 backdrop-blur',
                 {
                     'w-[12.625rem]': showSidebar,
                     'w-[3.125rem]': !showSidebar,

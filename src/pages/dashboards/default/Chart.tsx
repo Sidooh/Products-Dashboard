@@ -169,7 +169,7 @@ const DashboardChart = () => {
                 display: true,
                 text: 'TRANSACTIONS',
                 font: {
-                    size: 17,
+                    size: 14,
                 },
                 padding: {
                     bottom: 60,
@@ -222,7 +222,7 @@ const DashboardChart = () => {
                     backgroundImage: 'linear-gradient(-45deg, rgba(65, 75, 167, .5), #4a2613)',
                 }}
             >
-                <div className="absolute light border-t border-b py-1" style={{ top: 50 }}>
+                <div className="absolute light border-t border-b py-1 top-[35px] lg:top-[45px]">
                     <h6 className="text-white mb-0 text-xs">
                         Today{' '}
                         <CountUp end={totalToday} prefix={'KES '} decimals={2} separator={','} className={'fw-bold'} />

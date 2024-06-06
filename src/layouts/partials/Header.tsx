@@ -5,25 +5,29 @@ import { MobileNav } from '@/layouts/partials/MobileNav';
 import {
     Avatar,
     AvatarFallback,
-    AvatarImage,
+    cn,
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
+    IconButton,
     Logo,
-    cn,
     ModeToggle,
     Waffle,
 } from '@nabcellent/sui-react';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { logout, reset } from '@/features/auth/authSlice';
 import { CONFIG } from '@/config';
 import { IMAGES } from '@/constants/images';
+import { CgMenuLeft } from 'react-icons/cg';
+import { setTheme } from '@/features/themeSlice';
+import { RootState } from '@/app/store';
 
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const { isSidebarCollapsed } = useAppSelector((state: RootState) => state.theme);
     const [showDropShadow, setShowDropShadow] = useState(false);
 
     const setDropShadow = () => {
@@ -51,7 +55,10 @@ const Header = () => {
     const user = {
         name: 'Admin',
         email: 'international@sidooh.co.ke',
-        image: null,
+    };
+
+    const handleBurgerMenu = () => {
+        dispatch(setTheme({ key: 'isSidebarCollapsed', value: !isSidebarCollapsed }));
     };
 
     return (
@@ -62,6 +69,13 @@ const Header = () => {
         >
             <div className="px-3 lg:container flex h-16 items-center justify-between py-4">
                 <div className="flex gap-3">
+                    <IconButton
+                        icon={CgMenuLeft}
+                        variant={'ghost'}
+                        iconSize={20}
+                        onClick={handleBurgerMenu}
+                        className={'hidden md:!inline-flex'}
+                    />
                     <MobileNav />
                     <Link to="/" className="items-center space-x-2 flex">
                         <Logo src={IMAGES.logos.sidooh} />
@@ -115,23 +129,19 @@ const Header = () => {
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Avatar className={'h-8 w-8'}>
-                                {user.image ? (
-                                    <AvatarImage alt="Picture" src={user.image} />
-                                ) : (
-                                    <AvatarFallback>
-                                        <span className="sr-only">{user.name}</span>
-                                        <FaUser />
-                                    </AvatarFallback>
-                                )}
+                                <AvatarFallback>
+                                    <span className="sr-only">{user.name}</span>
+                                    <FaUser />
+                                </AvatarFallback>
                             </Avatar>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <div className="flex items-center justify-start gap-2 p-2">
                                 <div className="flex flex-col space-y-1 leading-none">
-                                    {user.name && <p className="font-medium">{user.name}</p>}
-                                    {user.email && (
-                                        <p className="w-[200px] truncate text-sm text-muted-foreground">{user.email}</p>
-                                    )}
+                                    <p className="font-medium">Admin</p>{' '}
+                                    <p className="w-[200px] truncate text-sm text-muted-foreground">
+                                        international@sidooh.co.ke
+                                    </p>
                                 </div>
                             </div>
                             <DropdownMenuSeparator />

@@ -21,7 +21,7 @@ const TandaTransaction = ({ requests }: { requests: TandaRequest[] }) => (
         <CardContent>
             <Table>
                 <TableHeader className="bg-slate-100">
-                    <TableRow className={'border-muted'}>
+                    <TableRow className={'border-muted text-nowrap'}>
                         <TableHead>Reference (Receipt No.)</TableHead>
                         <TableHead>Amount</TableHead>
                         <TableHead>Provider</TableHead>
@@ -35,20 +35,19 @@ const TandaTransaction = ({ requests }: { requests: TandaRequest[] }) => (
                 <TableBody>
                     {requests.map((r) => (
                         <TableRow key={r.request_id} className={'border-muted'}>
-                            <TableCell>
-                                {r.request_id}
-                                <br />
-                                <span className="text-sm-center">({r.receipt_number})</span>
+                            <TableCell className={'text-nowrap'}>
+                                <p>{r.request_id}</p>
+                                <p className="text-sm">({r.receipt_number})</p>
                             </TableCell>
                             <TableCell>{currencyFormat(r.amount)}</TableCell>
                             <TableCell>{r.provider}</TableCell>
                             <TableCell>{r.destination}</TableCell>
                             <TableCell>{r.message}</TableCell>
                             <TableCell>{r.status}</TableCell>
-                            <TableCell className="text-end">
+                            <TableCell className="text-end text-nowrap">
                                 <TableDate date={r.last_modified} />
                             </TableCell>
-                            <TableCell className="text-end">
+                            <TableCell className="text-end text-nowrap">
                                 <TableDate date={r.updated_at} />
                             </TableCell>
                         </TableRow>

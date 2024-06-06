@@ -22,7 +22,7 @@ const ProviderBalances = () => {
     };
 
     return (
-        <div className="grid grid-cols-12 gap-3 h-full">
+        <div className="grid md:grid-cols-12 gap-3 h-full">
             <div className={'col-span-4 2xl:mb-2'}>
                 <Card className={'relative bg-[linear-gradient(-45deg,#414ba7,#4a2613)] bg-center'}>
                     <CardBgCorner />

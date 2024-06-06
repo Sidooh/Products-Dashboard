@@ -30,9 +30,12 @@ const Show = () => {
                 </CardContent>
             </Card>
 
-            <div className="flex w-full gap-3">
+            <div className="flex flex-col xl:!flex-row w-full gap-3">
                 {data.earning_accounts.map((a) => (
-                    <Card className={'relative bg-[linear-gradient(-45deg,#414ba7,#4a2613)] bg-center w-full'}>
+                    <Card
+                        key={a.id}
+                        className={'relative bg-[linear-gradient(-45deg,#414ba7,#4a2613)] bg-center w-full'}
+                    >
                         <CardHeader className="text-white !pb-0 text-sm text-white/70">{a.type}</CardHeader>
                         <CardContent>
                             <h4 className="text-white m-0 lg:text-lg">

@@ -48,7 +48,7 @@ const routes: RouteType[] = [
         label: 'Earnings',
         children: [
             {
-                name: 'Accounts',
+                name: 'Earning Accounts',
                 icon: FaChalkboardUser,
                 to: '/earning-accounts',
                 active: true,

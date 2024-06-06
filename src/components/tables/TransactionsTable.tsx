@@ -3,15 +3,14 @@ import {
     currencyFormat,
     DataTable,
     getRelativeDateAndTime,
+    Latency,
     Phone,
-    StatusBadge,
-    TableDate,
     ProductsTransaction as Transaction,
     SidoohAccount,
-    Latency,
+    StatusBadge,
+    TableDate,
 } from '@nabcellent/sui-react';
 import moment from 'moment';
-import { CONFIG } from '@/config';
 
 type TransactionsTableProps = {
     tableTitle: string;
@@ -50,10 +49,7 @@ const TransactionsTable = ({
                 header: 'Account',
                 accessorFn: (row: Transaction) => `${row.account.phone}: ${row.account?.user?.name ?? ''}`,
                 cell: ({ row: { original } }: any) => (
-                    <SidoohAccount
-                        account={original.account}
-                        url={`${CONFIG.services.accounts.dashboard.url}/accounts/${original.account.id}`}
-                    />
+                    <SidoohAccount account={original.account} url={`/accounts/${original.account.id}/details`} />
                 ),
             },
             {

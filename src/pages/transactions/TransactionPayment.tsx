@@ -29,9 +29,9 @@ const TransactionPayment = ({ payment }: { payment?: Payment }) => {
             </CardHeader>
             <CardContent>
                 <Table>
-                    <TableHeader className="bg-200 text-900">
-                        <TableRow>
-                            <TableHead>Sub-Type</TableHead>
+                    <TableHeader className="bg-slate-100">
+                        <TableRow className={'text-nowrap'}>
+                            <TableHead>Sub Type</TableHead>
                             <TableHead>Amount</TableHead>
                             <TableHead>Charge</TableHead>
                             <TableHead>Date</TableHead>
@@ -42,12 +42,12 @@ const TransactionPayment = ({ payment }: { payment?: Payment }) => {
                     <TableBody>
                         <TableRow>
                             <TableCell>{payment.subtype}</TableCell>
-                            <TableCell className="align-middle">{currencyFormat(payment.amount)}</TableCell>
-                            <TableCell className="align-middle">{currencyFormat(payment.charge)}</TableCell>
-                            <TableCell className="">
+                            <TableCell>{currencyFormat(payment.amount)}</TableCell>
+                            <TableCell>{currencyFormat(payment.charge)}</TableCell>
+                            <TableCell className="text-nowrap">
                                 <TableDate date={payment.updated_at} />
                             </TableCell>
-                            <TableCell className="align-middle text-start">
+                            <TableCell>
                                 <StatusBadge status={payment.status} />
                             </TableCell>
                             <TableCell>

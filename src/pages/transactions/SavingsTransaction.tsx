@@ -1,7 +1,17 @@
 import moment from 'moment';
-import { currencyFormat, StatusBadge, SavingsTransaction, Card, Table, CardHeader } from '@nabcellent/sui-react';
+import {
+    currencyFormat,
+    StatusBadge,
+    SavingsTransaction as SavingsTransactionType,
+    Card,
+    Table,
+    CardHeader,
+    TableHeader,
+    TableRow,
+    TableHead,
+} from '@nabcellent/sui-react';
 
-const TandaTransaction = ({ transaction }: { transaction: SavingsTransaction }) => {
+const SavingsTransaction = ({ transaction }: { transaction: SavingsTransactionType }) => {
     return (
         <Card className="mb-3">
             <CardHeader className="pb-0">
@@ -9,16 +19,16 @@ const TandaTransaction = ({ transaction }: { transaction: SavingsTransaction }) 
             </CardHeader>
             <div className="card-body">
                 <Table className="border-b fs--1">
-                    <thead className="bg-200 text-900">
-                        <tr>
-                            <th className="border-0">Type</th>
-                            <th className="border-0">Amount</th>
-                            <th className="border-0">Description</th>
-                            <th className="border-0 text-center">Status</th>
-                            <th className="border-0">Created</th>
-                            <th className="border-0">Updated</th>
-                        </tr>
-                    </thead>
+                    <TableHeader className="bg-slate-100">
+                        <TableRow>
+                            <TableHead>Type</TableHead>
+                            <TableHead>Amount</TableHead>
+                            <TableHead>Description</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Created</TableHead>
+                            <TableHead>Updated</TableHead>
+                        </TableRow>
+                    </TableHeader>
 
                     <tbody>
                         <tr className="border-200">
@@ -46,4 +56,4 @@ const TandaTransaction = ({ transaction }: { transaction: SavingsTransaction }) 
     );
 };
 
-export default TandaTransaction;
+export default SavingsTransaction;

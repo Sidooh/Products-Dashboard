@@ -25,7 +25,7 @@ const TransactionSummaries = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-1 gap-3 h-full">
             <Card className={'relative'}>
                 <CardBgCorner corner={2} />
-                <CardHeader className={'!pb-0'}>
+                <CardHeader className={'!pb-0 2xl:mb-3'}>
                     <span className={'text-sm text-muted-foreground'}>Transactions</span>
                     <div className="absolute flex items-center top-3 right-6 gap-2">
                         <Tooltip title={'Refresh'} asChild>
@@ -51,7 +51,7 @@ const TransactionSummaries = () => {
 
             <Card className={'relative'}>
                 <CardBgCorner />
-                <CardHeader className={'!pb-0'}>
+                <CardHeader className={'!pb-0 2xl:mb-3'}>
                     <span className={'text-sm text-muted-foreground'}>Revenue</span>
                     <div className="absolute flex items-center top-3 right-6 gap-2">
                         <IconButton

@@ -162,36 +162,37 @@ const ShowAccountDetails = () => {
                 />
             )}
 
-            <div className="flex w-full gap-3">
+            <div className="flex flex-col xl:!flex-row w-full gap-3">
                 {data.vouchers.length > 0 && (
                     <Card className={'relative bg-[linear-gradient(-45deg,#414ba7,#4a2613)] bg-center w-full'}>
-                        <CardHeader className={'bg-transparent light'}>
-                            <h6 className="text-white">VOUCHERS</h6>
-                            <h4 className="text-white m-0">
+                        <CardHeader className={'relative'}>
+                            <h6 className="text-white/70 text-sm leading-none">VOUCHERS</h6>
+                            <h4 className="text-white text-lg font-semibold">
                                 {data.vouchers.map((v) => (
-                                    <CountUp end={v.balance} prefix={'KES '} separator="," />
+                                    <CountUp key={v.id} end={v.balance} prefix={'KES '} separator="," />
                                 ))}
                             </h4>
                         </CardHeader>
                     </Card>
                 )}
                 {data.earningAccounts.map((e) => (
-                    <Card className={'bg-line-chart-gradient'}>
-                        <CardHeader className={'grid grid-cols-2'}>
-                            <div>
-                                <h6 className="text-white">{e.type}</h6>
-                                <h4 className="text-white m-0">
-                                    <CountUp end={e.self_amount} prefix={'KES '} separator="," />
-                                </h4>
-                            </div>
-                            {e.type !== 'MERCHANT' && (
-                                <div className={'flex items-start justify-content'}>
-                                    <Badge className={'rounded-full'}>
-                                        <CountUp end={e.invite_amount} prefix={' KES '} separator="," />
-                                    </Badge>
-                                </div>
-                            )}
+                    <Card
+                        key={e.type}
+                        className={'relative bg-[linear-gradient(-45deg,#414ba7,#4a2613)] bg-center w-full'}
+                    >
+                        <CardHeader className={'relative'}>
+                            <h6 className="text-white/70 text-sm leading-none">{e.type}</h6>
+                            <h4 className="text-white text-lg font-semibold">
+                                <CountUp end={e.self_amount} prefix={'KES '} separator="," />
+                            </h4>
                         </CardHeader>
+                        {e.type !== 'MERCHANT' && (
+                            <div className={'absolute top-0 end-0 m-3'}>
+                                <Badge className={'rounded-full'}>
+                                    <CountUp end={e.invite_amount} prefix={' KES '} separator="," />
+                                </Badge>
+                            </div>
+                        )}
                     </Card>
                 ))}
             </div>

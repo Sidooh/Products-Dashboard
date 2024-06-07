@@ -65,7 +65,7 @@ const Revenue = () => {
     }, [data, chartPeriodOpt, chartFreqOpt, chartTypeOpt, txStatus]);
 
     if (isError) return <AlertError error={error} />;
-    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[100px]'} />;
+    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[300px]'} />;
 
     const options: ChartOptions<'line'> = defaultLineChartOptions({
         scales: {

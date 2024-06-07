@@ -239,9 +239,9 @@ const DashboardChart = () => {
                     </h6>
                 </div>
                 <div className="absolute right-0 me-3">
-                    <div className="flex">
+                    <div className="flex items-center">
                         <IconButton
-                            className="sm:shadow me-2 w-7 h-7"
+                            className="sm:shadow me-2 h-6 w-6 md:w-7 md:h-7"
                             onClick={() => {
                                 if (!bypassCache) setBypassCache(true);
 
@@ -255,7 +255,7 @@ const DashboardChart = () => {
                             value={chartTypeOpt}
                             onValueChange={(e) => setChartTypeOpt(e as 'time-series' | 'cumulative')}
                         >
-                            <SelectTrigger className="w-24 h-7 lg:w-[120px] px-2 me-2">
+                            <SelectTrigger className="w-24 h-6 md:h-7 lg:w-[120px] px-2 me-2">
                                 <SelectValue placeholder="Select chart type" />
                             </SelectTrigger>
                             <SelectContent>
@@ -267,7 +267,7 @@ const DashboardChart = () => {
                             </SelectContent>
                         </Select>
                         <Select value={txStatus} onValueChange={(e) => setTxStatus(e as Status)}>
-                            <SelectTrigger className="w-24 h-7 lg:w-[120px] px-2">
+                            <SelectTrigger className="w-24 h-6 md:h-7 lg:w-[120px] px-2">
                                 <SelectValue placeholder="Select status" />
                             </SelectTrigger>
                             <SelectContent>
@@ -286,7 +286,7 @@ const DashboardChart = () => {
                         </Select>
                     </div>
 
-                    <div className={'flex justify-content-end mt-2'}>
+                    <div className={'hidden md:!flex justify-end mt-2'}>
                         {Object.keys(data)
                             .sort()
                             .map((d, i) => (

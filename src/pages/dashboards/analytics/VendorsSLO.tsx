@@ -12,7 +12,7 @@ const VendorsSLO = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetVendorsSLOQuery(bypassCache);
 
     if (isError) return <AlertError error={error} />;
-    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[100px]'} />;
+    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[200px]'} />;
 
     return (
         <div className={'mb-3'}>

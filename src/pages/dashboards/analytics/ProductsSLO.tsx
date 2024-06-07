@@ -11,7 +11,7 @@ const ProductsSLO = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetProductsSLOQuery(bypassCache);
 
     if (isError) return <AlertError error={error} />;
-    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[100px]'} />;
+    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[600px]'} />;
 
     const groupedSLOs: { [key: string]: ProductsSLOData[] } = groupBy(data, 'year');
     const years = Object.keys(groupedSLOs);

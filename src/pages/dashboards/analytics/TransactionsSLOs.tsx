@@ -12,7 +12,7 @@ const TransactionsSLOs = () => {
     const { data, isError, error, isLoading, isSuccess, refetch, isFetching } = useGetTransactionsSLOQuery(bypassCache);
 
     if (isError) return <AlertError error={error} />;
-    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[100px]'} />;
+    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[600px]'} />;
 
     const groupedSLOs: { [key: string]: TransactionsSLOResponse[] } = groupBy(data, 'year');
     const years = Object.keys(groupedSLOs);

@@ -5,13 +5,14 @@ import {
     DataTable,
     getRelativeDateAndTime,
     PaginationState,
+    Phone,
     Skeleton,
     StatusBadge,
     TableDate,
-    SidoohAccount,
 } from '@nabcellent/sui-react';
 import { useState } from 'react';
 import AlertError from '@/components/alerts/AlertError';
+import { Link } from 'react-router-dom';
 
 const Cashbacks = () => {
     const [pagination, setPagination] = useState<PaginationState>({
@@ -31,8 +32,17 @@ const Cashbacks = () => {
                     accessorKey: 'account',
                     accessorFn: (row: Cashback) => `${row.account?.phone}: ${row.account?.user?.name ?? ''}`,
                     header: 'Account',
-                    cell: ({ row }: any) =>
-                        row.original.type === 'SYSTEM' ? 'SYSTEM' : <SidoohAccount account={row.original.account} />,
+                    cell: ({ row: { original } }: any) =>
+                        original.type === 'SYSTEM' ? (
+                            <b className={'text-primary'}>SYSTEM</b>
+                        ) : (
+                            <>
+                                {original.account?.user?.name} {original.account?.user?.name && <br />}
+                                <Link className={'text-xs'} to={`/accounts/${original.account?.id}/details`}>
+                                    <Phone phone={original.account?.phone} />
+                                </Link>
+                            </>
+                        ),
                 },
                 {
                     accessorKey: 'description',

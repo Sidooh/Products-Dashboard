@@ -1,4 +1,5 @@
-import { DataTable, getRelativeDateAndTime, ProductAccount, TableDate, SidoohAccount } from '@nabcellent/sui-react';
+import { DataTable, getRelativeDateAndTime, ProductAccount, TableDate, Phone } from '@nabcellent/sui-react';
+import { Link } from 'react-router-dom';
 
 type ProductAccountsTableProps = {
     title: string;
@@ -34,7 +35,18 @@ const ProductAccountsTable = ({
                 accessorKey: 'account',
                 accessorFn: (row: ProductAccount) => `${row.account.phone}: ${row.account.user?.name}`,
                 header: 'Account',
-                cell: ({ row }: any) => <SidoohAccount account={row.original.account} />,
+                cell: ({
+                    row: {
+                        original: { account },
+                    },
+                }: any) => (
+                    <>
+                        {account?.user?.name} {account?.user?.name && <br />}
+                        <Link className={'text-xs'} to={`/accounts/${account.id}/details`}>
+                            <Phone phone={account.phone} />
+                        </Link>
+                    </>
+                ),
             },
             {
                 accessorKey: 'account_number',

@@ -13,7 +13,7 @@ import {
     Subscription,
     TableDate,
     Latency,
-    SidoohAccount,
+    Phone,
 } from '@nabcellent/sui-react';
 import TableActions from '@/components/TableActions';
 import { useAccountQuery } from '@/services/accountsApi';
@@ -21,6 +21,7 @@ import CountUp from 'react-countup';
 import CardBgCorner from '@/components/CardBgCorner';
 import moment from 'moment/moment';
 import AlertError from '@/components/alerts/AlertError';
+import SidoohAccount from '@/components/SidoohAccount';
 
 const ShowAccountDetails = () => {
     const { id } = useParams<{ id: any }>();
@@ -87,16 +88,19 @@ const ShowAccountDetails = () => {
                     {
                         accessorKey: 'description',
                         header: 'Description',
-                        cell: ({ row }: any) => (
-                            <span>
-                                {row.original.description}
-                                <br />
-                                {row.original.destination !== account.phone && (
-                                    <small>
-                                        <b>{row.original.destination}</b>
-                                    </small>
+                        cell: ({ row: { original: tx } }: any) => (
+                            <>
+                                <p>{tx.description}</p>
+                                {tx.destination !== account.phone && (
+                                    <>
+                                        {tx.description.includes('Airtime') ? (
+                                            <Phone phone={tx.destination} className={'font-bold text-xs'} />
+                                        ) : (
+                                            tx.destination
+                                        )}
+                                    </>
                                 )}
-                            </span>
+                            </>
                         ),
                     },
                     {

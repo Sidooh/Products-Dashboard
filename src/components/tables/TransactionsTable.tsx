@@ -6,11 +6,11 @@ import {
     Latency,
     Phone,
     ProductsTransaction as Transaction,
-    SidoohAccount,
     StatusBadge,
     TableDate,
 } from '@nabcellent/sui-react';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 type TransactionsTableProps = {
     tableTitle: string;
@@ -48,8 +48,17 @@ const TransactionsTable = ({
                 accessorKey: 'account',
                 header: 'Account',
                 accessorFn: (row: Transaction) => `${row.account.phone}: ${row.account?.user?.name ?? ''}`,
-                cell: ({ row: { original } }: any) => (
-                    <SidoohAccount account={original.account} url={`/accounts/${original.account.id}/details`} />
+                cell: ({
+                    row: {
+                        original: { account },
+                    },
+                }: any) => (
+                    <>
+                        {account?.user?.name} {account?.user?.name && <br />}
+                        <Link className={'text-xs'} to={`/accounts/${account.id}/details`}>
+                            <Phone phone={account.phone} />
+                        </Link>
+                    </>
                 ),
             },
             {

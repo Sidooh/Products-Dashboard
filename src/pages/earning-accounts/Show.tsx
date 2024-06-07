@@ -1,17 +1,18 @@
 import { useGetEarningAccountQuery } from '@/services/earningAccountsApi';
-import { Badge, Card, CardContent, CardHeader, Skeleton, SidoohAccount } from '@nabcellent/sui-react';
+import { Badge, Card, CardContent, CardHeader, Skeleton } from '@nabcellent/sui-react';
 import CardBgCorner from '../../components/CardBgCorner';
 import moment from 'moment/moment';
 import { useParams } from 'react-router-dom';
 import CountUp from 'react-countup';
 import AlertError from '@/components/alerts/AlertError';
+import SidoohAccount from '@/components/SidoohAccount';
 
 const Show = () => {
     const id = Number(useParams().id);
     let { data, isLoading, isSuccess, isError, error } = useGetEarningAccountQuery(id);
 
     if (isError) return <AlertError error={error} />;
-    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[100px]'} />;
+    if (isLoading || !isSuccess || !data) return <Skeleton className={'h-[300px]'} />;
 
     return (
         <div className={'space-y-3'}>

@@ -1,17 +1,10 @@
 import TableActions from '@/components/TableActions';
 import { useEarningAccountsQuery } from '@/services/earningAccountsApi';
 import { EarningAccount } from '@/utils/types';
-import {
-    currencyFormat,
-    DataTable,
-    groupBy,
-    PaginationState,
-    Skeleton,
-    TableDate,
-    SidoohAccount,
-} from '@nabcellent/sui-react';
+import { currencyFormat, DataTable, groupBy, PaginationState, Phone, Skeleton, TableDate } from '@nabcellent/sui-react';
 import { useState } from 'react';
 import AlertError from '@/components/alerts/AlertError';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
     const [pagination, setPagination] = useState<PaginationState>({
@@ -31,7 +24,14 @@ const Index = () => {
                     accessorKey: 'account',
                     accessorFn: (r: EarningAccount[]) => `${r[0].account?.phone}: ${r[0].account?.user?.name}`,
                     header: 'Account',
-                    cell: ({ row }: any) => <SidoohAccount account={row.original[0].account} />,
+                    cell: ({ row }: any) => (
+                        <>
+                            {row.original[0].account?.user?.name} {row.original[0].account?.user?.name && <br />}
+                            <Link className={'text-xs'} to={`/accounts/${row.original[0].account.id}/details`}>
+                                <Phone phone={row.original[0].account.phone} />
+                            </Link>
+                        </>
+                    ),
                 },
                 {
                     accessorKey: 'earnings',

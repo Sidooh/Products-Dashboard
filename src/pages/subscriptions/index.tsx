@@ -7,10 +7,11 @@ import {
     PaginationState,
     Subscription,
     Skeleton,
-    SidoohAccount,
+    Phone,
 } from '@nabcellent/sui-react';
 import { useState } from 'react';
 import AlertError from '@/components/alerts/AlertError';
+import { Link } from 'react-router-dom';
 
 const Subscriptions = () => {
     const [pagination, setPagination] = useState<PaginationState>({
@@ -30,7 +31,18 @@ const Subscriptions = () => {
                     accessorKey: 'account',
                     accessorFn: (row: Subscription) => `${row.account?.phone}: ${row.account?.user?.name ?? ''}`,
                     header: 'Account',
-                    cell: ({ row }: any) => <SidoohAccount account={row.original.account} />,
+                    cell: ({
+                        row: {
+                            original: { account },
+                        },
+                    }: any) => (
+                        <>
+                            {account?.user?.name} {account?.user?.name && <br />}
+                            <Link className={'text-xs'} to={`/accounts/${account.id}/details`}>
+                                <Phone phone={account.phone} />
+                            </Link>
+                        </>
+                    ),
                 },
                 {
                     accessorKey: 'type',

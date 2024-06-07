@@ -22,7 +22,6 @@ import {
     IconButton,
     Latency,
     Separator,
-    SidoohAccount,
     Skeleton,
     Status,
     StatusBadge,
@@ -35,6 +34,7 @@ import SavingsTransaction from './SavingsTransaction';
 import AlertError from '@/components/alerts/AlertError';
 import { FaArrowRotateLeft, FaArrowRotateRight, FaArrowsRotate, FaCodePullRequest } from 'react-icons/fa6';
 import { CgOptions } from 'react-icons/cg';
+import SidoohAccount from '@/components/SidoohAccount';
 
 const TransactionPayment = lazy(() => import('./TransactionPayment'));
 const TandaTransaction = lazy(() => import('./TandaTransaction'));

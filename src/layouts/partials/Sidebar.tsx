@@ -12,15 +12,11 @@ const Sidebar = () => {
 
     return (
         <nav
-            className={cn(
-                'pb-12 fixed transition-[width] duration-[200ms] ease-[ease] overflow-hidden h-full bg-background/90 backdrop-blur',
-                {
-                    'w-[12.625rem]': showSidebar,
-                    'w-[3.125rem]': !showSidebar,
-                    ' shadow-[0.625rem_0_0.625rem_-0.5625rem_rgba(0,0,0,0.2)]':
-                        sidebarCollapsedHover && isSidebarCollapsed,
-                }
-            )}
+            className={cn('pb-12 fixed transition-[width] overflow-hidden h-full bg-background/90 backdrop-blur', {
+                'w-[12.625rem]': showSidebar,
+                'w-[3.125rem]': !showSidebar,
+                ' shadow-[0.625rem_0_0.625rem_-0.5625rem_rgba(0,0,0,0.2)]': sidebarCollapsedHover && isSidebarCollapsed,
+            })}
             onMouseEnter={() => setSidebarCollapsedHover(true)}
             onMouseLeave={() => setSidebarCollapsedHover(false)}
         >

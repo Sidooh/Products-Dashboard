@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",
-    "@nabcellent/sui-react": "^4.1.23",
+    "@nabcellent/sui-react": "^4.2.3",
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",

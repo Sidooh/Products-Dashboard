@@ -9,7 +9,7 @@ const Index = () => {
         page: 1,
         page_size: 100,
     });
-    let { data: res, isLoading, isSuccess, isError, error, isFetching } = useTransactionsQuery(pagination);
+    let { data: res, isLoading, isSuccess, isError, error, isFetching, refetch } = useTransactionsQuery(pagination);
 
     if (isError) return <AlertError error={error} />;
     if (isLoading || !isSuccess || !res) return <Skeleton className={'h-[700px]'} />;
@@ -18,6 +18,7 @@ const Index = () => {
         <TransactionsTable
             tableTitle={'Transactions'}
             transactions={res.data}
+            onRefetch={refetch}
             reFetching={isFetching}
             serverTotal={res.total}
             pageSize={res.per_page}

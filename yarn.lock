@@ -796,9 +796,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nabcellent/sui-react@npm:^4.2.3":
-  version: 4.2.3
-  resolution: "@nabcellent/sui-react@npm:4.2.3"
+"@nabcellent/sui-react@npm:^4.2.6":
+  version: 4.2.6
+  resolution: "@nabcellent/sui-react@npm:4.2.6"
   dependencies:
     "@hookform/resolvers": "npm:^3.5.0"
     "@radix-ui/react-avatar": "npm:^1.0.4"
@@ -826,7 +826,7 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10/129aa9bb549e10ad5145f3c0857cf72861b04e6c11270f62e591d559baabee7de880b995b26bf613065f4c2facd97a8c0046f697876ebc0da545d544fa53f9bf
+  checksum: 10/cc1efb567d608f47ae017f01fffb2a15d25e232bac9df0a41fa9a38ba4c94c15066e19fb116a79daea4d6d4422b551f16f1f7e2a9e3fe4c7e6f1c75d2a50646f
   languageName: node
   linkType: hard
 
@@ -5033,7 +5033,7 @@ __metadata:
     "@eslint/compat": "npm:^1.0.3"
     "@eslint/js": "npm:^9.4.0"
     "@hookform/resolvers": "npm:^3.6.0"
-    "@nabcellent/sui-react": "npm:^4.2.3"
+    "@nabcellent/sui-react": "npm:^4.2.6"
     "@reduxjs/toolkit": "npm:^2.2.5"
     "@types/node": "npm:^20.14.2"
     "@types/react": "npm:^18.3.3"

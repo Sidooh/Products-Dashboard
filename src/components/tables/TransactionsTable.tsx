@@ -111,8 +111,8 @@ const TransactionsTable = ({
             },
         ]}
         data={transactions}
-        onRefetch={onRefetch}
-        reFetching={reFetching}
+        onRefresh={onRefetch}
+        isRefreshing={reFetching}
         serverTotal={serverTotal}
         serverPageSize={pageSize}
         serverPageCount={serverPageCount}
